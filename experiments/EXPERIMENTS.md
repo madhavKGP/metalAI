@@ -17,7 +17,7 @@ How it works:
 | E002 | 2026-10-28 | M1 | ResNet-50 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 (→0-4 in T8) | done (fold 0) | acc 100.00, macroF1 100.00 (early stop ep 11, 4.4 min, peak VRAM 2.69 GB) | Converges in ~3 epochs, no overfit. Grad-CAM localises inclusion/scratches/patches well; diffuse on crazing/RS (texture classes). Run remaining folds. |
 | E003 | 2026-10-28 | M1 | EfficientNet-B0 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 (→0-4 in T8) | done (fold 0) | acc 100.00, macroF1 100.00 (early stop ep 24, 7.1 min, peak VRAM 1.49 GB) | Same accuracy at ~half the VRAM; slower to converge. Run remaining folds. |
 | E004 | 2026-10-28 | M1 | YOLOv8n | D-011, 640 px, bs 16 | 0 | **discarded** | test mAP50 74.56, mAP50-95 42.54 (22.8 min) | Discarded: 188 secondary-defect boxes had wrong class (D-020). Useful signal: errors = background FPs on crazing/RS, not class confusion; not converged at 150 ep. |
-| E005 | | M1 | YOLOv8n — corrected labels | D-011, 640 px, bs 16, 150 ep, patience 30 | 0 (→0-4 if selected) | planned | | |
+| E005 | | M1 | YOLOv8n — corrected labels | D-011, 640 px, bs 16, 150 ep, patience 30 | 0 (→0-4 if selected) | crashed (system-RAM OOM in mosaic worker @ ep 46/150, 2026-10-30; no test metrics) | | |
 | E006 | | M1 | YOLOv8n — longer | 640 px, bs 16, **300 ep, patience 50** | 0 (→0-4 if selected) | planned | | |
 | E007 | | M1 | YOLOv8s — bigger model | 640 px, bs 16, 150 ep, patience 30 | 0 (→0-4 if selected) | planned | | |
 

@@ -132,7 +132,7 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | DONE — reviewed by Claude (D-023) |
 | T7 | Pull label fix (D-020): rebuild data + YOLO labels, verify splits unchanged, discard E004 | – | DONE |
 | T8 | CNN folds 1–4 (GPU lane) | E002, E003 | DONE |
-| T9 | YOLO config selection on fold 0 (val metrics) | E005–E007 | **NEXT** |
+| T9 | YOLO config selection on fold 0 (val metrics) | E005–E007 | IN-PROGRESS (E005 crashed, see log; E006/E007 pending) |
 | T10 | Winning YOLO config on folds 1–4 | E005/6/7 | TODO |
 | T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | TODO |
 
@@ -520,3 +520,10 @@ python -m metalai.m1_surface.report
 **Anything odd:** only ResNet-50 fold 3 missed one test image (99.72 %) — Grad-CAM `_errors` panel produced for Claude; EfficientNet-B0 is 100 % on every fold. No other warnings beyond the known lr_scheduler one.
 **Code changes:** none
 **Questions for Claude:** none
+
+### [T9 · partial] YOLO config selection — E005 crashed (2026-10-30, stopped for the night per Madhav)
+**Commands run:** `$env:METALAI_EXP = "E005"; python -m metalai.m1_surface.yolo_train --folds 0` (monitored, GPU log `reports/gpu_logs/E005.csv`)
+**What happened:** trained normally to **epoch 46/150** (val mAP50 ≈ 0.72, mAP50-95 ≈ 0.39, still improving), then died with **system-RAM OOM in a DataLoader worker**: `numpy._core._exceptions._ArrayMemoryError: Unable to allocate 4.69 MiB for an array with shape (1280,1280,3)` inside the **mosaic** augmentation (`augment.py:611`, imgsz×2 canvas). GPU was fine (peak 4,035 MiB / 8 GB, max 73 °C, mean util 75 %) — the constraint is the laptop's **15.6 GB RAM** shared between `cache='ram'` (1,295 images) + 2 mosaic worker processes. ELAPSED 6.8 min.
+**State left:** E005 has **no test metrics** (crash before final val/test); partial checkpoint exists under `runs/`. `results/m1/yolo_results.csv` still only has SMOKE + discarded E004. E006/E007 not started. Monitor + stray python killed; **no GPU jobs running** (machine idle for the night). T9 not committed (nothing new to record beyond this log line).
+**Fix options for next session (Claude to pick in the T9 re-brief):** (a) `cache='disk'` for YOLO runs, (b) dataloader `workers=0–1` for the mosaic phase, (c) larger Windows pagefile, or (d) `--imgsz 512` — all CPU-side, no GPU risk. Simplest safe default: **workers=0 + cache='disk'**.
+**Questions for Claude:** which fix should be baked into `yolo_train.py` before re-running E005?
