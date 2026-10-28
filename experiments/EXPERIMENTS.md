@@ -14,9 +14,9 @@ How it works:
 | ID | Date | Module | What (model / featureset) | Key config | Folds | Status | Headline result | Conclusion (Claude) |
 |---|---|---|---|---|---|---|---|---|
 | E001 | 2026-10-28 | M1 | LBP / GLCM / both + RBF-SVM | D-008 | 0-4 | done | both: acc 0.9944 ± 0.0020 (lbp 0.9811, glcm 0.9817) | |
-| E002 | | M1 | ResNet-50 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 | planned | | |
-| E003 | | M1 | EfficientNet-B0 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 | planned | | |
-| E004 | | M1 | YOLOv8n | D-011, 640 px, bs 16 | 0 | planned | | |
+| E002 | 2026-10-28 | M1 | ResNet-50 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 | done | acc 100.00, macroF1 100.00 (early stop ep 11, 4.4 min, peak VRAM 2.69 GB) | |
+| E003 | 2026-10-28 | M1 | EfficientNet-B0 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 | done | acc 100.00, macroF1 100.00 (early stop ep 24, 7.1 min, peak VRAM 1.49 GB) | |
+| E004 | 2026-10-28 | M1 | YOLOv8n | D-011, 640 px, bs 16 | 0 | done | test mAP50 74.56, mAP50-95 42.54 (22.8 min) | |
 
 Folder layout produced by runs:
 ```

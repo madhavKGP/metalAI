@@ -129,7 +129,7 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T3 | Prepare data, splits, EDA, YOLO labels | – | DONE |
 | T4 | GPU smoke tests (CNN, Grad-CAM, YOLO, app) + cleanup | SMOKE | DONE |
 | T5 | Classical baseline (LBP/GLCM + SVM) | E001 | DONE |
-| T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | **NEXT** |
+| T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | **DONE — CHECKPOINT, waiting for Claude** |
 | T7+ | Remaining folds, full models, app — written by Claude after reviewing T6 | – | WAITING-FOR-CLAUDE |
 
 ---
@@ -352,3 +352,50 @@ Per-fold: lbp 0.9861/0.9833/0.9861/0.9722/0.9777 · glcm 0.9861/0.9806/0.9833/0.
 **Anything odd:** sklearn 1.9 `FutureWarning`: `SVC(probability=True)` deprecated, removed in 1.11 → will need `CalibratedClassifierCV(SVC(), ensemble=False)`. Not urgent, but should go on the tech-debt list in `decisions.md`. Subagent's first attempt failed on a shell typo (`.\ .venv`), not a code problem.
 **Code changes:** none
 **Questions for Claude:** none
+
+### [T6] Fold-0 training E002–E004 + Grad-CAM — DONE / **CHECKPOINT** (2026-10-28, ~40 min total)
+**Commands run (one GPU job at a time, `nvidia-smi` monitor per experiment):**
+```powershell
+$env:METALAI_EXP = "E002"; python -m metalai.m1_surface.cnn --model resnet50 --folds 0          # 4.6 min
+$env:METALAI_EXP = "E002"; python -m metalai.m1_surface.gradcam --model resnet50 --fold 0
+$env:METALAI_EXP = "E003"; python -m metalai.m1_surface.cnn --model efficientnet_b0 --folds 0   # 7.3 min
+$env:METALAI_EXP = "E003"; python -m metalai.m1_surface.gradcam --model efficientnet_b0 --fold 0
+$env:METALAI_EXP = "E004"; python -m metalai.m1_surface.yolo_train --folds 0                    # 23.2 min (150 epochs)
+python -m metalai.m1_surface.report
+```
+**Console output (key lines):**
+```
+[resnet50 fold0] ep 01-11 | Early stop at epoch 11 (best epoch 5)
+==> resnet50 fold 0: acc=1.0000 macroF1=1.0000 (4.44 min, peak VRAM 2.69 GB)
+[efficientnet_b0 fold0] ep 01-24 | Early stop at epoch 24 (best epoch 18)
+==> efficientnet_b0 fold 0: acc=1.0000 macroF1=1.0000 (7.05 min, peak VRAM 1.49 GB)
+150 epochs completed in 0.377 hours
+==> E004_yolov8n_fold0: test mAP50=0.7456 mAP50-95=0.4254 (22.8 min)
+```
+**Metrics (tables from `reports/m1/REPORT.md`):**
+- CNN: resnet50 acc **100.00** / macroF1 100.00; efficientnet_b0 acc **100.00** / macroF1 100.00 (fold 0, 360 test images, **zero errors** → per-class F1 all 100.00).
+- CNN cost: resnet50 4.44 min, best epoch 5, 6.51 ms/img, peak VRAM 2.69 GB; efficientnet_b0 7.05 min, best epoch 18, 8.70 ms/img, peak VRAM 1.49 GB.
+- YOLO: mAP50 **74.56**, mAP50-95 **42.54**, P 75.03, R 70.41. Per-class AP50: crazing **39.37**, rolled-in_scale **55.48**, pitted_surface 84.41, inclusion 87.12, scratches 90.23, patches 90.78. Cost: 22.8 min, 3.38 ms inference.
+- vs literature (decisions.md D-012): NEU-CLS CNNs ~98-100% ✓; NEU-DET YOLOv8n ~73% mAP50 — ours 74.6% ✓ consistent.
+**Files produced (all verified to exist):**
+- `reports/m1/cnn/E002_resnet50/fold0_curves.png`, `fold0_confusion.png`, `confusion_all.png`, `fold0_history.csv`, `summary.json`; same set for `E003_efficientnet_b0/`
+- `reports/m1/gradcam/E002_resnet50_fold0_correct.png`, `_boxes.png` (**no `_errors` panel — zero misclassifications**); E003 same
+- `reports/m1/yolo/E004_yolov8n_fold0/` → `train_results.png`, `test_confusion_matrix_normalized.png`, `test_BoxPR_curve.png`, `test_BoxF1_curve.png` (named `test_Box*`, not bare `PR_curve`), `test_val_batch{0,1,2}_{labels,pred}.jpg`
+- `reports/gpu_logs/E002.csv` (41 rows), `E003.csv` (41 rows), `E004.csv` (124 rows)
+- `results/m1/cnn_results.csv`, `yolo_results.csv`, `cnn_predictions/E002_resnet50.csv`, `E003_efficientnet_b0.csv`; weights under `models/m1/{cnn,yolo}/E00X/` (not committed)
+**Hardware (from the nvidia-smi logs; RTX 4060 Laptop 8 GB, on AC throughout, no OOM, default batch sizes kept — CNN 32, YOLO 16):**
+- E002 ResNet-50: peak 3,498 MiB, max 65 °C, mean util 49.5 %, max 68.2 W, ~10.4 s/epoch.
+- E003 EfficientNet-B0: peak 3,046 MiB, max 65 °C, mean util 69.9 %, max 58.2 W, ~17 s/epoch.
+- E004 YOLOv8n: peak 4,146 MiB, max 73 °C, mean util 74.5 %, max 88.6 W, ~9.9 s/epoch (81 batches).
+- All well below the 87 °C concern threshold.
+**Anything odd / observations for Claude:**
+- **Perfect 100% from both CNNs on fold 0** with zero errors — consistent with the easy-to-classify NEU-CLS literature, but fold 0 gives no error analysis; remaining folds may differ.
+- YOLO weak classes: **crazing (AP50 39.4)** and **rolled-in_scale (55.48)**; crazing is diffuse low-contrast texture → poor box regression. Matches the ~73% literature figure, so nothing is broken.
+- Grad-CAM hot regions appear on the visible defect areas in the `_correct` panels; `_boxes` panels show GT boxes for comparison — please eyeball these.
+- `nvidia-smi --query-gpu ... -f out.csv` only flushes the file when the process is killed, so the monitor must be stopped after training or the CSV reads empty. Handled; noted for future rounds.
+- Curves: mild over-fit pattern (train loss flat/down, val loss flat from ~epoch 5); early stopping worked as designed (patience 6).
+**Code changes:** none
+**Questions for Claude:**
+1. Proceed to remaining folds 1-4 for E002-E004 as T7? (~2 h GPU: 4 × (5 + 7 + 23) min, sequential.)
+2. Any YOLO tweak for crazing (class weights, higher `imgsz`, mosaic off) — your call in the T7 brief?
+3. With CNNs at 100%, do you want a robustness check (augmented test / GC10-DET) before the full 5-fold, or just run all folds?

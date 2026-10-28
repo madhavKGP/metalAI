@@ -1,6 +1,6 @@
 # Module 1 - Surface Defect Inspector: results
 
-Generated 2026-10-28T23:07:35 | git 54d2a14 | numbers = mean ± std over test folds (%, unless stated)
+Generated 2026-10-28T23:48:18 | git 25b8fc2 | numbers = mean ± std over test folds (%, unless stated)
 
 ## Data
 
@@ -36,37 +36,40 @@ Generated 2026-10-28T23:07:35 | git 54d2a14 | numbers = mean ± std over test fo
 
 | model | exp | folds | accuracy | macro_f1 |
 |---|---|---|---|---|
-| resnet50 | SMOKE | [0] | 96.94 ± 0.00 | 96.93 ± 0.00 |
+| efficientnet_b0 | E003 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| resnet50 | E002 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 |
 
 ### CNN: per-class F1
 
 | model | exp | folds | f1_crazing | f1_inclusion | f1_patches | f1_pitted_surface | f1_rolled-in_scale | f1_scratches |
 |---|---|---|---|---|---|---|---|---|
-| resnet50 | SMOKE | [0] | 90.91 ± 0.00 | 99.16 ± 0.00 | 92.31 ± 0.00 | 99.17 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| efficientnet_b0 | E003 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| resnet50 | E002 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
 
 ### CNN: cost
 
 | model | exp | folds | train_minutes | best_epoch | ms_per_img_bs1 | peak_vram_gb |
 |---|---|---|---|---|---|---|
-| resnet50 | SMOKE | [0] | 0.45 ± 0.00 | 1.00 ± 0.00 | 6.48 ± 0.00 | 2.69 ± 0.00 |
+| efficientnet_b0 | E003 | [0] | 7.05 ± 0.00 | 18.00 ± 0.00 | 8.70 ± 0.00 | 1.49 ± 0.00 |
+| resnet50 | E002 | [0] | 4.44 ± 0.00 | 5.00 ± 0.00 | 6.51 ± 0.00 | 2.69 ± 0.00 |
 
 ### YOLO detection (test folds)
 
 | model | exp | folds | mAP50 | mAP50_95 | precision | recall |
 |---|---|---|---|---|---|---|
-| yolov8n | SMOKE | [0] | 1.67 ± 0.00 | 0.36 ± 0.00 | 51.85 ± 0.00 | 11.08 ± 0.00 |
+| yolov8n | E004 | [0] | 74.56 ± 0.00 | 42.54 ± 0.00 | 75.03 ± 0.00 | 70.41 ± 0.00 |
 
 ### YOLO: per-class AP50
 
 | model | exp | folds | AP50_crazing | AP50_inclusion | AP50_patches | AP50_pitted_surface | AP50_rolled-in_scale | AP50_scratches |
 |---|---|---|---|---|---|---|---|---|
-| yolov8n | SMOKE | [0] | 0.01 ± 0.00 | 1.00 ± 0.00 | 2.85 ± 0.00 | 1.22 ± 0.00 | 0.01 ± 0.00 | 4.92 ± 0.00 |
+| yolov8n | E004 | [0] | 39.37 ± 0.00 | 87.12 ± 0.00 | 90.78 ± 0.00 | 84.41 ± 0.00 | 55.48 ± 0.00 | 90.23 ± 0.00 |
 
 ### YOLO: cost
 
 | model | exp | folds | train_minutes | ms_inference |
 |---|---|---|---|---|
-| yolov8n | SMOKE | [0] | 0.80 ± 0.00 | 3.19 ± 0.00 |
+| yolov8n | E004 | [0] | 22.80 ± 0.00 | 3.38 ± 0.00 |
 
 ### Summary
 
@@ -75,8 +78,9 @@ Generated 2026-10-28T23:07:35 | git 54d2a14 | numbers = mean ± std over test fo
 | SVM both | 99.44 ± 0.20 | 99.44 ± 0.20 | - | - |
 | SVM glcm | 98.17 ± 0.58 | 98.17 ± 0.57 | - | - |
 | SVM lbp | 98.11 ± 0.60 | 98.11 ± 0.60 | - | - |
-| resnet50 | 96.94 ± 0.00 | 96.93 ± 0.00 | - | - |
-| yolov8n | - | - | 1.67 ± 0.00 | 0.36 ± 0.00 |
+| efficientnet_b0 | 100.00 ± 0.00 | 100.00 ± 0.00 | - | - |
+| resnet50 | 100.00 ± 0.00 | 100.00 ± 0.00 | - | - |
+| yolov8n | - | - | 74.56 ± 0.00 | 42.54 ± 0.00 |
 
 Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (see decisions.md D-012).
 
@@ -87,8 +91,42 @@ Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (s
 ![confusion_glcm.png](classical/confusion_glcm.png)
 ![confusion_lbp.png](classical/confusion_lbp.png)
 
+### CNN E002_resnet50
+![confusion_all.png](cnn/E002_resnet50/confusion_all.png)
+![fold0_confusion.png](cnn/E002_resnet50/fold0_confusion.png)
+![fold0_curves.png](cnn/E002_resnet50/fold0_curves.png)
+
+### CNN E003_efficientnet_b0
+![confusion_all.png](cnn/E003_efficientnet_b0/confusion_all.png)
+![fold0_confusion.png](cnn/E003_efficientnet_b0/fold0_confusion.png)
+![fold0_curves.png](cnn/E003_efficientnet_b0/fold0_curves.png)
+
 ### Grad-CAM
+![E002_resnet50_fold0_boxes.png](gradcam/E002_resnet50_fold0_boxes.png)
+![E002_resnet50_fold0_correct.png](gradcam/E002_resnet50_fold0_correct.png)
+![E003_efficientnet_b0_fold0_boxes.png](gradcam/E003_efficientnet_b0_fold0_boxes.png)
+![E003_efficientnet_b0_fold0_correct.png](gradcam/E003_efficientnet_b0_fold0_correct.png)
+
+### YOLO E004_yolov8n_fold0
+![test_BoxF1_curve.png](yolo/E004_yolov8n_fold0/test_BoxF1_curve.png)
+![test_BoxP_curve.png](yolo/E004_yolov8n_fold0/test_BoxP_curve.png)
+![test_BoxPR_curve.png](yolo/E004_yolov8n_fold0/test_BoxPR_curve.png)
+![test_BoxR_curve.png](yolo/E004_yolov8n_fold0/test_BoxR_curve.png)
+![test_confusion_matrix.png](yolo/E004_yolov8n_fold0/test_confusion_matrix.png)
+![test_confusion_matrix_normalized.png](yolo/E004_yolov8n_fold0/test_confusion_matrix_normalized.png)
+![train_BoxF1_curve.png](yolo/E004_yolov8n_fold0/train_BoxF1_curve.png)
+![train_BoxP_curve.png](yolo/E004_yolov8n_fold0/train_BoxP_curve.png)
+![train_BoxPR_curve.png](yolo/E004_yolov8n_fold0/train_BoxPR_curve.png)
+![train_BoxR_curve.png](yolo/E004_yolov8n_fold0/train_BoxR_curve.png)
+![train_confusion_matrix.png](yolo/E004_yolov8n_fold0/train_confusion_matrix.png)
+![train_confusion_matrix_normalized.png](yolo/E004_yolov8n_fold0/train_confusion_matrix_normalized.png)
+![train_results.png](yolo/E004_yolov8n_fold0/train_results.png)
 
 ## Observations (OpenCode fills in, Claude reviews)
 
-- ...
+- Both CNNs hit 100% test accuracy on fold 0 with **zero misclassifications** (hence no `_errors.png` Grad-CAM panels). ResNet-50 early-stopped at epoch 11, EfficientNet-B0 at 24 — curves show val loss flattening ~epoch 5-18 while train loss keeps dropping slightly (mild over-fit, no val degradation).
+- Grad-CAM hot regions sit on the visible defect areas in the `_correct` panels (spot-check crazing/scratches/patches); `_boxes` overlays show the GT boxes for comparison. Suggest Claude confirm placement visually.
+- YOLO is clearly the weak spot and matches literature (D-012, ~73% mAP50): **crazing AP50 39.4** and **rolled-in_scale AP50 55.5** drag the mean down; inclusion/patches/scratches are 84-91. Crazing is low-contrast, diffuse texture — hard for box regression. Pitted_surface 84.4.
+- Classical SVM (LBP+GLCM, E001) at 99.44% is essentially saturated too; per-class F1 shows inclusion (98.5) and scratches (98.3) are the only classes it ever misses.
+- Dataset looks "easy" for classification (all models ≥99%) — the interesting research question is detection (YOLO) and robustness (later modules / GC10-DET).
+- GPU: RTX 4060 Laptop. E002 peak 3.5 GB / 65 C / mean util 50%; E003 peak 3.0 GB / 65 C / mean util 70%; E004 peak 4.1 GB / 73 C / mean util 75% / max power 88.6 W. No OOM at default batch sizes (CNN 32, YOLO 16). On AC power throughout.
