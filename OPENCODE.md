@@ -124,12 +124,12 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 
 | ID | Task | Exp | Status |
 |---|---|---|---|
-| T1 | Environment setup + GPU check | – | **NEXT** |
-| T2 | Kaggle auth + download NEU | – | TODO |
-| T3 | Prepare data, splits, EDA, YOLO labels | – | TODO |
-| T4 | GPU smoke tests (CNN, Grad-CAM, YOLO, app) + cleanup | SMOKE | TODO |
-| T5 | Classical baseline (LBP/GLCM + SVM) | E001 | TODO |
-| T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | TODO |
+| T1 | Environment setup + GPU check | – | DONE |
+| T2 | Kaggle auth + download NEU | – | DONE |
+| T3 | Prepare data, splits, EDA, YOLO labels | – | DONE |
+| T4 | GPU smoke tests (CNN, Grad-CAM, YOLO, app) + cleanup | SMOKE | DONE |
+| T5 | Classical baseline (LBP/GLCM + SVM) | E001 | DONE |
+| T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | **NEXT** |
 | T7+ | Remaining folds, full models, app — written by Claude after reviewing T6 | – | WAITING-FOR-CLAUDE |
 
 ---
@@ -255,3 +255,100 @@ Do **T1 → T6 without waiting for me**, unless something fails that you can't f
 - GPU: everything trains on the local **RTX 4050**; follow 0.1 (verify dGPU, power check, `nvidia-smi` log per experiment, OOM fallback).
 - Keep code organised (0.2) and experiments organised (0.3): set `$env:METALAI_EXP` before each run, fill `experiments/EXPERIMENTS.md`, never overwrite or hand-edit results.
 - Report after each task with the template and commit. The T6 report must list PNG paths — I will open them.
+
+### [T1] Environment setup + GPU check — DONE (2026-10-28, ~20 min incl. downloads)
+**Commands run:** `py -3.11 -m venv .venv`; `.\.venv\Scripts\Activate.ps1`; `python -m pip install --upgrade pip`; `pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124`; `pip install -r requirements.txt`; `pip install -e .`; `python -m metalai.common.env_check`; `pip show torch`
+**Console output:** `env_check` → `cuda_available: True`, `gpu_name: NVIDIA GeForce RTX 4060 Laptop GPU`, `gpu_vram_gb: 8.0`, `gpu_matmul_ok: True`, `torch: 2.6.0+cu124` (no `+cpu`), torchvision 0.21.0+cu124, ultralytics 8.4.191, sklearn 1.9.1, cv2 5.0.0, gradio 6.31.0, pytorch_grad_cam ok. Full JSON in `reports/env.json`.
+**Metrics:** — (env only)
+**Files produced:** `reports/env.json`
+**Hardware:** `nvidia-smi`: RTX 4060 Laptop GPU, 8188 MiB total, driver 596.36, CUDA 13.2. On AC power (`BatteryStatus=2`).
+**Anything odd:** **The GPU is an RTX 4060 Laptop (8 GB), not the RTX 4050 (6 GB) documented in §0.1.** Better card, more VRAM — continued without stopping. All §0.1 rules still applied. Note for Claude: §0.1's "expected footprint" table and the 6 GB assumption can be relaxed.
+**Code changes:** none
+**Questions for Claude:** none
+
+### [T2] Kaggle auth + download NEU — DONE (2026-10-28, ~2 min)
+**Commands run:** `Copy-Item .secrets\kaggle_access_token "$env:USERPROFILE\.kaggle\access_token" -Force`; `pip install -U kaggle` (system py -3.12 already had 2.2.4; download run with it); `kaggle datasets download -d kaustubhdikshit/neu-surface-defect-database -p data/raw/neu --unzip`; `kaggle datasets metadata ...`
+**Console output:** download OK, 26.4 MB in ~3 s. `Get-ChildItem ... | Group-Object Extension` → `.xml 1800`, `.jpg 1800`.
+**Metrics:** 1,800 JPG + 1,800 XML. 300 images/class × 6 classes (crazing, inclusion, patches, pitted_surface, rolled-in_scale, scratches), all 200×200.
+**Files produced:** `data/raw/neu/NEU-DET/{train,validation}/{images,annotations}/`; `data/raw/neu/dataset-metadata.json`; `data/README.md` NEU section filled in.
+**Hardware:** n/a (network)
+**Anything odd:** Kaggle reports the licence as **`unknown`** (mirror of Northeastern University's NEU-DET, Song & Yan) — recorded in `data/README.md`. The mirror ships a pre-made train/validation split that the pipeline ignores (`prepare_data` re-splits via `splits.py`), which is fine. `icacls` permission-tightening on the token path failed on the `(R)` argument (quoting) — non-fatal, token copied successfully, not printed anywhere.
+**Code changes:** none
+**Questions for Claude:** none
+
+### [T3] Prepare data, splits, EDA, YOLO labels — DONE (2026-10-28, ~3 min)
+**Commands run:** `python -m metalai.m1_surface.prepare_data`; `python -m metalai.m1_surface.splits`; `python -m metalai.m1_surface.eda`; `python -m metalai.m1_surface.yolo_data`; `python -m metalai.m1_surface.report`
+**Console output (key lines):**
+```
+Found 1800 image files, 1800 XML files under D:\python\metalAI\data\raw\neu
+duplicates_dropped: 1 | n_images_kept: 1799 | images_with_boxes: 1799
+images_per_class: {'crazing': 300, 'inclusion': 300, 'patches': 299, 'pitted_surface': 300, 'rolled-in_scale': 300, 'scratches': 300}
+n_unparsed_images: 0 | n_folder_name_mismatch: 0 | n_xml_label_mismatch: 188 | n_xml_without_image: 1
+[WARN] classes without exactly 300 images: {'patches': 299}
+fold 0-3: 360 test each, fold 4: 359 test (1799 total)
+fold0: train 1295  val 144  test 360
+YOLO dataset at data\processed\neu_yolo  (images without boxes: 0)
+```
+**Metrics:** 1,799 images kept (1 exact duplicate dropped by `prepare_data`), 4,186 boxes, every image ≥1 box, 0 unparsed, 0 folder mismatches, 360 test images/fold (359 in fold 4).
+**Files produced:** `data/processed/neu/manifest.csv`, `data/processed/neu/boxes.csv`, `data/splits/neu_folds.csv` (committed), `data/processed/neu_yolo/`, `reports/m1/eda/{class_counts,box_stats,intensity_hist,samples_grid}.png`, `reports/m1/eda/eda_summary.json`, `reports/m1/data_summary.json`.
+**Hardware:** n/a (CPU, ~1 min total)
+**Anything odd:**
+- **1,799 not 1,800** — one duplicate image pair in the Kaggle mirror, dropped by `prepare_data`. Splits absorb it (fold 4 has 359 test images). This is expected behaviour, just differs from the 1,800/300-per-class figure in T3's brief.
+- **188 XML label mismatches** — the XML `<object><name>` disagrees with the folder-derived class. Spot-checked: all in `crazing` images whose XML says `patches`/`inclusion` (e.g. `crazing_104.xml: xml=patches file=crazing`) and `patches_*` images whose XML says `inclusion`. These look like the mirror's XML annotation errors, not ours — the folder name is the ground truth used for labels. Worth a note in `decisions.md` if you agree, Claude.
+- 1 XML without a matching image (dropped).
+- Images are `.jpg` in the mirror (original NEU-DET is `.bmp`) — no effect on the pipeline.
+**Code changes:** none
+**Questions for Claude:** (1) Are the 188 XML/folder mismatches acceptable as "mirror annotation noise, folder name wins"? (2) OK to treat 1,799 as the canonical dataset size?
+
+### [T4] GPU smoke tests (exp `SMOKE`) — DONE (2026-10-28, ~5 min)
+**Commands run:**
+```powershell
+$env:METALAI_EXP = "SMOKE"
+python -m metalai.m1_surface.cnn --model resnet50 --folds 0 --epochs 1   # 40.7 s wall
+python -m metalai.m1_surface.gradcam --model resnet50 --fold 0
+python -m metalai.m1_surface.yolo_train --folds 0 --epochs 1             # 71.5 s wall
+python app\smoke_test.py
+python -m metalai.m1_surface.report
+python -m metalai.common.cleanup --exp SMOKE          # dry run, list checked
+python -m metalai.common.cleanup --exp SMOKE --yes
+python -m metalai.m1_surface.report
+```
+**Console output (key lines):**
+```
+[resnet50 fold0] ep 01 train_loss 1.1771 acc 0.7367 | val_loss 0.1767 acc 0.9722
+==> resnet50 fold 0: acc=0.9694 macroF1=0.9693 (0.45 min, peak VRAM 2.69 GB)
+YOLO: 1 epochs completed in 0.006 hours ... all 360 853 0.518 0.111 0.0167 0.00361
+==> SMOKE_yolov8n_fold0: test mAP50=0.0167 mAP50-95=0.0036 (0.8 min)
+smoke_test.py: crazing_1/crazing, inclusion_1/inclusion, patches_1/patches,
+  pitted_surface_1/pitted_surface, rolled-in_scale_1/rolled-in_scale, scratches_1/scratches
+OK - outputs in reports\m1\app_smoke
+```
+**Metrics:** CNN 1-epoch test acc 0.9694 / macro-F1 0.9693. YOLO 1-epoch (sanity only, not meaningful at 1 epoch) mAP50 0.0167. App smoke `OK`, 6/6 classes correct.
+**Files produced:** verified before cleanup — `reports/m1/app_smoke/*_det.png` + `*_cam.png` (6 each) + `app_smoke.json`; `reports/m1/gradcam/SMOKE_resnet50_fold0_{correct,errors,boxes}.png`; `reports/m1/cnn/SMOKE_resnet50/`; `reports/m1/yolo/SMOKE_yolov8n_fold0/`. All SMOKE artefacts then deleted via `cleanup --yes` (dry run reviewed first); `cnn_results.csv` / `yolo_results.csv` SMOKE rows dropped, E001 rows untouched (separate file).
+**Hardware:** RTX 4060 Laptop, 8 GB. CNN peak VRAM 2.69 GB (reported by script); `nvidia-smi` log over the whole T4 window: peak 3,917 MiB (incl. desktop), max 58 °C, mean util 11 % / median 6 % (expected — 1-epoch smokes are mostly setup). ~27 s/epoch CNN (ResNet-50, bs 32, AMP), ~48 s/epoch YOLO (yolov8n, 640 px, bs 16, cache=ram). On AC power. **No OOM — default batch sizes (CNN 32, YOLO 16) work; no retry needed.**
+**Anything odd:**
+- `lr_scheduler.step() before optimizer.step()` UserWarning from `cnn.py` (harmless, skips the first LR value; only affects 1-epoch runs in practice). Flagging for Claude.
+- sklearn 1.9 deprecation: `SVC(probability=True)` — from the classical lane, see T5.
+- Monitor CSV written by `Tee-Object` is UTF-16, so `pandas.read_csv` needs `encoding='utf-16'`. Minor, but Claude may want `report.py`/tooling to know.
+- YOLO: `cache='ram'` warning (non-deterministic vs `cache='disk'`) and "Slow image access" warnings from Ultralytics — cosmetic on Windows.
+- `cleanup --yes` hit `PermissionError` on `reports\gpu_logs\SMOKE.csv` because the `nvidia-smi` logger still had it open; killed the logger and deleted the file manually. `cleanup` could skip in-use files or the operator should stop loggers first.
+**Code changes:** none
+**Questions for Claude:** none
+
+### [T5] Classical baseline (exp `E001`, CPU) — DONE (2026-10-28, ~2 min; run in parallel with T4 per §0.4)
+**Commands run:** `$env:METALAI_EXP = "E001"; python -m metalai.m1_surface.classical --n-jobs 4` (via CPU subagent; `report.py` run by orchestrator afterwards)
+**Console output:**
+```
+[experiment] E001 | m1_classical | commit 54d2a14
+Extracted features for 1799 images in 15.4s (LBP dim 54, GLCM dim 36)
+[lbp]   fold 0-4 → ==> lbp:   acc 0.9811 +/- 0.0060
+[glcm]  fold 0-4 → ==> glcm:  acc 0.9817 +/- 0.0058
+[both]  fold 0-4 → ==> both:  acc 0.9944 +/- 0.0020
+```
+Per-fold: lbp 0.9861/0.9833/0.9861/0.9722/0.9777 · glcm 0.9861/0.9806/0.9833/0.9861/0.9721 · both 0.9944/0.9972/0.9944/0.9917/0.9944. Best hyper-params mostly `C=100, gamma=scale/0.01`.
+**Metrics:** **LBP+GLCM + RBF-SVM: 99.44 % ± 0.20 % accuracy (5 folds)** — this is the number to beat. LBP alone 98.11 %, GLCM alone 98.17 %.
+**Files produced:** `results/m1/classical_results.csv`, `results/m1/classical_predictions_{lbp,glcm,both}.csv`, `reports/m1/classical/confusion_{lbp,glcm,both}.png`, `reports/m1/classical/summary.json`.
+**Hardware:** CPU only (`--n-jobs 4`), ~15 s feature extraction + ~1 min SVM search. Ran concurrently with T4's GPU smoke — no interference.
+**Anything odd:** sklearn 1.9 `FutureWarning`: `SVC(probability=True)` deprecated, removed in 1.11 → will need `CalibratedClassifierCV(SVC(), ensemble=False)`. Not urgent, but should go on the tech-debt list in `decisions.md`. Subagent's first attempt failed on a shell typo (`.\ .venv`), not a code problem.
+**Code changes:** none
+**Questions for Claude:** none

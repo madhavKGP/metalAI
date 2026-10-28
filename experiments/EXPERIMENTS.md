@@ -13,7 +13,7 @@ How it works:
 
 | ID | Date | Module | What (model / featureset) | Key config | Folds | Status | Headline result | Conclusion (Claude) |
 |---|---|---|---|---|---|---|---|---|
-| E001 | | M1 | LBP / GLCM / both + RBF-SVM | D-008 | 0-4 | planned | | |
+| E001 | 2026-10-28 | M1 | LBP / GLCM / both + RBF-SVM | D-008 | 0-4 | done | both: acc 0.9944 ± 0.0020 (lbp 0.9811, glcm 0.9817) | |
 | E002 | | M1 | ResNet-50 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 | planned | | |
 | E003 | | M1 | EfficientNet-B0 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 | planned | | |
 | E004 | | M1 | YOLOv8n | D-011, 640 px, bs 16 | 0 | planned | | |
