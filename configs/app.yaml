@@ -1,0 +1,11 @@
+# Which trained models the app serves. Claude updates this after reviewing experiments.
+# exp = experiment id (experiments/EXPERIMENTS.md); tag = full | fold0 | fold1 ...
+# If an entry is null or the file is missing, the app uses the most recently saved weights.
+cnn:
+  exp: null
+  model: resnet50
+  tag: null
+yolo:
+  exp: null
+  model: yolov8n
+  tag: null

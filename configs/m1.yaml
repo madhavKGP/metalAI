@@ -1,0 +1,32 @@
+# Module 1 - Surface Defect Inspector defaults.
+# CLI flags override these values.
+seed: 42
+n_folds: 5
+val_frac: 0.10          # inner validation split carved from the training folds
+
+classical:
+  lbp_scales: [[8, 1], [16, 2], [24, 3]]
+  glcm_distances: [1, 2, 3]
+  glcm_levels: 64
+  svm_C: [0.1, 1, 10, 100]
+  svm_gamma: ["scale", 0.001, 0.01, 0.1]
+  inner_cv: 3
+
+cnn:
+  img_size: 224
+  epochs: 25
+  batch_size: 32          # drop to 16 if CUDA out-of-memory (4 GB laptop GPUs)
+  lr: 0.0003
+  weight_decay: 0.0001
+  label_smoothing: 0.1
+  warmup_epochs: 1
+  patience: 6             # early stopping on val loss
+  workers: 0              # 0 = safest on Windows (images are cached in RAM anyway)
+
+yolo:
+  model: yolov8n.pt
+  imgsz: 640
+  epochs: 150
+  patience: 30
+  batch: 16               # drop to 8 if CUDA out-of-memory
+  workers: 2

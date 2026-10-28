@@ -1,0 +1,16 @@
+# Install PyTorch with CUDA FIRST (see OPENCODE.md task T1), then:
+#   pip install -r requirements.txt
+#   pip install -e .
+numpy
+pandas
+scikit-learn
+scikit-image
+opencv-python
+matplotlib
+pyyaml
+tqdm
+joblib
+ultralytics
+grad-cam
+gradio
+kaggle

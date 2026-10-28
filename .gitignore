@@ -1,0 +1,23 @@
+# secrets - NEVER commit
+.secrets/
+access_token
+kaggle.json
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# data & weights are re-creatable, never commit
+data/raw/
+data/processed/
+models/
+runs/
+*.pt
+*.pth
+*.onnx
+
+# keep: data/splits/, results/, reports/
+.ipynb_checkpoints/
+.gradio/
