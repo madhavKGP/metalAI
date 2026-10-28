@@ -77,7 +77,8 @@ def main() -> None:
 
     summary = {"raw_dir": str(args.raw), "n_image_files": len(images), "n_xml_files": len(xmls),
                "unparsed_images": [], "folder_name_mismatch": [], "duplicates_dropped": 0,
-               "xml_label_mismatch": [], "xml_without_image": [], "boxes_clipped": 0}
+               "xml_label_mismatch": [], "secondary_defect_boxes": [], "xml_without_image": [],
+               "boxes_clipped": 0}
 
     # ---- images -> manifest (dedupe by (class, number) and by content hash) ----
     records: dict[str, dict] = {}
@@ -131,16 +132,20 @@ def main() -> None:
         rec = records[image_id]
         W, H = rec["width"], rec["height"]
         for o in info["objects"]:
-            if o["label"] != rec["label"]:
-                summary["xml_label_mismatch"].append(f"{x.name}: xml={o['label_raw']} file={rec['label']}")
+            # NEU-DET images can contain SECONDARY defects of another class (e.g. inclusions inside a
+            # 'patches' image). Box class = XML <name> (decisions.md D-020); image class stays the file class.
+            box_label = o["label"] or rec["label"]
+            if o["label"] is None:
+                summary["xml_label_mismatch"].append(f"{x.name}: unparseable xml name '{o['label_raw']}'")
+            elif o["label"] != rec["label"]:
+                summary["secondary_defect_boxes"].append(f"{x.name}: box={o['label']} image={rec['label']}")
             xmin, ymin = max(0.0, o["xmin"]), max(0.0, o["ymin"])
             xmax, ymax = min(float(W), o["xmax"]), min(float(H), o["ymax"])
             if (xmin, ymin, xmax, ymax) != (o["xmin"], o["ymin"], o["xmax"], o["ymax"]):
                 summary["boxes_clipped"] += 1
             if xmax - xmin < 1 or ymax - ymin < 1:
                 continue
-            # Box class = image class (NEU images contain a single defect type).
-            boxes.append({"image_id": image_id, "label": rec["label"], "label_idx": rec["label_idx"],
+            boxes.append({"image_id": image_id, "label": box_label, "label_idx": CLASSES.index(box_label),
                           "xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax})
 
     man = pd.DataFrame(sorted(records.values(), key=lambda r: (r["label_idx"], r["number"])))
@@ -157,7 +162,10 @@ def main() -> None:
         "boxes_per_class": bx["label"].value_counts().reindex(CLASSES, fill_value=0).to_dict() if len(bx) else {},
         "image_sizes": {f"{w}x{h}": int(c) for (w, h), c in Counter(zip(man.width, man.height)).items()},
     })
-    for k in ["unparsed_images", "folder_name_mismatch", "xml_label_mismatch", "xml_without_image"]:
+    summary["images_with_secondary_defects"] = int(bx[bx.label_idx != bx.image_id.map(
+        man.set_index("image_id").label_idx)].image_id.nunique()) if len(bx) else 0
+    for k in ["unparsed_images", "folder_name_mismatch", "xml_label_mismatch", "secondary_defect_boxes",
+              "xml_without_image"]:
         summary[f"n_{k}"] = len(summary[k])
         summary[k] = summary[k][:30]  # keep the report short
     save_json(summary, REPORTS / "m1" / "data_summary.json")

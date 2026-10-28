@@ -94,5 +94,27 @@ Format: `D-NNN · date · owner · status (Accepted / Proposed / Superseded)`
 **Parallelism: across resources, never on the GPU.** One GPU job at a time (6 GB laptop GPU); CPU work (classical SVM with `--n-jobs 4`, EDA, report drafting), downloads and GPU monitoring run in parallel via OpenCode subagents. Orchestrator agent owns git commits and the status board; subagents return text only. Details: `OPENCODE.md` §0.4.
 - Rejected: two concurrent GPU trainings (OOM risk, no net speed-up on one GPU); multi-GPU/DDP (only one GPU).
 
+## D-020 · 2026-10-29 · Claude · Accepted (fixes a bug found in T3/T6 review)
+**Detection box labels come from the XML `<name>`, not from the image's class.**
+- Finding: the 188 "XML label mismatches" are **genuine secondary defects** (e.g. `patches_168.xml` = 3 patches + 4 inclusion boxes; `crazing_104.xml` = 3 crazing + 1 patches). The original `prepare_data` relabelled them to the image class → ~4.5 % of YOLO boxes had the wrong class in E004.
+- Fix: box class = XML name; image (classification) label = file-name class (dataset convention, unchanged). `data_summary.json` now reports `secondary_defect_boxes` and `images_with_secondary_defects`.
+- Consequence: **E004 discarded** (trained on wrong labels); YOLO is re-run as E005. CNN/SVM results (E001–E003) are unaffected (image labels unchanged, splits unchanged).
+- Dataset size: **1,799 images** is canonical — `patches_105` is a byte-identical duplicate of another image and was dropped by MD5 de-duplication (fold 4 has 359 test images).
+
+## D-021 · 2026-10-29 · Claude · Accepted
+**Hardware correction: the laptop GPU is an RTX 4060 Laptop, 8 GB** (from T1 `nvidia-smi`), not a 4050. Observed: peak VRAM 1.5–4.1 GB, max 73 °C, no OOM at default batch sizes. Defaults stay; no need for fallbacks.
+
+## D-022 · 2026-10-29 · Claude · Accepted
+**Model/config selection uses inner-validation metrics only; test folds are for reporting.**
+- `yolo_train.py` now also evaluates on the inner val split (`val_mAP50`, `val_mAP50_95`) and records `best_epoch`.
+- YOLO variants (E005–E007) are compared on **fold-0 val mAP50-95**; the winner is then run on folds 1–4. Picking by fold-0 *test* mAP would leak the test fold into model selection.
+
+## D-023 · 2026-10-29 · Claude · Accepted — review of T6 (fold 0)
+- **Classification is saturated on NEU**: SVM LBP+GLCM 99.44 ± 0.20 % (5 folds); ResNet-50 and EfficientNet-B0 100 % on fold 0. Consistent with literature (98–100 %). Run all 5 folds anyway (cheap) for honest mean ± std; the interesting questions (robustness, localisation) move to Part 2.
+- **CNN curves**: converge in 2–4 epochs; val loss < train loss is expected (train uses augmentation + dropout + label smoothing 0.1, which also floors train loss ≈ 0.43). No overfitting.
+- **Grad-CAM (ResNet-50)**: tight on localised defects (inclusion, scratches, patches); diffuse/texture-wide on crazing and rolled-in scale — physically sensible since those are distributed textures. Some pitted-surface heat lies outside GT boxes → to quantify in Part 3 (pointing game).
+- **YOLO E004 (discarded, but informative)**: class confusion is near-zero (diagonal 0.97–0.99); errors are mostly **background false positives** (crazing 0.35, rolled-in scale 0.20) — i.e. *box granularity* ambiguity of diffuse defects, not misclassification. Train losses still falling at epoch 150 and val mAP still creeping up → not converged; val DFL loss rising slightly late → mild localisation overfit. Hence variants: longer training (E006) and a bigger model (E007). Crazing will likely stay the weakest class (known in literature); explain rather than over-tune.
+- Tech-debt notes from OpenCode: sklearn `SVC(probability=...)` deprecation warning and "lr_scheduler.step() before optimizer.step()" warning (first AMP step skipped by GradScaler) are harmless; leave.
+
 ## D-014 · 2026-10-28 · Claude · Accepted
 **Sandbox verification done before hand-off:** `prepare_data`, `splits`, `eda`, `classical`, `yolo_data`, `report` were executed end-to-end on a synthetic NEU-like dataset (180 fake images) — all ran and produced figures. `cnn`, `gradcam`, `yolo_train`, `app` were syntax-checked only (no torch/GPU in sandbox) → OpenCode runs a 1-epoch smoke test first (T4).

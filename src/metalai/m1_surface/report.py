@@ -78,6 +78,10 @@ def main() -> None:
             summary_rows.append((mdl, ms(sub.accuracy), ms(sub.macro_f1), "-", "-"))
     if (R / "yolo_results.csv").exists():
         y = latest(pd.read_csv(R / "yolo_results.csv"), ["model", "fold"])
+        y["model"] = y["exp_id"].astype(str) + " " + y["model"].astype(str)  # one line per experiment
+        vcols = [c for c in ["val_mAP50", "val_mAP50_95"] if c in y]
+        if vcols:
+            L += section_table(y, "model", vcols, "YOLO inner-validation (used for config selection)")
         L += section_table(y, "model", ["mAP50", "mAP50_95", "precision", "recall"], "YOLO detection (test folds)")
         L += section_table(y, "model", [f"AP50_{c}" for c in CLASSES], "YOLO: per-class AP50")
         L += section_table(y, "model", ["train_minutes", "ms_inference"], "YOLO: cost", pct=False)

@@ -83,11 +83,24 @@ def main() -> None:
             continue
 
         best = YOLO(str(wpath))
+        # inner-validation metrics: used for MODEL SELECTION between configs (never the test fold)
+        mv = best.val(data=str(data_yaml), split="val", imgsz=a.imgsz, batch=a.batch, device=dev, plots=False,
+                      project=str(RUNS / "m1_yolo"), name=f"{run_name}_val", exist_ok=True, verbose=False)
+        best_epoch = None
+        if (run_dir / "results.csv").exists():
+            import pandas as pd
+
+            rc = pd.read_csv(run_dir / "results.csv")
+            rc.columns = [c.strip() for c in rc.columns]
+            col = "metrics/mAP50-95(B)"
+            if col in rc:
+                best_epoch = int(rc.loc[rc[col].idxmax(), "epoch"])
         m = best.val(data=str(data_yaml), split="test", imgsz=a.imgsz, batch=a.batch, device=dev, plots=True,
                      project=str(RUNS / "m1_yolo"), name=f"{run_name}_test", exist_ok=True, verbose=False)
         copy_pngs(RUNS / "m1_yolo" / f"{run_name}_test", rep, "test_")
         row = {"model": tag_model, "fold": k, "imgsz": a.imgsz, "batch": a.batch, "epochs_max": a.epochs,
-               "train_minutes": round(train_min, 1),
+               "patience": a.patience, "train_minutes": round(train_min, 1), "best_epoch": best_epoch,
+               "val_mAP50": float(mv.box.map50), "val_mAP50_95": float(mv.box.map),
                "mAP50": float(m.box.map50), "mAP50_95": float(m.box.map),
                "precision": float(m.box.mp), "recall": float(m.box.mr),
                "ms_inference": float(m.speed.get("inference", float("nan")))}

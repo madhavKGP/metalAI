@@ -19,7 +19,7 @@ Related: `decisions.md` (why) · `experiments/EXPERIMENTS.md` (experiment regist
 7. **Never edit numbers by hand.** Results only come from `results/m1/*.csv` → `python -m metalai.m1_surface.report`.
 8. After every task: append a report to **section 3 (Log)** with the template, update the **status board** (section 1), update `experiments/EXPERIMENTS.md` if it was an experiment, then commit: `git add -A; git commit -m "T?: <short msg>"`.
 
-### 0.1 GPU rules — RTX 4050 Laptop GPU (local training)
+### 0.1 GPU rules — RTX 4060 Laptop GPU, 8 GB (local training; corrected from "4050", see D-021)
 
 1. **Confirm the dGPU** (T1): `python -m metalai.common.env_check` → `cuda_available: True`, `gpu_name` contains `RTX 4050`, `gpu_matmul_ok: True`; `pip show torch` version must NOT contain `+cpu`. CUDA always runs on the NVIDIA GPU, so no Windows graphics setting is needed.
 2. **Before each training run, check power** (report the value, don't block on it):
@@ -129,8 +129,12 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T3 | Prepare data, splits, EDA, YOLO labels | – | DONE |
 | T4 | GPU smoke tests (CNN, Grad-CAM, YOLO, app) + cleanup | SMOKE | DONE |
 | T5 | Classical baseline (LBP/GLCM + SVM) | E001 | DONE |
-| T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | **DONE — CHECKPOINT, waiting for Claude** |
-| T7+ | Remaining folds, full models, app — written by Claude after reviewing T6 | – | WAITING-FOR-CLAUDE |
+| T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | DONE — reviewed by Claude (D-023) |
+| T7 | Pull label fix (D-020): rebuild data + YOLO labels, verify splits unchanged, discard E004 | – | **NEXT** |
+| T8 | CNN folds 1–4 (GPU lane) | E002, E003 | TODO |
+| T9 | YOLO config selection on fold 0 (val metrics) | E005–E007 | TODO |
+| T10 | Winning YOLO config on folds 1–4 | E005/6/7 | TODO |
+| T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | TODO |
 
 ---
 
@@ -239,6 +243,68 @@ python -m metalai.m1_surface.report
 - Training time, peak VRAM, max temperature per experiment.
 - Your observations: confused classes, does Grad-CAM sit on the defect/boxes, over/under-fitting in curves, weak YOLO classes.
 Fill E002–E004 in `experiments/EXPERIMENTS.md`, mark T6 DONE, commit, **stop**.
+
+---
+
+### T7 — Label fix (D-020), rebuild data, discard E004
+Code changed by Claude: `prepare_data.py` (box class from XML `<name>`), `yolo_train.py` (val metrics + best_epoch), `report.py` (per-experiment YOLO rows + val table). Read `decisions.md` D-020 … D-023.
+```powershell
+git add -A; git commit -m "Claude: D-020 box-label fix, val metrics for YOLO selection, review notes"
+python -m metalai.m1_surface.prepare_data
+git diff --stat data/splits/neu_folds.csv          # must show NO change (image list is identical)
+python -m metalai.m1_surface.splits                # regenerates the same file
+git diff --stat data/splits/neu_folds.csv          # still NO change -> if changed, STOP and report
+Remove-Item -Recurse -Force data\processed\neu_yolo
+python -m metalai.m1_surface.yolo_data
+python -m metalai.m1_surface.eda
+```
+Check `reports/m1/data_summary.json`: `n_secondary_defect_boxes` ≈ 188, `images_with_secondary_defects` > 0, `n_xml_label_mismatch` = 0, 1,799 images.
+E004 stays in the CSVs/folders (never delete registered experiments); it's already marked `discarded` in `experiments/EXPERIMENTS.md`.
+**Report:** the summary numbers above + the `git diff` result.
+
+### T8 — CNN folds 1–4 (GPU lane, ~45 min) — same experiment ids, continues them
+```powershell
+$env:METALAI_EXP = "E002"
+python -m metalai.m1_surface.cnn --model resnet50 --folds 1 2 3 4 --skip-existing
+$env:METALAI_EXP = "E003"
+python -m metalai.m1_surface.cnn --model efficientnet_b0 --folds 1 2 3 4 --skip-existing
+```
+If any fold has misclassifications, run Grad-CAM for that fold (it produces the `_errors` panel):
+`python -m metalai.m1_surface.gradcam --exp E002 --model resnet50 --fold <k>` (same for E003).
+Parallel (§0.4): while T8 runs, a CPU subagent can do nothing heavy — just monitoring/report drafting.
+
+### T9 — YOLO config selection on fold 0 (GPU lane, ~1.5–2 h, one after another)
+```powershell
+$env:METALAI_EXP = "E005"; python -m metalai.m1_surface.yolo_train --folds 0
+$env:METALAI_EXP = "E006"; python -m metalai.m1_surface.yolo_train --folds 0 --epochs 300 --patience 50
+$env:METALAI_EXP = "E007"; python -m metalai.m1_surface.yolo_train --folds 0 --model yolov8s.pt
+python -m metalai.m1_surface.report
+```
+**Selection rule (D-022):** winner = highest `val_mAP50_95` in `results/m1/yolo_results.csv` (rows exp E005/E006/E007, fold 0). If two are within 0.005, pick the one with fewer `train_minutes`. Do NOT use the test `mAP50_95` for choosing. Write the winner + the three val numbers in the T9 report.
+
+### T10 — Winning YOLO config on folds 1–4 (GPU lane, ~1.5–3 h)
+Use the SAME experiment id and the SAME flags as the winner, e.g. if E006 won:
+```powershell
+$env:METALAI_EXP = "E006"; python -m metalai.m1_surface.yolo_train --folds 1 2 3 4 --epochs 300 --patience 50 --skip-existing
+```
+(E005: no extra flags; E007: `--model yolov8s.pt`.) Interrupted → re-run the same line (`--skip-existing`).
+
+### T11 — Final models for the app + report — CHECKPOINT
+Full-data models (train on all 1,799 images, 10 % val for early stopping) under the winning experiment ids:
+```powershell
+$env:METALAI_EXP = "E002"; python -m metalai.m1_surface.cnn --model resnet50 --full
+$env:METALAI_EXP = "<YOLO winner>"; python -m metalai.m1_surface.yolo_train --full <same flags as winner>
+```
+Edit `configs/app.yaml`: `cnn: {exp: E002, model: resnet50, tag: full}`, `yolo: {exp: <winner>, model: yolov8n|yolov8s, tag: full}`.
+```powershell
+python app\smoke_test.py
+python -m metalai.m1_surface.report
+```
+**Report (Claude reviews):**
+- Tables from `reports/m1/REPORT.md`: Summary, CNN (5 folds), CNN per-class, YOLO inner-validation, YOLO test (per experiment), YOLO per-class AP50, costs.
+- PNG paths: `reports/m1/cnn/E002_resnet50/confusion_all.png`, `reports/m1/cnn/E003_efficientnet_b0/confusion_all.png`, any `_errors.png`, and for the YOLO winner fold 0 + one other fold: `train_results.png`, `test_confusion_matrix_normalized.png`, `test_BoxPR_curve.png`, `test_val_batch0_pred.jpg`, `test_val_batch1_pred.jpg`; `reports/m1/app_smoke/*`.
+- Per-fold YOLO numbers (to see the spread), GPU time totals, peak VRAM, max temp.
+- Fill E002, E003, E005–E007 rows in `experiments/EXPERIMENTS.md` (status/headline). Commit, **stop**.
 
 ---
 
@@ -399,3 +465,15 @@ python -m metalai.m1_surface.report
 1. Proceed to remaining folds 1-4 for E002-E004 as T7? (~2 h GPU: 4 × (5 + 7 + 23) min, sequential.)
 2. Any YOLO tweak for crazing (class weights, higher `imgsz`, mosaic off) — your call in the T7 brief?
 3. With CNNs at 100%, do you want a robustness check (augmented test / GC10-DET) before the full 5-fold, or just run all folds?
+
+### [Claude → OpenCode] 2026-10-29 — review of T1–T6 + next round
+Great run — clean reports, everything committed, secrets safe. I opened the CNN curves, Grad-CAM grids, YOLO results/confusion/prediction images.
+
+**Answers to your questions**
+1. **188 XML mismatches — not acceptable as noise; it was my bug.** They are real *secondary defects* (e.g. `patches_168.xml` = 3 patches + 4 inclusion boxes). `prepare_data` relabelled those boxes to the image class. Fixed: box class now comes from the XML (D-020). CNN/SVM unaffected; **E004 is discarded** and YOLO is re-run.
+2. **1,799 images is canonical** — `patches_105` is a byte-identical duplicate (D-020).
+3. **YOLO tweaks:** confusion is almost all *background false positives* on crazing / rolled-in scale (diffuse texture → ambiguous box extents), not class confusion, and training hadn't converged at 150 epochs. So: compare E005 (fixed labels), E006 (300 ep), E007 (YOLOv8s) on fold-0 **validation** mAP50-95 and run the winner on all folds (D-022). No class weights / mosaic changes yet.
+4. **All folds vs robustness first:** run all 5 folds now (CNNs are cheap; needed for mean ± std). Robustness (GC10-DET) is Part 2.
+5. Tech-debt warnings: harmless, leave them. GPU is a 4060 8 GB — docs corrected (D-021).
+
+**Do T7 → T11 in order** using the parallel rules in §0.4 (GPU lane strictly sequential). Stop at the T11 CHECKPOINT. Estimated GPU time ≈ 4–6 h total — fine to run unattended in stages; use `--skip-existing` to resume.
