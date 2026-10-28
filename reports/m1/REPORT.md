@@ -1,13 +1,13 @@
 # Module 1 - Surface Defect Inspector: results
 
-Generated 2026-10-28T23:48:18 | git 25b8fc2 | numbers = mean ± std over test folds (%, unless stated)
+Generated 2026-10-29T01:25:59 | git 6385545 | numbers = mean ± std over test folds (%, unless stated)
 
 ## Data
 
 - images kept: **1799**, with boxes: 1799
 - per class: {'crazing': 300, 'inclusion': 300, 'patches': 299, 'pitted_surface': 300, 'rolled-in_scale': 300, 'scratches': 300}
-- boxes per class: {'crazing': 694, 'inclusion': 884, 'patches': 870, 'pitted_surface': 489, 'rolled-in_scale': 628, 'scratches': 621}
-- duplicates dropped: 1, unparsed: 0, xml label mismatches: 188
+- boxes per class: {'crazing': 689, 'inclusion': 1011, 'patches': 878, 'pitted_surface': 432, 'rolled-in_scale': 628, 'scratches': 548}
+- duplicates dropped: 1, unparsed: 0, xml label mismatches: 0
 
 ![box_stats.png](eda/box_stats.png)
 ![class_counts.png](eda/class_counts.png)
@@ -36,40 +36,40 @@ Generated 2026-10-28T23:48:18 | git 25b8fc2 | numbers = mean ± std over test fo
 
 | model | exp | folds | accuracy | macro_f1 |
 |---|---|---|---|---|
-| efficientnet_b0 | E003 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 |
-| resnet50 | E002 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| efficientnet_b0 | E003 | [0, 1, 2, 3, 4] | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| resnet50 | E002 | [0, 1, 2, 3, 4] | 99.94 ± 0.12 | 99.94 ± 0.12 |
 
 ### CNN: per-class F1
 
 | model | exp | folds | f1_crazing | f1_inclusion | f1_patches | f1_pitted_surface | f1_rolled-in_scale | f1_scratches |
 |---|---|---|---|---|---|---|---|---|
-| efficientnet_b0 | E003 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
-| resnet50 | E002 | [0] | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| efficientnet_b0 | E003 | [0, 1, 2, 3, 4] | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| resnet50 | E002 | [0, 1, 2, 3, 4] | 100.00 ± 0.00 | 99.83 ± 0.37 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 | 99.83 ± 0.38 |
 
 ### CNN: cost
 
 | model | exp | folds | train_minutes | best_epoch | ms_per_img_bs1 | peak_vram_gb |
 |---|---|---|---|---|---|---|
-| efficientnet_b0 | E003 | [0] | 7.05 ± 0.00 | 18.00 ± 0.00 | 8.70 ± 0.00 | 1.49 ± 0.00 |
-| resnet50 | E002 | [0] | 4.44 ± 0.00 | 5.00 ± 0.00 | 6.51 ± 0.00 | 2.69 ± 0.00 |
+| efficientnet_b0 | E003 | [0, 1, 2, 3, 4] | 4.49 ± 1.74 | 9.40 ± 5.94 | 9.29 ± 0.99 | 1.45 ± 0.03 |
+| resnet50 | E002 | [0, 1, 2, 3, 4] | 5.46 ± 1.04 | 7.40 ± 2.51 | 7.31 ± 0.60 | 2.08 ± 0.55 |
 
 ### YOLO detection (test folds)
 
 | model | exp | folds | mAP50 | mAP50_95 | precision | recall |
 |---|---|---|---|---|---|---|
-| yolov8n | E004 | [0] | 74.56 ± 0.00 | 42.54 ± 0.00 | 75.03 ± 0.00 | 70.41 ± 0.00 |
+| E004 yolov8n | E004 | [0] | 74.56 ± 0.00 | 42.54 ± 0.00 | 75.03 ± 0.00 | 70.41 ± 0.00 |
 
 ### YOLO: per-class AP50
 
 | model | exp | folds | AP50_crazing | AP50_inclusion | AP50_patches | AP50_pitted_surface | AP50_rolled-in_scale | AP50_scratches |
 |---|---|---|---|---|---|---|---|---|
-| yolov8n | E004 | [0] | 39.37 ± 0.00 | 87.12 ± 0.00 | 90.78 ± 0.00 | 84.41 ± 0.00 | 55.48 ± 0.00 | 90.23 ± 0.00 |
+| E004 yolov8n | E004 | [0] | 39.37 ± 0.00 | 87.12 ± 0.00 | 90.78 ± 0.00 | 84.41 ± 0.00 | 55.48 ± 0.00 | 90.23 ± 0.00 |
 
 ### YOLO: cost
 
 | model | exp | folds | train_minutes | ms_inference |
 |---|---|---|---|---|
-| yolov8n | E004 | [0] | 22.80 ± 0.00 | 3.38 ± 0.00 |
+| E004 yolov8n | E004 | [0] | 22.80 ± 0.00 | 3.38 ± 0.00 |
 
 ### Summary
 
@@ -79,8 +79,8 @@ Generated 2026-10-28T23:48:18 | git 25b8fc2 | numbers = mean ± std over test fo
 | SVM glcm | 98.17 ± 0.58 | 98.17 ± 0.57 | - | - |
 | SVM lbp | 98.11 ± 0.60 | 98.11 ± 0.60 | - | - |
 | efficientnet_b0 | 100.00 ± 0.00 | 100.00 ± 0.00 | - | - |
-| resnet50 | 100.00 ± 0.00 | 100.00 ± 0.00 | - | - |
-| yolov8n | - | - | 74.56 ± 0.00 | 42.54 ± 0.00 |
+| resnet50 | 99.94 ± 0.12 | 99.94 ± 0.12 | - | - |
+| E004 yolov8n | - | - | 74.56 ± 0.00 | 42.54 ± 0.00 |
 
 Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (see decisions.md D-012).
 
@@ -95,15 +95,34 @@ Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (s
 ![confusion_all.png](cnn/E002_resnet50/confusion_all.png)
 ![fold0_confusion.png](cnn/E002_resnet50/fold0_confusion.png)
 ![fold0_curves.png](cnn/E002_resnet50/fold0_curves.png)
+![fold1_confusion.png](cnn/E002_resnet50/fold1_confusion.png)
+![fold1_curves.png](cnn/E002_resnet50/fold1_curves.png)
+![fold2_confusion.png](cnn/E002_resnet50/fold2_confusion.png)
+![fold2_curves.png](cnn/E002_resnet50/fold2_curves.png)
+![fold3_confusion.png](cnn/E002_resnet50/fold3_confusion.png)
+![fold3_curves.png](cnn/E002_resnet50/fold3_curves.png)
+![fold4_confusion.png](cnn/E002_resnet50/fold4_confusion.png)
+![fold4_curves.png](cnn/E002_resnet50/fold4_curves.png)
 
 ### CNN E003_efficientnet_b0
 ![confusion_all.png](cnn/E003_efficientnet_b0/confusion_all.png)
 ![fold0_confusion.png](cnn/E003_efficientnet_b0/fold0_confusion.png)
 ![fold0_curves.png](cnn/E003_efficientnet_b0/fold0_curves.png)
+![fold1_confusion.png](cnn/E003_efficientnet_b0/fold1_confusion.png)
+![fold1_curves.png](cnn/E003_efficientnet_b0/fold1_curves.png)
+![fold2_confusion.png](cnn/E003_efficientnet_b0/fold2_confusion.png)
+![fold2_curves.png](cnn/E003_efficientnet_b0/fold2_curves.png)
+![fold3_confusion.png](cnn/E003_efficientnet_b0/fold3_confusion.png)
+![fold3_curves.png](cnn/E003_efficientnet_b0/fold3_curves.png)
+![fold4_confusion.png](cnn/E003_efficientnet_b0/fold4_confusion.png)
+![fold4_curves.png](cnn/E003_efficientnet_b0/fold4_curves.png)
 
 ### Grad-CAM
 ![E002_resnet50_fold0_boxes.png](gradcam/E002_resnet50_fold0_boxes.png)
 ![E002_resnet50_fold0_correct.png](gradcam/E002_resnet50_fold0_correct.png)
+![E002_resnet50_fold3_boxes.png](gradcam/E002_resnet50_fold3_boxes.png)
+![E002_resnet50_fold3_correct.png](gradcam/E002_resnet50_fold3_correct.png)
+![E002_resnet50_fold3_errors.png](gradcam/E002_resnet50_fold3_errors.png)
 ![E003_efficientnet_b0_fold0_boxes.png](gradcam/E003_efficientnet_b0_fold0_boxes.png)
 ![E003_efficientnet_b0_fold0_correct.png](gradcam/E003_efficientnet_b0_fold0_correct.png)
 
@@ -124,9 +143,4 @@ Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (s
 
 ## Observations (OpenCode fills in, Claude reviews)
 
-- Both CNNs hit 100% test accuracy on fold 0 with **zero misclassifications** (hence no `_errors.png` Grad-CAM panels). ResNet-50 early-stopped at epoch 11, EfficientNet-B0 at 24 — curves show val loss flattening ~epoch 5-18 while train loss keeps dropping slightly (mild over-fit, no val degradation).
-- Grad-CAM hot regions sit on the visible defect areas in the `_correct` panels (spot-check crazing/scratches/patches); `_boxes` overlays show the GT boxes for comparison. Suggest Claude confirm placement visually.
-- YOLO is clearly the weak spot and matches literature (D-012, ~73% mAP50): **crazing AP50 39.4** and **rolled-in_scale AP50 55.5** drag the mean down; inclusion/patches/scratches are 84-91. Crazing is low-contrast, diffuse texture — hard for box regression. Pitted_surface 84.4.
-- Classical SVM (LBP+GLCM, E001) at 99.44% is essentially saturated too; per-class F1 shows inclusion (98.5) and scratches (98.3) are the only classes it ever misses.
-- Dataset looks "easy" for classification (all models ≥99%) — the interesting research question is detection (YOLO) and robustness (later modules / GC10-DET).
-- GPU: RTX 4060 Laptop. E002 peak 3.5 GB / 65 C / mean util 50%; E003 peak 3.0 GB / 65 C / mean util 70%; E004 peak 4.1 GB / 73 C / mean util 75% / max power 88.6 W. No OOM at default batch sizes (CNN 32, YOLO 16). On AC power throughout.
+- ...

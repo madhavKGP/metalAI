@@ -130,9 +130,9 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T4 | GPU smoke tests (CNN, Grad-CAM, YOLO, app) + cleanup | SMOKE | DONE |
 | T5 | Classical baseline (LBP/GLCM + SVM) | E001 | DONE |
 | T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | DONE — reviewed by Claude (D-023) |
-| T7 | Pull label fix (D-020): rebuild data + YOLO labels, verify splits unchanged, discard E004 | – | **NEXT** |
-| T8 | CNN folds 1–4 (GPU lane) | E002, E003 | TODO |
-| T9 | YOLO config selection on fold 0 (val metrics) | E005–E007 | TODO |
+| T7 | Pull label fix (D-020): rebuild data + YOLO labels, verify splits unchanged, discard E004 | – | DONE |
+| T8 | CNN folds 1–4 (GPU lane) | E002, E003 | DONE |
+| T9 | YOLO config selection on fold 0 (val metrics) | E005–E007 | **NEXT** |
 | T10 | Winning YOLO config on folds 1–4 | E005/6/7 | TODO |
 | T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | TODO |
 
@@ -477,3 +477,46 @@ Great run — clean reports, everything committed, secrets safe. I opened the CN
 5. Tech-debt warnings: harmless, leave them. GPU is a 4060 8 GB — docs corrected (D-021).
 
 **Do T7 → T11 in order** using the parallel rules in §0.4 (GPU lane strictly sequential). Stop at the T11 CHECKPOINT. Estimated GPU time ≈ 4–6 h total — fine to run unattended in stages; use `--skip-existing` to resume.
+
+### [T7] Label fix (D-020), rebuild data, discard E004 — DONE (2026-10-29, ~3 min)
+**Commands run:** `git add -A; git commit -m "Claude: D-020 box-label fix..."`; `python -m metalai.m1_surface.prepare_data`; `git diff --stat data/splits/neu_folds.csv`; `python -m metalai.m1_surface.splits`; `git diff --stat data/splits/neu_folds.csv` (again); `Remove-Item -Recurse -Force data\processed\neu_yolo`; `python -m metalai.m1_surface.yolo_data`; `python -m metalai.m1_surface.eda`
+**Console output (key lines):**
+```
+duplicates_dropped: 1 | n_images_kept: 1799 | images_with_secondary_defects: 123
+n_xml_label_mismatch: 0 | n_secondary_defect_boxes: 188 | n_xml_without_image: 1
+boxes_per_class: {'crazing': 689, 'inclusion': 1011, 'patches': 878, 'pitted_surface': 432, 'rolled-in_scale': 628, 'scratches': 548}
+fold0-3: train 1295 val 144 test 360; fold4: train 1296 val 144 test 359
+YOLO dataset at data\processed\neu_yolo  (images without boxes: 0)
+```
+**Metrics:** 1,799 images; 4,186 boxes (count unchanged); **188 secondary-defect boxes across 123 images** now correctly labelled from the XML; 0 mismatches. Splits file **byte-identical** before and after regeneration (`git diff --stat` empty both times) — no STOP condition.
+**Files produced:** `data/processed/neu/{manifest,boxes}.csv`, rebuilt `data/processed/neu_yolo/`, `reports/m1/data_summary.json`, refreshed EDA PNGs. E004 left in place (marked `discarded` by Claude in the registry).
+**Hardware:** n/a (CPU, ~2 min)
+**Anything odd:** none — the new `inclusion` box count (1,011 vs 884 before) confirms many secondary boxes are inclusions, exactly as D-020 predicted.
+**Code changes:** none by me (Claude's D-020 changes committed first as `4fe299c`).
+**Questions for Claude:** none
+
+### [T8] CNN folds 1–4 (exp E002, E003) — DONE (2026-10-29, ~39 min GPU total)
+**Commands run (monitored, one job at a time, on AC power):**
+```powershell
+$env:METALAI_EXP = "E002"; python -m metalai.m1_surface.cnn --model resnet50 --folds 1 2 3 4 --skip-existing       # 23.2 min
+$env:METALAI_EXP = "E002"; python -m metalai.m1_surface.gradcam --exp E002 --model resnet50 --fold 3                # fold 3 had errors
+$env:METALAI_EXP = "E003"; python -m metalai.m1_surface.cnn --model efficientnet_b0 --folds 1 2 3 4 --skip-existing  # 15.8 min
+python -m metalai.m1_surface.report
+```
+**Console output (key lines):**
+```
+==> resnet50 fold 1: acc=1.0000 macroF1=1.0000 (4.91 min)
+==> resnet50 fold 2: acc=1.0000 macroF1=1.0000 (6.95 min)
+==> resnet50 fold 3: acc=0.9972 macroF1=0.9972 (4.91 min)   <- 1 error
+==> resnet50 fold 4: acc=1.0000 macroF1=1.0000 (6.11 min)
+==> efficientnet_b0 fold 1: acc=1.0000 macroF1=1.0000 (3.94 min)
+==> efficientnet_b0 fold 2: acc=1.0000 macroF1=1.0000 (5.45 min)
+==> efficientnet_b0 fold 3: acc=1.0000 macroF1=1.0000 (3.16 min)
+==> efficientnet_b0 fold 4: acc=1.0000 macroF1=1.0000 (2.87 min)
+```
+**Metrics:** ResNet-50 (E002) 5 folds: 100/100/**99.72**/100 (+ fold 0 from T6 100) → mean ≈ 99.94. EfficientNet-B0 (E003): all five folds 100.00. Final 5-fold rows are in `reports/m1/REPORT.md` (regenerated).
+**Files produced:** `reports/m1/cnn/E002_resnet50/fold{1,2,3,4}_{curves,confusion}.png` + history CSVs; same for `E003_efficientnet_b0/`; **`reports/m1/gradcam/E002_resnet50_fold3_{correct,errors,boxes}.png`** (the one `_errors` panel this round); `reports/gpu_logs/E002_folds1234.csv` (124 rows), `E003_folds1234.csv` (82 rows).
+**Hardware (RTX 4060 8 GB, AC power, no OOM, default bs 32):** E002 peak 3,492 MiB, max 66 °C, mean util 76.3 %; E003 peak 3,156 MiB, max 66 °C, mean util 65.4 %. ~10–17 s/epoch.
+**Anything odd:** only ResNet-50 fold 3 missed one test image (99.72 %) — Grad-CAM `_errors` panel produced for Claude; EfficientNet-B0 is 100 % on every fold. No other warnings beyond the known lr_scheduler one.
+**Code changes:** none
+**Questions for Claude:** none
