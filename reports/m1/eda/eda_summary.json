@@ -1,0 +1,72 @@
+{
+  "intensity": [
+    {
+      "class": "crazing",
+      "mean_intensity": 136.75111225,
+      "mean_std": 29.347825970280198
+    },
+    {
+      "class": "inclusion",
+      "mean_intensity": 109.5815745,
+      "mean_std": 13.293694179207723
+    },
+    {
+      "class": "patches",
+      "mean_intensity": 139.31590400000002,
+      "mean_std": 55.67943384475689
+    },
+    {
+      "class": "pitted_surface",
+      "mean_intensity": 181.36552774999996,
+      "mean_std": 26.370744032335246
+    },
+    {
+      "class": "rolled-in_scale",
+      "mean_intensity": 119.983946,
+      "mean_std": 16.555986424478395
+    },
+    {
+      "class": "scratches",
+      "mean_intensity": 97.22960075,
+      "mean_std": 21.855623788091314
+    }
+  ],
+  "boxes": {
+    "crazing": {
+      "n_boxes": 694,
+      "boxes_per_image_mean": 2.3133333333333335,
+      "rel_area_median": 0.21095,
+      "rel_area_min": 0.028
+    },
+    "inclusion": {
+      "n_boxes": 884,
+      "boxes_per_image_mean": 2.9466666666666668,
+      "rel_area_median": 0.045399999999999996,
+      "rel_area_min": 0.00605
+    },
+    "patches": {
+      "n_boxes": 870,
+      "boxes_per_image_mean": 2.9096989966555182,
+      "rel_area_median": 0.09208749999999999,
+      "rel_area_min": 0.00825
+    },
+    "pitted_surface": {
+      "n_boxes": 489,
+      "boxes_per_image_mean": 1.63,
+      "rel_area_median": 0.512425,
+      "rel_area_min": 0.01425
+    },
+    "rolled-in_scale": {
+      "n_boxes": 628,
+      "boxes_per_image_mean": 2.0933333333333333,
+      "rel_area_median": 0.1230125,
+      "rel_area_min": 0.0132
+    },
+    "scratches": {
+      "n_boxes": 621,
+      "boxes_per_image_mean": 2.07,
+      "rel_area_median": 0.0696,
+      "rel_area_min": 0.0027
+    }
+  }
+}

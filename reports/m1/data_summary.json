@@ -1,0 +1,69 @@
+{
+  "raw_dir": "D:\\python\\metalAI\\data\\raw\\neu",
+  "n_image_files": 1800,
+  "n_xml_files": 1800,
+  "unparsed_images": [],
+  "folder_name_mismatch": [],
+  "duplicates_dropped": 1,
+  "xml_label_mismatch": [
+    "crazing_104.xml: xml=patches file=crazing",
+    "crazing_105.xml: xml=inclusion file=crazing",
+    "crazing_112.xml: xml=patches file=crazing",
+    "crazing_152.xml: xml=patches file=crazing",
+    "crazing_20.xml: xml=patches file=crazing",
+    "patches_155.xml: xml=inclusion file=patches",
+    "patches_155.xml: xml=inclusion file=patches",
+    "patches_167.xml: xml=inclusion file=patches",
+    "patches_167.xml: xml=inclusion file=patches",
+    "patches_168.xml: xml=inclusion file=patches",
+    "patches_168.xml: xml=inclusion file=patches",
+    "patches_168.xml: xml=inclusion file=patches",
+    "patches_168.xml: xml=inclusion file=patches",
+    "patches_171.xml: xml=inclusion file=patches",
+    "patches_171.xml: xml=inclusion file=patches",
+    "patches_172.xml: xml=inclusion file=patches",
+    "patches_172.xml: xml=inclusion file=patches",
+    "patches_174.xml: xml=inclusion file=patches",
+    "patches_174.xml: xml=inclusion file=patches",
+    "patches_175.xml: xml=inclusion file=patches",
+    "patches_175.xml: xml=inclusion file=patches",
+    "patches_176.xml: xml=inclusion file=patches",
+    "patches_176.xml: xml=inclusion file=patches",
+    "patches_176.xml: xml=inclusion file=patches",
+    "patches_179.xml: xml=inclusion file=patches",
+    "patches_179.xml: xml=inclusion file=patches",
+    "patches_184.xml: xml=inclusion file=patches",
+    "patches_184.xml: xml=inclusion file=patches",
+    "patches_184.xml: xml=inclusion file=patches",
+    "patches_187.xml: xml=inclusion file=patches"
+  ],
+  "xml_without_image": [
+    "patches_105.xml"
+  ],
+  "boxes_clipped": 0,
+  "n_images_kept": 1799,
+  "images_per_class": {
+    "crazing": 300,
+    "inclusion": 300,
+    "patches": 299,
+    "pitted_surface": 300,
+    "rolled-in_scale": 300,
+    "scratches": 300
+  },
+  "images_with_boxes": 1799,
+  "boxes_per_class": {
+    "crazing": 694,
+    "inclusion": 884,
+    "patches": 870,
+    "pitted_surface": 489,
+    "rolled-in_scale": 628,
+    "scratches": 621
+  },
+  "image_sizes": {
+    "200x200": 1799
+  },
+  "n_unparsed_images": 0,
+  "n_folder_name_mismatch": 0,
+  "n_xml_label_mismatch": 188,
+  "n_xml_without_image": 1
+}
