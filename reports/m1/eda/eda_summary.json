@@ -33,28 +33,28 @@
   ],
   "boxes": {
     "crazing": {
-      "n_boxes": 694,
+      "n_boxes": 689,
       "boxes_per_image_mean": 2.3133333333333335,
-      "rel_area_median": 0.21095,
-      "rel_area_min": 0.028
+      "rel_area_median": 0.2114,
+      "rel_area_min": 0.056
     },
     "inclusion": {
-      "n_boxes": 884,
+      "n_boxes": 1011,
       "boxes_per_image_mean": 2.9466666666666668,
-      "rel_area_median": 0.045399999999999996,
+      "rel_area_median": 0.0407,
       "rel_area_min": 0.00605
     },
     "patches": {
-      "n_boxes": 870,
+      "n_boxes": 878,
       "boxes_per_image_mean": 2.9096989966555182,
-      "rel_area_median": 0.09208749999999999,
-      "rel_area_min": 0.00825
+      "rel_area_median": 0.0927875,
+      "rel_area_min": 0.00975
     },
     "pitted_surface": {
-      "n_boxes": 489,
+      "n_boxes": 432,
       "boxes_per_image_mean": 1.63,
-      "rel_area_median": 0.512425,
-      "rel_area_min": 0.01425
+      "rel_area_median": 0.5548,
+      "rel_area_min": 0.0208
     },
     "rolled-in_scale": {
       "n_boxes": 628,
@@ -63,9 +63,9 @@
       "rel_area_min": 0.0132
     },
     "scratches": {
-      "n_boxes": 621,
+      "n_boxes": 548,
       "boxes_per_image_mean": 2.07,
-      "rel_area_median": 0.0696,
+      "rel_area_median": 0.0747125,
       "rel_area_min": 0.0027
     }
   }
