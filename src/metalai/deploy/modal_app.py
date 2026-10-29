@@ -15,7 +15,12 @@ import re
 
 import modal
 
-BUILD = pathlib.Path(__file__).resolve().parents[3] / "deploy_build" / "hf_space"
+_module_path = pathlib.Path(__file__).resolve()
+BUILD = (
+    _module_path.parents[3] / "deploy_build" / "hf_space"
+    if len(_module_path.parents) > 3
+    else pathlib.Path("/app")
+)
 
 reqs: list[str] = []
 gradio_req = "gradio"
@@ -37,7 +42,7 @@ if BUILD.exists():
 app = modal.App("metalai", image=image)
 
 
-@app.function(max_containers=1, scaledown_window=15 * 60, timeout=10 * 60)
+@app.function(max_containers=1, scaledown_window=5 * 60, timeout=10 * 60)  # sleep after 5 idle min (saves credit)
 @modal.concurrent(max_inputs=50)
 @modal.asgi_app()
 def web():

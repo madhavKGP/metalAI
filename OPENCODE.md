@@ -140,8 +140,8 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T13b | Build + check Space locally | ? | DONE |
 | T13c | Push + verify Hugging Face Space ? **CHECKPOINT** | ? | BLOCKED (HF requires PRO for Gradio CPU Basic) |
 | T14a | Modal login | ? | DONE |
-| T14b | Test temporary Modal URL | ? | NEXT |
-| T14c | Permanent Modal deploy ? **CHECKPOINT** | ? | PENDING |
+| T14b | Test temporary Modal URL | ? | DONE |
+| T14c | Permanent Modal deploy ? **CHECKPOINT** | ? | NEXT |
 
 ---
 
@@ -724,4 +724,14 @@ Report: the public URL, first-load (cold start) time, time per inspection, and r
 **Hardware:** n/a.
 **Anything odd:** terminal Unicode encoding error after successful authentication; no payment prompt, card entry, or paid plan selection.
 **Code changes:** none.
+**Questions for Claude:** none
+
+### [T14b] Test with a temporary Modal URL ? DONE (2026-10-30)
+**Commands run:** ` .\.venv\Scripts\Activate.ps1`; `$env:PYTHONIOENCODING='utf-8'`; `python -m metalai.deploy.build_space --check`; `modal serve src/metalai/deploy/modal_app.py`; stopped with Ctrl+C.
+**Console output (key lines):** build check `CHECK verdict ok: True | det: True | cam: True | top: Crazing`. First serve attempt failed at container import with `IndexError: 3` because the uploaded module path is `/root/modal_app.py` and `parents[3]` does not exist. After the path fix, Modal built image `im-DONqzLxaXu6ocPKAprNQuY` in 47.44 s and served `https://mdhvdhage--metalai-web-dev.us-east.modal.run` (unauthenticated). Windows live-reload is unsupported, but the app served normally.
+**UI check:** clicked three samples: Crazing (93% confidence, 3 regions, 492 ms), Inclusion (93%, 3 regions, 229 ms), Patches (90%, 3 regions, 108 ms). Where? rendered the YOLO result, Why? rendered the Grad-CAM, and All classes showed classifier probabilities for all six classes. Then stopped the temporary server. Initial page readiness took roughly 40 s including image build; no standalone cold-start timing was available.
+**Files produced:** refreshed Modal image cache only; no source artifacts.
+**Hardware:** Modal CPU container; no GPU.
+**Anything odd:** dashboard showed `$1 of $30/mo in free credits`; no payment method was added. The first serving attempt generated repeated import errors until stopped.
+**Code changes:** `src/metalai/deploy/modal_app.py` ? choose `/app` as the build directory inside the Modal container because the uploaded module lives at `/root/modal_app.py`; retain the repo-relative build path locally. Set `scaledown_window=5 * 60` so the app sleeps after five idle minutes as requested.
 **Questions for Claude:** none
