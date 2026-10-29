@@ -136,6 +136,9 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T10 | Winning YOLO config on folds 1–4 | E005/6/7 | SKIPPED (D-027 close Module 1) |
 | T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | REPLACED by T12 |
 | T12 | Wrap up Module 1 — cleanup SMOKE, near_dups, app smoke test, report — **CHECKPOINT** | – | DONE |
+| T13a | Local UI check | – | DONE |
+| T13b | Build + check Space locally | – | NEXT |
+| T13c | Push + verify Hugging Face Space — **CHECKPOINT** | – | PENDING |
 
 ---
 
@@ -625,4 +628,13 @@ Must print `CHECK verdict ok: True ...`. Report the build size and the weight fi
 **Hardware:** RTX 4060 Laptop 8 GB, AC power throughout. E005: ~51 min, best ep 118. E006: 436.2 min, best ep 191, GPU util avg 12.7%, max temp 53 °C, peak 3,999 MiB. E007: ~3.59 GB VRAM before cancellation.
 **Anything odd:** smoke_test.py had variable-name bug (det/probs swapped in inspect() unpacking) → fixed. E005 CSV train_minutes=4.3 (resumed portion only); real wall ~51 min hand-logged in EXPERIMENTS.md.
 **Code changes:** app/smoke_test.py — fixed variable unpacking to match inspect() return order (verdict_html, det_img, cam, labels).
+**Questions for Claude:** none
+
+### [T13a] Local UI check ? DONE (2026-10-30)
+**Commands run:** ` .\.venv\Scripts\Activate.ps1`; `python app\smoke_test.py`; `python app\app.py` (served at `http://127.0.0.1:7860`, opened in the in-app browser, stopped with Ctrl+C).
+**Console output (key lines):** headless smoke check: all six class samples matched their expected labels; `OK - outputs in D:\python\metalAI\reports\m1\app_smoke` (exit 0). Local app returned HTTP 200. Browser UI showed the hero, upload controls, 12 sample buttons, verdict card, and tabs. Three samples inspected; results included Crazing 93%, Crazing 93%, and Inclusion 93% with three located regions. Grad-CAM image displayed in ?Why?? tab. Browser console had no warnings/errors. App stdout was not captured by the session runner; no traceback observed.
+**Files produced:** refreshed `reports/m1/app_smoke/` images and JSON.
+**Hardware:** local CPU inference; no training.
+**Anything odd:** no UI or browser warnings observed. Screenshot was not saved.
+**Code changes:** none.
 **Questions for Claude:** none
