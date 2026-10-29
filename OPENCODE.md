@@ -137,8 +137,11 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | REPLACED by T12 |
 | T12 | Wrap up Module 1 — cleanup SMOKE, near_dups, app smoke test, report — **CHECKPOINT** | – | DONE |
 | T13a | Local UI check | – | DONE |
-| T13b | Build + check Space locally | – | NEXT |
-| T13c | Push + verify Hugging Face Space — **CHECKPOINT** | – | PENDING |
+| T13b | Build + check Space locally | ? | DONE |
+| T13c | Push + verify Hugging Face Space ? **CHECKPOINT** | ? | BLOCKED (HF requires PRO for Gradio CPU Basic) |
+| T14a | Modal login | ? | DONE |
+| T14b | Test temporary Modal URL | ? | NEXT |
+| T14c | Permanent Modal deploy ? **CHECKPOINT** | ? | PENDING |
 
 ---
 
@@ -713,3 +716,12 @@ Tiny fixes allowed for Modal/Gradio API renames (e.g. `@modal.concurrent`, `max_
 modal deploy src/metalai/deploy/modal_app.py
 ```
 Report: the public URL, first-load (cold start) time, time per inspection, and remaining credit shown in the Modal dashboard (Usage). Commit `T14: Modal deploy`. **CHECKPOINT** — Madhav will share the URL with friends.
+
+### [T14a] Modal login ? DONE (2026-10-30)
+**Commands run:** ` .\.venv\Scripts\Activate.ps1`; `pip install -U modal` (installed Modal 1.6.3); `modal setup`.
+**Console output (key lines):** user completed Modal browser authentication; setup reported `Web authentication finished successfully!`, workspace `mdhvdhage`, `Token verified successfully!`, and wrote the token to the local `.modal.toml` profile. The command then exited 1 because the Windows `charmap` codec could not encode a Unicode arrow. A retry with `$env:PYTHONIOENCODING='utf-8'` opened another token flow; I stopped that redundant setup without completing it. The first token remains verified and configured.
+**Files produced:** local Modal CLI profile at `%USERPROFILE%\.modal.toml` (outside repo).
+**Hardware:** n/a.
+**Anything odd:** terminal Unicode encoding error after successful authentication; no payment prompt, card entry, or paid plan selection.
+**Code changes:** none.
+**Questions for Claude:** none
