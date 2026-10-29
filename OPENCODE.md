@@ -132,7 +132,7 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | DONE — reviewed by Claude (D-023) |
 | T7 | Pull label fix (D-020): rebuild data + YOLO labels, verify splits unchanged, discard E004 | – | DONE |
 | T8 | CNN folds 1–4 (GPU lane) | E002, E003 | DONE |
-| T9 | YOLO config selection on fold 0 (val metrics) | E005–E007 | IN-PROGRESS (E005 crashed, see log; E006/E007 pending) |
+| T9 | YOLO config selection on fold 0 (val metrics) — **re-briefed: cache fix D-024, restart E005** | E005–E007 | **NEXT** |
 | T10 | Winning YOLO config on folds 1–4 | E005/6/7 | TODO |
 | T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | TODO |
 
@@ -274,6 +274,16 @@ If any fold has misclassifications, run Grad-CAM for that fold (it produces the 
 Parallel (§0.4): while T8 runs, a CPU subagent can do nothing heavy — just monitoring/report drafting.
 
 ### T9 — YOLO config selection on fold 0 (GPU lane, ~1.5–2 h, one after another)
+**Re-brief 2026-10-30 (after the E005 crash, D-024):** `yolo_train.py` now uses `cache=False` by default (from `configs/m1.yaml`) and has `--resume`. Re-run E005 **from scratch** — first remove its crashed partial run:
+```powershell
+Remove-Item -Recurse -Force runs\m1_yolo\E005_* -ErrorAction SilentlyContinue
+```
+Watch system RAM as well as the GPU during the first E005 run (second terminal):
+```powershell
+while ($true) { $os = Get-CimInstance Win32_OperatingSystem; "{0:N1} GB free RAM" -f ($os.FreePhysicalMemory/1MB); Start-Sleep 30 }
+```
+If free RAM drops below ~1.5 GB or it crashes again: re-run that experiment with `--workers 0` (same exp id; if a `last.pt` exists add `--resume`) and report.
+If the laptop is interrupted mid-run (sleep/shutdown): re-run the same line with `--resume`.
 ```powershell
 $env:METALAI_EXP = "E005"; python -m metalai.m1_surface.yolo_train --folds 0
 $env:METALAI_EXP = "E006"; python -m metalai.m1_surface.yolo_train --folds 0 --epochs 300 --patience 50
@@ -292,10 +302,10 @@ $env:METALAI_EXP = "E006"; python -m metalai.m1_surface.yolo_train --folds 1 2 3
 ### T11 — Final models for the app + report — CHECKPOINT
 Full-data models (train on all 1,799 images, 10 % val for early stopping) under the winning experiment ids:
 ```powershell
-$env:METALAI_EXP = "E002"; python -m metalai.m1_surface.cnn --model resnet50 --full
+$env:METALAI_EXP = "E003"; python -m metalai.m1_surface.cnn --model efficientnet_b0 --full     # app classifier (D-025)
 $env:METALAI_EXP = "<YOLO winner>"; python -m metalai.m1_surface.yolo_train --full <same flags as winner>
 ```
-Edit `configs/app.yaml`: `cnn: {exp: E002, model: resnet50, tag: full}`, `yolo: {exp: <winner>, model: yolov8n|yolov8s, tag: full}`.
+Edit `configs/app.yaml`: `cnn: {exp: E003, model: efficientnet_b0, tag: full}`, `yolo: {exp: <winner>, model: yolov8n|yolov8s, tag: full}`.
 ```powershell
 python app\smoke_test.py
 python -m metalai.m1_surface.report
@@ -527,3 +537,9 @@ python -m metalai.m1_surface.report
 **State left:** E005 has **no test metrics** (crash before final val/test); partial checkpoint exists under `runs/`. `results/m1/yolo_results.csv` still only has SMOKE + discarded E004. E006/E007 not started. Monitor + stray python killed; **no GPU jobs running** (machine idle for the night). T9 not committed (nothing new to record beyond this log line).
 **Fix options for next session (Claude to pick in the T9 re-brief):** (a) `cache='disk'` for YOLO runs, (b) dataloader `workers=0–1` for the mosaic phase, (c) larger Windows pagefile, or (d) `--imgsz 512` — all CPU-side, no GPU risk. Simplest safe default: **workers=0 + cache='disk'**.
 **Questions for Claude:** which fix should be baked into `yolo_train.py` before re-running E005?
+
+### [Claude → OpenCode] 2026-10-30 — review of T7–T8 + T9 re-brief
+- T7/T8 reviewed — thanks for the clean logs. CNN 5-fold results are final (D-025). The single ResNet error (`scratches_149` → inclusion at 0.50) is a genuine borderline case: Grad-CAM sits on a dark blob next to the scratch. **App classifier will be EfficientNet-B0 (E003)**, 100 % on all folds and lighter — T11 updated accordingly.
+- **E005 crash fix (answer to your question): `cache=False` + keep `workers=2`** (D-024). Root cause: on Windows each spawned dataloader worker gets its own copy of the `cache='ram'` image cache (640-px, ~1.2 MB/img) → RAM × (workers+1). NEU PNGs are 200 px / ~40 KB, so disk reads are negligible — no need for `cache='disk'` or a pagefile change. `--workers 0` is the fallback if RAM still runs low. Added `--resume` for interruptions.
+- Code changed by Claude (commit it first): `src/metalai/m1_surface/yolo_train.py` (`--cache`, `--resume`, cache/resumed in results row), `configs/m1.yaml` (`yolo.cache: "false"`), `decisions.md` D-024/D-025, `experiments/EXPERIMENTS.md` (E002/E003 conclusions, E005 note).
+- Next: commit my changes → **T9 (restart E005, then E006, E007) → T10 → T11**, stop at the T11 CHECKPOINT. Watch free RAM during the first E005 run (command in T9).

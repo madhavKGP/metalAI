@@ -14,10 +14,10 @@ How it works:
 | ID | Date | Module | What (model / featureset) | Key config | Folds | Status | Headline result | Conclusion (Claude) |
 |---|---|---|---|---|---|---|---|---|
 | E001 | 2026-10-28 | M1 | LBP / GLCM / both + RBF-SVM | D-008 | 0-4 | done | both: acc 0.9944 ± 0.0020 (lbp 0.9811, glcm 0.9817) | Strong texture baseline; LBP+GLCM complementary (+1.3 pt over either alone). Classification on NEU is near-saturated even classically. |
-| E002 | 2026-10-28 | M1 | ResNet-50 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 (→0-4 in T8) | done (fold 0) | acc 100.00, macroF1 100.00 (early stop ep 11, 4.4 min, peak VRAM 2.69 GB) | Converges in ~3 epochs, no overfit. Grad-CAM localises inclusion/scratches/patches well; diffuse on crazing/RS (texture classes). Run remaining folds. |
-| E003 | 2026-10-28 | M1 | EfficientNet-B0 (ImageNet, full FT) | D-009, bs 32, 224 px | 0 (→0-4 in T8) | done (fold 0) | acc 100.00, macroF1 100.00 (early stop ep 24, 7.1 min, peak VRAM 1.49 GB) | Same accuracy at ~half the VRAM; slower to converge. Run remaining folds. |
+| E002 | 2026-10-28 | M1 | ResNet-50 (ImageNet, full FT) | D-009, bs 32, 224 px | 0-4 | done | acc 99.94 (100/100/100/99.72/100), ~5 min/fold, peak VRAM 3.5 GB | Converges in ~3 epochs, no overfit. Grad-CAM localises inclusion/scratches/patches well; diffuse on crazing/RS (texture classes). Only error: scratches_149 → inclusion at 0.50 conf (dark blob beside scratch) — borderline case (D-025). Comparison model. |
+| E003 | 2026-10-28 | M1 | EfficientNet-B0 (ImageNet, full FT) | D-009, bs 32, 224 px | 0-4 | done | acc 100.00 on all 5 folds, ~3-7 min/fold, peak VRAM 1.5-3.2 GB | Best classifier: 100 % at lower cost → **serves the app** (D-025). |
 | E004 | 2026-10-28 | M1 | YOLOv8n | D-011, 640 px, bs 16 | 0 | **discarded** | test mAP50 74.56, mAP50-95 42.54 (22.8 min) | Discarded: 188 secondary-defect boxes had wrong class (D-020). Useful signal: errors = background FPs on crazing/RS, not class confusion; not converged at 150 ep. |
-| E005 | | M1 | YOLOv8n — corrected labels | D-011, 640 px, bs 16, 150 ep, patience 30 | 0 (→0-4 if selected) | crashed (system-RAM OOM in mosaic worker @ ep 46/150, 2026-10-30; no test metrics) | | |
+| E005 | | M1 | YOLOv8n — corrected labels | D-011, 640 px, bs 16, 150 ep, patience 30 | 0 (→0-4 if selected) | crashed (system-RAM OOM in mosaic worker @ ep 46/150, 2026-10-30; no test metrics) → **re-run from scratch with cache=False (D-024)** | | Crash cause: cache='ram' copied into each Windows worker. Not a model issue. |
 | E006 | | M1 | YOLOv8n — longer | 640 px, bs 16, **300 ep, patience 50** | 0 (→0-4 if selected) | planned | | |
 | E007 | | M1 | YOLOv8s — bigger model | 640 px, bs 16, 150 ep, patience 30 | 0 (→0-4 if selected) | planned | | |
 

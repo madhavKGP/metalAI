@@ -43,9 +43,14 @@ def main() -> None:
     ap.add_argument("--patience", type=int, default=cfg["patience"])
     ap.add_argument("--batch", type=int, default=cfg["batch"])
     ap.add_argument("--workers", type=int, default=cfg["workers"])
+    ap.add_argument("--cache", default=str(cfg.get("cache", "false")),
+                    help="false | disk | ram. 'ram' crashed the 16 GB laptop (Windows workers copy the cache) - D-024")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue a crashed/interrupted run from runs/.../weights/last.pt (same exp id + flags)")
     ap.add_argument("--skip-existing", action="store_true")
     ap.add_argument("--allow-cpu", action="store_true")
     a = ap.parse_args()
+    cache = {"false": False, "none": False, "disk": "disk", "ram": "ram", "true": "ram"}[str(a.cache).lower()]
     device = require_cuda(a.allow_cpu)
     dev = 0 if device == "cuda" else "cpu"
     exp = start_experiment(f"m1_yolo_{Path(a.model).stem}", a, cfg_all)
@@ -66,12 +71,18 @@ def main() -> None:
         if not data_yaml.exists():
             raise SystemExit(f"{data_yaml} missing - run: python -m metalai.m1_surface.yolo_data")
         t0 = time.time()
-        model = YOLO(a.model)
-        model.train(data=str(data_yaml), imgsz=a.imgsz, epochs=a.epochs, patience=a.patience, batch=a.batch,
-                    device=dev, workers=a.workers, seed=cfg_all["seed"], deterministic=True, amp=True,
-                    cache="ram", project=str(RUNS / "m1_yolo"), name=run_name, exist_ok=True, plots=True, verbose=False)
-        train_min = (time.time() - t0) / 60
         run_dir = RUNS / "m1_yolo" / run_name
+        last = run_dir / "weights" / "last.pt"
+        if a.resume and last.exists():
+            print(f"[resume] continuing {last}")
+            YOLO(str(last)).train(resume=True)
+        else:
+            model = YOLO(a.model)
+            model.train(data=str(data_yaml), imgsz=a.imgsz, epochs=a.epochs, patience=a.patience, batch=a.batch,
+                        device=dev, workers=a.workers, seed=cfg_all["seed"], deterministic=True, amp=True,
+                        cache=cache, project=str(RUNS / "m1_yolo"), name=run_name, exist_ok=True, plots=True,
+                        verbose=False)
+        train_min = (time.time() - t0) / 60  # note: for --resume this is only the resumed part
         wpath.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(run_dir / "weights" / "best.pt", wpath)
         rep = REPORTS / "m1" / "yolo" / run_name
@@ -99,7 +110,8 @@ def main() -> None:
                      project=str(RUNS / "m1_yolo"), name=f"{run_name}_test", exist_ok=True, verbose=False)
         copy_pngs(RUNS / "m1_yolo" / f"{run_name}_test", rep, "test_")
         row = {"model": tag_model, "fold": k, "imgsz": a.imgsz, "batch": a.batch, "epochs_max": a.epochs,
-               "patience": a.patience, "train_minutes": round(train_min, 1), "best_epoch": best_epoch,
+               "patience": a.patience, "cache": str(cache), "resumed": bool(a.resume),
+               "train_minutes": round(train_min, 1), "best_epoch": best_epoch,
                "val_mAP50": float(mv.box.map50), "val_mAP50_95": float(mv.box.map),
                "mAP50": float(m.box.map50), "mAP50_95": float(m.box.map),
                "precision": float(m.box.mp), "recall": float(m.box.mr),

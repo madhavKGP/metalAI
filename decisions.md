@@ -116,5 +116,19 @@ Format: `D-NNN · date · owner · status (Accepted / Proposed / Superseded)`
 - **YOLO E004 (discarded, but informative)**: class confusion is near-zero (diagonal 0.97–0.99); errors are mostly **background false positives** (crazing 0.35, rolled-in scale 0.20) — i.e. *box granularity* ambiguity of diffuse defects, not misclassification. Train losses still falling at epoch 150 and val mAP still creeping up → not converged; val DFL loss rising slightly late → mild localisation overfit. Hence variants: longer training (E006) and a bigger model (E007). Crazing will likely stay the weakest class (known in literature); explain rather than over-tune.
 - Tech-debt notes from OpenCode: sklearn `SVC(probability=...)` deprecation warning and "lr_scheduler.step() before optimizer.step()" warning (first AMP step skipped by GradScaler) are harmless; leave.
 
+## D-024 · 2026-10-30 · Claude · Accepted (fix for E005 crash)
+**YOLO runs with `cache=False` (configurable `--cache`, default from `configs/m1.yaml`) and keep `workers=2`.**
+- Cause of the E005 crash at epoch 46: system-RAM OOM (15.6 GB laptop) inside mosaic augmentation. On Windows, dataloader workers are *spawned* and each gets its own copy of the dataset object, including the `cache='ram'` image cache (images are cached at 640 px, ~1.2 MB each) → RAM multiplies by (workers + 1) and fragments over time.
+- NEU images are 200×200 PNGs (~40 KB) — decoding from disk is negligible next to GPU time, so caching buys nothing. `cache='disk'` would write 640-px `.npy` files (~1.5 GB per fold) for no gain.
+- Kept `workers=2` (mosaic on the main process alone would slow training). If RAM still runs out → `--workers 0`.
+- Added `--resume` (continues from `runs/.../weights/last.pt`) so a future crash doesn't lose the run.
+- Rejected: bigger pagefile (treats the symptom, slow), lower imgsz (changes the experiment, breaks comparability with literature at 640).
+- E005 is re-run from scratch (the partial run used a different cache setting; cheap to redo, ~25 min).
+
+## D-025 · 2026-10-30 · Claude · Accepted — review of T8
+**CNN 5-fold results final:** ResNet-50 (E002) 99.94 % mean (one error, fold 3), EfficientNet-B0 (E003) 100 % on all 5 folds.
+- The single ResNet error, `scratches_149` → predicted *inclusion* at 0.50 confidence: Grad-CAM sits on a dark blob next to the scratch, i.e. a locally inclusion-like feature; the classifier was uncertain (0.50 = exactly the app's "uncertain" threshold). Plausible borderline case, not a systematic failure. Useful thesis example.
+- **App classifier = EfficientNet-B0 (E003)**: same/better accuracy, ~half the VRAM, faster → supersedes the earlier plan to serve ResNet-50. ResNet-50 stays as a comparison model.
+
 ## D-014 · 2026-10-28 · Claude · Accepted
 **Sandbox verification done before hand-off:** `prepare_data`, `splits`, `eda`, `classical`, `yolo_data`, `report` were executed end-to-end on a synthetic NEU-like dataset (180 fake images) — all ran and produced figures. `cnn`, `gradcam`, `yolo_train`, `app` were syntax-checked only (no torch/GPU in sandbox) → OpenCode runs a 1-epoch smoke test first (T4).

@@ -30,3 +30,4 @@ yolo:
   patience: 30
   batch: 16               # drop to 8 if CUDA out-of-memory
   workers: 2
+  cache: "false"          # NEU images are tiny PNGs - reading from disk is cheap. 'ram' -> system-RAM OOM (D-024)
