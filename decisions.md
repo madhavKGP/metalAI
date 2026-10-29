@@ -153,5 +153,12 @@ How we guard against over-optimistic numbers, in one place:
 - `python -m metalai.deploy.build_space [--push --repo-id <user>/metalai]` builds a self-contained Space in `deploy_build/hf_space/` (git-ignored): inference-only source subset, served weights only (EfficientNet-B0 E003 fold0 ≈ 16 MB, YOLOv8n E005 fold0 ≈ 6 MB), CPU-only torch wheels, `packages.txt` for libGL, README with Space config; runs a headless check before pushing. HF token lives in `.secrets/hf_token` (git-ignored).
 - NEU images in the gallery: dataset licence is "unknown" on Kaggle — acceptable for a non-commercial academic demo with citation; remove the gallery if anyone objects.
 
+## D-029 · 2026-10-30 · Madhav/Claude · Accepted — host on Modal instead of HF Spaces
+- HF now requires a paid PRO plan to create Gradio/Docker Spaces (free accounts: Static Spaces only; ZeroGPU only for accounts > 30 days). T13c failed with HTTP 402.
+- Requirement: public link friends can open, working ≥ 7 days, fast to set up, free.
+- **Chosen: Modal** (free Starter plan, ~$30/month compute credits, reportedly no card needed; scales to zero; Gradio via `@modal.asgi_app` + `gr.mount_gradio_app`). Reuses the already-built `deploy_build/hf_space`. File: `src/metalai/deploy/modal_app.py`. One container (Gradio sticky sessions), up to 50 concurrent requests, idle shutdown after 15 min → cold start for the first visitor.
+- Rejected: Gradio share link (expires after 72 h and needs the laptop on), Render/Koyeb/Cloud Run free tiers (~512 MB RAM — too small for PyTorch), Railway (trial credit only), PythonAnywhere (no ASGI on free).
+- Fallbacks: HF PRO (~$9 for one month, re-run T13c unchanged) or a fully in-browser ONNX version on a free Static Space (more work).
+
 ## D-014 · 2026-10-28 · Claude · Accepted
 **Sandbox verification done before hand-off:** `prepare_data`, `splits`, `eda`, `classical`, `yolo_data`, `report` were executed end-to-end on a synthetic NEU-like dataset (180 fake images) — all ran and produced figures. `cnn`, `gradcam`, `yolo_train`, `app` were syntax-checked only (no torch/GPU in sandbox) → OpenCode runs a 1-epoch smoke test first (T4).
