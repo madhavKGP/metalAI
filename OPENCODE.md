@@ -141,7 +141,7 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T13c | Push + verify Hugging Face Space ? **CHECKPOINT** | ? | BLOCKED (HF requires PRO for Gradio CPU Basic) |
 | T14a | Modal login | ? | DONE |
 | T14b | Test temporary Modal URL | ? | DONE |
-| T14c | Permanent Modal deploy ? **CHECKPOINT** | ? | NEXT |
+| T14c | Permanent Modal deploy ? **CHECKPOINT** | ? | DONE |
 
 ---
 
@@ -735,3 +735,12 @@ Report: the public URL, first-load (cold start) time, time per inspection, and r
 **Anything odd:** dashboard showed `$1 of $30/mo in free credits`; no payment method was added. The first serving attempt generated repeated import errors until stopped.
 **Code changes:** `src/metalai/deploy/modal_app.py` ? choose `/app` as the build directory inside the Modal container because the uploaded module lives at `/root/modal_app.py`; retain the repo-relative build path locally. Set `scaledown_window=5 * 60` so the app sleeps after five idle minutes as requested.
 **Questions for Claude:** none
+
+### [T14c] Permanent Modal deploy ? DONE (2026-10-30)
+**Commands run:** ` .\.venv\Scripts\Activate.ps1`; `$env:PYTHONIOENCODING='utf-8'`; `modal deploy src/metalai/deploy/modal_app.py`; verified with `Invoke-WebRequest` and opened the public URL in the browser.
+**Console output (key lines):** `? App deployed in 5.013s`; public endpoint `https://mdhvdhage--metalai-web.us-east.modal.run` (unauthenticated). HTTP 200 after 17.86 s on the first request (cold start/page response); the UI loaded. Permanent app sample check: Crazing 93%, three regions, 528 ms. Temporary serve checks: Crazing 492 ms, Inclusion 229 ms, Patches 108 ms.
+**Files produced:** permanent Modal app `metalai`.
+**Hardware:** Modal CPU container; no GPU.
+**Anything odd:** Modal dashboard showed `$1 of $30/mo in free credits` during T14b; no payment method added. App scales down after five idle minutes.
+**Code changes:** none beyond the T14b change in `modal_app.py` (path fix and five-minute idle shutdown).
+**Questions for Claude:** none. Public URL can be shared with Claude for testing.
