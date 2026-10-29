@@ -96,7 +96,8 @@ def main() -> None:
         best = YOLO(str(wpath))
         # inner-validation metrics: used for MODEL SELECTION between configs (never the test fold)
         mv = best.val(data=str(data_yaml), split="val", imgsz=a.imgsz, batch=a.batch, device=dev, plots=False,
-                      project=str(RUNS / "m1_yolo"), name=f"{run_name}_val", exist_ok=True, verbose=False)
+                      workers=a.workers, project=str(RUNS / "m1_yolo"), name=f"{run_name}_val", exist_ok=True,
+                      verbose=False)
         best_epoch = None
         if (run_dir / "results.csv").exists():
             import pandas as pd
@@ -107,7 +108,8 @@ def main() -> None:
             if col in rc:
                 best_epoch = int(rc.loc[rc[col].idxmax(), "epoch"])
         m = best.val(data=str(data_yaml), split="test", imgsz=a.imgsz, batch=a.batch, device=dev, plots=True,
-                     project=str(RUNS / "m1_yolo"), name=f"{run_name}_test", exist_ok=True, verbose=False)
+                     workers=a.workers, project=str(RUNS / "m1_yolo"), name=f"{run_name}_test", exist_ok=True,
+                     verbose=False)
         copy_pngs(RUNS / "m1_yolo" / f"{run_name}_test", rep, "test_")
         row = {"model": tag_model, "fold": k, "imgsz": a.imgsz, "batch": a.batch, "epochs_max": a.epochs,
                "patience": a.patience, "cache": str(cache), "resumed": bool(a.resume),
