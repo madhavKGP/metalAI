@@ -647,3 +647,45 @@ Must print `CHECK verdict ok: True ...`. Report the build size and the weight fi
 **Anything odd:** none.
 **Code changes:** none.
 **Questions for Claude:** none
+
+### [T13c] Push + verify Hugging Face Space ? BLOCKED (2026-10-30)
+**Commands run:** ` .\.venv\Scripts\Activate.ps1`; `python -c "from huggingface_hub import HfApi; print(HfApi(token=open('.secrets/hf_token').read().strip()).whoami()['name'])"`; `python -m metalai.deploy.build_space --push --repo-id mdhvfx1/metalai`.
+**Console output (key lines / full traceback):** whoami returned `mdhvfx1`. Build again passed (`23.2 MB`; `CHECK verdict ok: True | det: True | cam: True | top: Crazing`), then push failed before repo creation with HTTP 402. Full traceback:
+```text
+Traceback (most recent call last):
+  File "D:\python\metalAI\.venv\Lib\site-packages\huggingface_hub\utils\_http.py", line 866, in hf_raise_for_status
+    response.raise_for_status()
+  File "D:\python\metalAI\.venv\Lib\site-packages\httpx2\_models.py", line 828, in raise_for_status
+    raise HTTPStatusError(message, request=self, response=self)
+httpx2.HTTPStatusError: Client error '402 Payment Required' for url 'https://huggingface.co/api/repos/create'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\python\metalAI\src\metalai\deploy\build_space.py", line 195, in <module>
+    main()
+  File "D:\python\metalAI\src\metalai\deploy\build_space.py", line 191, in main
+    push(a.repo_id)
+  File "D:\python\metalAI\src\metalai\deploy\build_space.py", line 173, in push
+    api.create_repo(repo_id=repo_id, repo_type="space", space_sdk="gradio", exist_ok=True, private=False)
+  File "D:\python\metalAI\.venv\Lib\site-packages\huggingface_hub\utils\_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\python\metalAI\.venv\Lib\site-packages\huggingface_hub\hf_api.py", line 4781, in create_repo
+    raise err
+  File "D:\python\metalAI\.venv\Lib\site-packages\huggingface_hub\hf_api.py", line 4765, in create_repo
+    hf_raise_for_status(r)
+  File "D:\python\metalAI\.venv\Lib\site-packages\huggingface_hub\utils\_http.py", line 996, in hf_raise_for_status
+    raise _format(HfHubHTTPError, str(e), response) from e
+huggingface_hub.errors.HfHubHTTPError: Client error '402 Payment Required' for url 'https://huggingface.co/api/repos/create' (Request ID: Root=1-6ae399dc-58a9d5632e1c32dd1e480d49;56da741b-2974-453d-b199-2134dc5667d0)
+
+Static Spaces are free for everyone, but hosting Gradio and Docker Spaces on free cpu-basic requires a PRO subscription. Subscribe at https://huggingface.co/pro
+```
+**Metrics:** No remote repository was created; no public URL/runtime to report. Local build remains valid at `deploy_build/hf_space/`.
+**Files produced:** none by the push; build artifacts are git-ignored.
+**Hardware:** n/a.
+**Anything odd:** Hugging Face reports static Spaces remain free, but Gradio and Docker Spaces on `cpu-basic` require PRO.
+**Code changes:** none.
+**Questions for Claude:** please advise whether Madhav will enable Hugging Face PRO for this account or choose a different hosting plan.
