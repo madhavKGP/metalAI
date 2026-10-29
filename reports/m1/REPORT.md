@@ -1,6 +1,6 @@
 # Module 1 - Surface Defect Inspector: results
 
-Generated 2026-10-29T01:25:59 | git 6385545 | numbers = mean ± std over test folds (%, unless stated)
+Generated 2026-10-29T23:46:08 | git 3cce2bd | numbers = mean ± std over test folds (%, unless stated)
 
 ## Data
 
@@ -53,23 +53,29 @@ Generated 2026-10-29T01:25:59 | git 6385545 | numbers = mean ± std over test fo
 | efficientnet_b0 | E003 | [0, 1, 2, 3, 4] | 4.49 ± 1.74 | 9.40 ± 5.94 | 9.29 ± 0.99 | 1.45 ± 0.03 |
 | resnet50 | E002 | [0, 1, 2, 3, 4] | 5.46 ± 1.04 | 7.40 ± 2.51 | 7.31 ± 0.60 | 2.08 ± 0.55 |
 
+### YOLO inner-validation (used for config selection)
+
+| model | exp | folds | val_mAP50 | val_mAP50_95 |
+|---|---|---|---|---|
+| E006 yolov8n | E006 | [0] | 76.05 ± 0.00 | 44.54 ± 0.00 |
+
 ### YOLO detection (test folds)
 
 | model | exp | folds | mAP50 | mAP50_95 | precision | recall |
 |---|---|---|---|---|---|---|
-| E004 yolov8n | E004 | [0] | 74.56 ± 0.00 | 42.54 ± 0.00 | 75.03 ± 0.00 | 70.41 ± 0.00 |
+| E006 yolov8n | E006 | [0] | 72.29 ± 0.00 | 41.26 ± 0.00 | 70.46 ± 0.00 | 68.82 ± 0.00 |
 
 ### YOLO: per-class AP50
 
 | model | exp | folds | AP50_crazing | AP50_inclusion | AP50_patches | AP50_pitted_surface | AP50_rolled-in_scale | AP50_scratches |
 |---|---|---|---|---|---|---|---|---|
-| E004 yolov8n | E004 | [0] | 39.37 ± 0.00 | 87.12 ± 0.00 | 90.78 ± 0.00 | 84.41 ± 0.00 | 55.48 ± 0.00 | 90.23 ± 0.00 |
+| E006 yolov8n | E006 | [0] | 36.69 ± 0.00 | 81.63 ± 0.00 | 89.54 ± 0.00 | 80.69 ± 0.00 | 55.05 ± 0.00 | 90.16 ± 0.00 |
 
 ### YOLO: cost
 
 | model | exp | folds | train_minutes | ms_inference |
 |---|---|---|---|---|
-| E004 yolov8n | E004 | [0] | 22.80 ± 0.00 | 3.38 ± 0.00 |
+| E006 yolov8n | E006 | [0] | 436.20 ± 0.00 | 6.63 ± 0.00 |
 
 ### Summary
 
@@ -80,7 +86,7 @@ Generated 2026-10-29T01:25:59 | git 6385545 | numbers = mean ± std over test fo
 | SVM lbp | 98.11 ± 0.60 | 98.11 ± 0.60 | - | - |
 | efficientnet_b0 | 100.00 ± 0.00 | 100.00 ± 0.00 | - | - |
 | resnet50 | 99.94 ± 0.12 | 99.94 ± 0.12 | - | - |
-| E004 yolov8n | - | - | 74.56 ± 0.00 | 42.54 ± 0.00 |
+| E006 yolov8n | - | - | 72.29 ± 0.00 | 41.26 ± 0.00 |
 
 Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (see decisions.md D-012).
 
@@ -140,6 +146,36 @@ Literature reference: NEU-CLS CNNs ~98-100% acc; NEU-DET YOLOv8n ~73% mAP@0.5 (s
 ![train_confusion_matrix.png](yolo/E004_yolov8n_fold0/train_confusion_matrix.png)
 ![train_confusion_matrix_normalized.png](yolo/E004_yolov8n_fold0/train_confusion_matrix_normalized.png)
 ![train_results.png](yolo/E004_yolov8n_fold0/train_results.png)
+
+### YOLO E005_yolov8n_fold0
+![test_BoxF1_curve.png](yolo/E005_yolov8n_fold0/test_BoxF1_curve.png)
+![test_BoxP_curve.png](yolo/E005_yolov8n_fold0/test_BoxP_curve.png)
+![test_BoxPR_curve.png](yolo/E005_yolov8n_fold0/test_BoxPR_curve.png)
+![test_BoxR_curve.png](yolo/E005_yolov8n_fold0/test_BoxR_curve.png)
+![test_confusion_matrix.png](yolo/E005_yolov8n_fold0/test_confusion_matrix.png)
+![test_confusion_matrix_normalized.png](yolo/E005_yolov8n_fold0/test_confusion_matrix_normalized.png)
+![train_BoxF1_curve.png](yolo/E005_yolov8n_fold0/train_BoxF1_curve.png)
+![train_BoxP_curve.png](yolo/E005_yolov8n_fold0/train_BoxP_curve.png)
+![train_BoxPR_curve.png](yolo/E005_yolov8n_fold0/train_BoxPR_curve.png)
+![train_BoxR_curve.png](yolo/E005_yolov8n_fold0/train_BoxR_curve.png)
+![train_confusion_matrix.png](yolo/E005_yolov8n_fold0/train_confusion_matrix.png)
+![train_confusion_matrix_normalized.png](yolo/E005_yolov8n_fold0/train_confusion_matrix_normalized.png)
+![train_results.png](yolo/E005_yolov8n_fold0/train_results.png)
+
+### YOLO E006_yolov8n_fold0
+![test_BoxF1_curve.png](yolo/E006_yolov8n_fold0/test_BoxF1_curve.png)
+![test_BoxP_curve.png](yolo/E006_yolov8n_fold0/test_BoxP_curve.png)
+![test_BoxPR_curve.png](yolo/E006_yolov8n_fold0/test_BoxPR_curve.png)
+![test_BoxR_curve.png](yolo/E006_yolov8n_fold0/test_BoxR_curve.png)
+![test_confusion_matrix.png](yolo/E006_yolov8n_fold0/test_confusion_matrix.png)
+![test_confusion_matrix_normalized.png](yolo/E006_yolov8n_fold0/test_confusion_matrix_normalized.png)
+![train_BoxF1_curve.png](yolo/E006_yolov8n_fold0/train_BoxF1_curve.png)
+![train_BoxP_curve.png](yolo/E006_yolov8n_fold0/train_BoxP_curve.png)
+![train_BoxPR_curve.png](yolo/E006_yolov8n_fold0/train_BoxPR_curve.png)
+![train_BoxR_curve.png](yolo/E006_yolov8n_fold0/train_BoxR_curve.png)
+![train_confusion_matrix.png](yolo/E006_yolov8n_fold0/train_confusion_matrix.png)
+![train_confusion_matrix_normalized.png](yolo/E006_yolov8n_fold0/train_confusion_matrix_normalized.png)
+![train_results.png](yolo/E006_yolov8n_fold0/train_results.png)
 
 ## Observations (OpenCode fills in, Claude reviews)
 

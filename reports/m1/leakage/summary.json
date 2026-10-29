@@ -1,0 +1,8 @@
+{
+  "max_dist": 6,
+  "pairs_total": 9565,
+  "pairs_cross_fold": 7699,
+  "pairs_cross_fold_pixel_mae_lt_5": 5,
+  "images_in_cross_fold_pairs": 495,
+  "pairs_with_different_labels": 6636
+}

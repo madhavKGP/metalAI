@@ -3,6 +3,9 @@
 access_token
 kaggle.json
 
+deploy_build/
+hf_token
+
 __pycache__/
 *.pyc
 .venv/

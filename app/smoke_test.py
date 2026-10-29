@@ -27,14 +27,14 @@ picks = man.groupby("label").head(1)
 log = []
 for r in picks.itertuples():
     rgb = cv2.cvtColor(cv2.imread(str(PROC / "neu" / r.path)), cv2.COLOR_BGR2RGB)
-    det, probs, cam, text = app.inspect(rgb, 0.25)  # only the pixel array is passed (decisions.md D-010)
+    _, det, cam, probs = app.inspect(rgb, 0.25)  # inspect() returns (verdict_html, det_img, cam, labels)
     if det is not None:
         cv2.imwrite(str(OUT / f"{r.image_id}_det.png"), cv2.cvtColor(det, cv2.COLOR_RGB2BGR))
     if cam is not None:
         cv2.imwrite(str(OUT / f"{r.image_id}_cam.png"), cv2.cvtColor(cam, cv2.COLOR_RGB2BGR))
     top = max(probs, key=probs.get) if probs else None
     log.append({"image_id": r.image_id, "true": r.label, "cnn_top": top,
-                "cnn_conf": probs[top] if top else None, "text": text})
+                "cnn_conf": probs[top] if top else None, "text": probs})
     print(f"{r.image_id}: true={r.label} cnn={top}")
 save_json(log, OUT / "app_smoke.json")
 print(f"OK - outputs in {OUT}")

@@ -1,5 +1,4 @@
 exp_id,timestamp,git_commit,model,fold,epochs_run,best_epoch,train_minutes,batch_size,img_size,lr,device,peak_vram_gb,test_loss,ms_per_img_bs1,accuracy,macro_f1,f1_crazing,f1_inclusion,f1_patches,f1_pitted_surface,f1_rolled-in_scale,f1_scratches
-SMOKE,2026-10-28T23:04:04,54d2a14,resnet50,0,1,1,0.45,32,224,0.0003,NVIDIA GeForce RTX 4060 Laptop GPU,2.69,0.1807,6.48,0.9694444444444444,0.9692500013355629,0.9090909090909091,0.9915966386554622,0.9230769230769231,0.9917355371900827,1.0,1.0
 E002,2026-10-28T23:15:14,25b8fc2,resnet50,0,11,5,4.44,32,224,0.0003,NVIDIA GeForce RTX 4060 Laptop GPU,2.69,0.0756,6.51,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
 E003,2026-10-28T23:24:18,25b8fc2,efficientnet_b0,0,24,18,7.05,32,224,0.0003,NVIDIA GeForce RTX 4060 Laptop GPU,1.49,0.0833,8.7,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
 E002,2026-10-29T00:51:19,6385545,resnet50,1,12,6,4.91,32,224,0.0003,NVIDIA GeForce RTX 4060 Laptop GPU,2.69,0.078,8.1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0

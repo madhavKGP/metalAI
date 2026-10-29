@@ -1,0 +1,13 @@
+file,image_id,true_label
+sample_01.png,crazing_101,crazing
+sample_02.png,crazing_106,crazing
+sample_03.png,inclusion_105,inclusion
+sample_04.png,inclusion_122,inclusion
+sample_05.png,patches_108,patches
+sample_06.png,patches_115,patches
+sample_07.png,pitted_surface_108,pitted_surface
+sample_08.png,pitted_surface_11,pitted_surface
+sample_09.png,rolled-in_scale_103,rolled-in_scale
+sample_10.png,rolled-in_scale_110,rolled-in_scale
+sample_11.png,scratches_1,scratches
+sample_12.png,scratches_10,scratches

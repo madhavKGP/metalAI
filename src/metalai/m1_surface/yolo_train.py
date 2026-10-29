@@ -74,15 +74,35 @@ def main() -> None:
         run_dir = RUNS / "m1_yolo" / run_name
         last = run_dir / "weights" / "last.pt"
         if a.resume and last.exists():
-            print(f"[resume] continuing {last}")
-            YOLO(str(last)).train(resume=True)
+            import torch
+
+            ck = torch.load(last, map_location="cpu", weights_only=False)
+            ta = ck.get("train_args") or {}
+            if ck.get("epoch", -1) == -1 or not ta.get("data"):
+                # Ultralytics strips finished checkpoints (epoch=-1). Resuming those silently falls back to
+                # default args (coco8!) - so: don't train, just evaluate the existing best.pt below.
+                print(f"[resume] {last} is a finished run -> skipping training, evaluating existing weights")
+                if not (run_dir / "weights" / "best.pt").exists():
+                    raise SystemExit("finished run without best.pt - re-run without --resume")
+            else:
+                print(f"[resume] continuing {last} from epoch {ck.get('epoch')} (data={ta.get('data')})")
+                YOLO(str(last)).train(resume=True)
         else:
             model = YOLO(a.model)
             model.train(data=str(data_yaml), imgsz=a.imgsz, epochs=a.epochs, patience=a.patience, batch=a.batch,
                         device=dev, workers=a.workers, seed=cfg_all["seed"], deterministic=True, amp=True,
                         cache=cache, project=str(RUNS / "m1_yolo"), name=run_name, exist_ok=True, plots=True,
                         verbose=False)
-        train_min = (time.time() - t0) / 60  # note: for --resume this is only the resumed part
+        train_min = (time.time() - t0) / 60
+        try:  # true total training time across resumes = Ultralytics' cumulative 'time' column (seconds)
+            import pandas as pd
+
+            rc = pd.read_csv(run_dir / "results.csv")
+            rc.columns = [c.strip() for c in rc.columns]
+            if "time" in rc:
+                train_min = float(rc["time"].iloc[-1]) / 60
+        except Exception:  # noqa: BLE001
+            pass
         wpath.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(run_dir / "weights" / "best.pt", wpath)
         rep = REPORTS / "m1" / "yolo" / run_name

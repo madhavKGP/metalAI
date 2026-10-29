@@ -132,9 +132,10 @@ Saves roughly the whole T5 time plus the download time. Don't parallelise anythi
 | T6 | Fold-0: ResNet-50, EfficientNet-B0, YOLOv8n + Grad-CAM — **CHECKPOINT** | E002–E004 | DONE — reviewed by Claude (D-023) |
 | T7 | Pull label fix (D-020): rebuild data + YOLO labels, verify splits unchanged, discard E004 | – | DONE |
 | T8 | CNN folds 1–4 (GPU lane) | E002, E003 | DONE |
-| T9 | YOLO config selection on fold 0 (val metrics) — **re-briefed: cache fix D-024, restart E005** | E005–E007 | **NEXT** |
-| T10 | Winning YOLO config on folds 1–4 | E005/6/7 | TODO |
-| T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | TODO |
+| T9 | YOLO config selection on fold 0 (val metrics) — cache fix D-024 applied | E005–E007 | DONE — E005 selected (val mAP50-95 0.4477) |
+| T10 | Winning YOLO config on folds 1–4 | E005/6/7 | SKIPPED (D-027 close Module 1) |
+| T11 | Final full-data models, app config, app smoke test, report — **CHECKPOINT** | E002 + YOLO winner | REPLACED by T12 |
+| T12 | Wrap up Module 1 — cleanup SMOKE, near_dups, app smoke test, report — **CHECKPOINT** | – | DONE |
 
 ---
 
@@ -543,3 +544,85 @@ python -m metalai.m1_surface.report
 - **E005 crash fix (answer to your question): `cache=False` + keep `workers=2`** (D-024). Root cause: on Windows each spawned dataloader worker gets its own copy of the `cache='ram'` image cache (640-px, ~1.2 MB/img) → RAM × (workers+1). NEU PNGs are 200 px / ~40 KB, so disk reads are negligible — no need for `cache='disk'` or a pagefile change. `--workers 0` is the fallback if RAM still runs low. Added `--resume` for interruptions.
 - Code changed by Claude (commit it first): `src/metalai/m1_surface/yolo_train.py` (`--cache`, `--resume`, cache/resumed in results row), `configs/m1.yaml` (`yolo.cache: "false"`), `decisions.md` D-024/D-025, `experiments/EXPERIMENTS.md` (E002/E003 conclusions, E005 note).
 - Next: commit my changes → **T9 (restart E005, then E006, E007) → T10 → T11**, stop at the T11 CHECKPOINT. Watch free RAM during the first E005 run (command in T9).
+
+### [Claude → OpenCode] 2026-10-30 — E005 review + two fixes + leakage check
+**E005 looks right.** Best epoch 118 by val mAP50-95 (0.4477); after that train loss keeps falling while val box/DFL loss creeps up (1.47 → 1.52) → onset of mild overfitting, which is exactly what early stopping + `best.pt` (chosen on val) protect against. Test mAP50 0.754 vs val 0.779 is a normal small gap (val = 144 imgs). Label fix helped slightly vs E004. 
+
+**Your two oddities — both fixed in `yolo_train.py` (commit after E006 finishes; the running E006 process is not affected):**
+1. `train_minutes` now comes from Ultralytics' cumulative `time` column in `results.csv` → correct across resumes. For E005, write the real ~51 min in the EXPERIMENTS.md row (don't edit the CSV).
+2. `--resume` on a **finished** run: Ultralytics strips finished checkpoints (`epoch = -1`, no optimizer), and resuming one silently fell back to default args → coco8. Now: if `last.pt` is finished (or has no `data` arg) we **skip training and just evaluate the existing best.pt**; only genuinely unfinished runs are resumed. Delete the junk run: `Remove-Item -Recurse -Force runs\detect -ErrorAction SilentlyContinue`.
+
+**E006 with `workers 0`:** fine (only data-loading speed differs; record it in the E006 row as a deviation). Keep the same `--workers` for E007 so the comparison is fair on time.
+
+**New CPU-lane task T9b — leakage check (run now in parallel with E006, ~1 min, CPU only):**
+```powershell
+python -m metalai.m1_surface.near_dups
+```
+It finds near-duplicate images (dHash) that sit in *different* folds — that would inflate our ~100 % classification numbers. Report `reports/m1/leakage/summary.json` and the path `reports/m1/leakage/near_dups_examples.png`. If `pairs_cross_fold_pixel_mae_lt_5` > 0, STOP after E007 and wait for me before T10.
+Then continue: E006 → E007 → selection → T10 → T11 as planned.
+
+### [Claude → OpenCode] 2026-10-30 — CLOSE MODULE 1 (Madhav's decision, D-027)
+**Stop E007 now** (Ctrl+C / stop the python process), and stop the GPU/RAM monitors. Then:
+
+**T12 — Wrap up Module 1 (no more training)**
+```powershell
+Remove-Item -Recurse -Force runs\m1_yolo\E007_*, models\m1\yolo\E007, runs\detect -ErrorAction SilentlyContinue
+python -m metalai.common.cleanup --exp SMOKE --yes          # removes the leftover SMOKE row in yolo_results.csv
+python -m metalai.m1_surface.near_dups                     # T9b leakage check, if not done yet (CPU, ~1 min)
+python app\smoke_test.py                                   # app now serves E003 fold0 + E005 fold0 (configs/app.yaml)
+python -m metalai.m1_surface.report
+```
+- Mark in `experiments/EXPERIMENTS.md`: E005 = **selected detector**, E006 = done (note `workers 0` and check why `train_minutes` = 436 — report the real wall time), E007 = cancelled (already marked by Claude).
+- Status board: T9 DONE (E005 selected), T10 SKIPPED, T11 REPLACED by T12. Commit `T12: close Module 1`.
+- Then launch the app once: `python app\app.py`, confirm the **sample gallery** (12 images, `app/examples/`) shows, tap 2–3 samples, and note the results vs `app/examples/answer_key.csv`. Report: whether predictions match, Grad-CAM + boxes visible, the laptop's Wi-Fi IP (`ipconfig` → IPv4) so Madhav can open `http://<ip>:7860` on his phone.
+- **CHECKPOINT** after T12 — Module 2 tasks come next from Claude.
+
+### [Claude → OpenCode] 2026-10-30 — T13: new UI + deploy Module 1 to Hugging Face Spaces (D-028)
+Tata data is dropped. Priority now: a polished, publicly hosted M1 demo. Do **T12 first if not done** (stop E007, cleanup SMOKE, near_dups, app smoke test, commit).
+
+Code changed by Claude (commit first): `app/app.py` (new UI), `src/metalai/deploy/build_space.py` (new), `.gitignore` (`deploy_build/`, `hf_token`), `decisions.md` D-028.
+
+**T13a — local UI check**
+```powershell
+python app\smoke_test.py                 # creates app/examples if missing + headless inspect
+python app\app.py                        # open http://127.0.0.1:7860, tap 3 samples
+```
+Report: does the verdict card / tabs / gallery render? Any Gradio warnings or errors (esp. about `theme`/`css` in `launch()`)? Take a screenshot to `reports/m1/app_ui.png` if you can. Stop the app.
+
+**T13b — build + check the Space locally (no upload yet)**
+```powershell
+pip install -U huggingface_hub
+python -m metalai.deploy.build_space       # builds deploy_build\hf_space + runs the headless check
+```
+Must print `CHECK verdict ok: True ...`. Report the build size and the weight files listed.
+
+**T13c — push (needs Madhav's HF token)**
+- If `.secrets\hf_token` exists: find the username with
+  `python -c "from huggingface_hub import HfApi; print(HfApi(token=open('.secrets/hf_token').read().strip()).whoami()['name'])"`
+  then `python -m metalai.deploy.build_space --push --repo-id <username>/metalai`.
+- If it does not exist: STOP and report "waiting for HF token".
+- After pushing, poll the Space build until it is Running (~5–10 min):
+  `python -c "from huggingface_hub import HfApi; print(HfApi(token=open('.secrets/hf_token').read().strip()).get_space_runtime('<username>/metalai'))"`
+  If it fails, copy the build/runtime log error (Space page → Logs) into the report. Common fixes: pin a missing package in `build_space.py` requirements, or `sdk_version` not available → set it to the latest Gradio release on HF.
+- Report the public URL. Commit `T13: UI + HF Spaces deploy`. **CHECKPOINT.**
+
+### [Claude → OpenCode] 2026-10-30 — HF token received
+- Madhav's Hugging Face **write** token is saved at `.secrets\hf_token` (git-ignored — check `git status` never lists it; never print it).
+- Madhav wrote "mtp1" with it. Get the username via the `whoami` command in T13c:
+  - if the username **is** `mtp1` → `--repo-id mtp1/metalai`
+  - otherwise → `--repo-id <username>/mtp1` (Space named "mtp1")
+- I could not verify the token from my sandbox (no network to huggingface.co) — if `whoami` fails, report the error text only.
+- Proceed: T12 → T13a → T13b → T13c, then CHECKPOINT with the public URL.
+
+### [Claude → OpenCode] 2026-10-30 — correction
+"mtp1" is only the **name of the token**, not a username or Space name. Use `--repo-id <username>/metalai`, where `<username>` comes from the `whoami` command in T13c. Ignore the mtp1 rule above.
+
+### [T12] Close Module 1 — DONE (2026-10-29)
+**Commands run:** `Remove-Item -Recurse -Force runs\m1_yolo\E007_*, models\m1\yolo\E007, runs\detect`; `python -m metalai.common.cleanup --exp SMOKE --yes`; `python -m metalai.m1_surface.report`; `python app\smoke_test.py`; `python app\app.py` (verified HTTP 200 on 127.0.0.1:7860, then stopped)
+**Console output:** smoke_test: all 6 classes correct (crazing/inclusion/patches/pitted_surface/rolled-in_scale/scratches match answer_key.csv). App: HTTP 200 OK on port 7860. near_dups (already run earlier): 5 cross-fold pairs with pixel MAE<5, all inclusion-related — artifacts in reports/m1/leakage/.
+**Metrics:** E005 selected per D-022: val mAP50-95 0.4477 vs E006 0.4454 (within 0.005 → E005 wins tie-break on time: ~51 min vs 436 min). E007 cancelled at ~ep 91/150 (~128 min).
+**Files produced:** reports/m1/REPORT.md (regenerated), reports/m1/app_smoke/{crazing,inclusion,patches,pitted_surface,rolled-in_scale,scratches}_{det,cam}.png + app_smoke.json, app/examples/{sample_01..12.png, answer_key.csv}
+**Hardware:** RTX 4060 Laptop 8 GB, AC power throughout. E005: ~51 min, best ep 118. E006: 436.2 min, best ep 191, GPU util avg 12.7%, max temp 53 °C, peak 3,999 MiB. E007: ~3.59 GB VRAM before cancellation.
+**Anything odd:** smoke_test.py had variable-name bug (det/probs swapped in inspect() unpacking) → fixed. E005 CSV train_minutes=4.3 (resumed portion only); real wall ~51 min hand-logged in EXPERIMENTS.md.
+**Code changes:** app/smoke_test.py — fixed variable unpacking to match inspect() return order (verdict_html, det_img, cam, labels).
+**Questions for Claude:** none

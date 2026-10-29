@@ -1,0 +1,86 @@
+[
+  {
+    "image_id": "crazing_1",
+    "true": "crazing",
+    "cnn_top": "Crazing",
+    "cnn_conf": 0.9147099256515503,
+    "text": {
+      "Crazing": 0.9147099256515503,
+      "Inclusion": 0.016404977068305016,
+      "Patches": 0.01694047823548317,
+      "Pitted surface": 0.014050276950001717,
+      "Rolled-in scale": 0.01816742494702339,
+      "Scratches": 0.019726959988474846
+    }
+  },
+  {
+    "image_id": "inclusion_1",
+    "true": "inclusion",
+    "cnn_top": "Inclusion",
+    "cnn_conf": 0.8825531601905823,
+    "text": {
+      "Crazing": 0.023404322564601898,
+      "Inclusion": 0.8825531601905823,
+      "Patches": 0.024786626920104027,
+      "Pitted surface": 0.016563596203923225,
+      "Rolled-in scale": 0.02873670682311058,
+      "Scratches": 0.023955564945936203
+    }
+  },
+  {
+    "image_id": "patches_1",
+    "true": "patches",
+    "cnn_top": "Patches",
+    "cnn_conf": 0.9376174211502075,
+    "text": {
+      "Crazing": 0.012478717602789402,
+      "Inclusion": 0.012743092142045498,
+      "Patches": 0.9376174211502075,
+      "Pitted surface": 0.011858830228447914,
+      "Rolled-in scale": 0.011274797841906548,
+      "Scratches": 0.014027182944118977
+    }
+  },
+  {
+    "image_id": "pitted_surface_1",
+    "true": "pitted_surface",
+    "cnn_top": "Pitted surface",
+    "cnn_conf": 0.9181666970252991,
+    "text": {
+      "Crazing": 0.01614616997539997,
+      "Inclusion": 0.015841379761695862,
+      "Patches": 0.0165494903922081,
+      "Pitted surface": 0.9181666970252991,
+      "Rolled-in scale": 0.014571602456271648,
+      "Scratches": 0.018724659457802773
+    }
+  },
+  {
+    "image_id": "rolled-in_scale_1",
+    "true": "rolled-in_scale",
+    "cnn_top": "Rolled-in scale",
+    "cnn_conf": 0.9363828301429749,
+    "text": {
+      "Crazing": 0.012661281041800976,
+      "Inclusion": 0.01171609852463007,
+      "Patches": 0.013275223784148693,
+      "Pitted surface": 0.012849369086325169,
+      "Rolled-in scale": 0.9363828301429749,
+      "Scratches": 0.013115270994603634
+    }
+  },
+  {
+    "image_id": "scratches_1",
+    "true": "scratches",
+    "cnn_top": "Scratches",
+    "cnn_conf": 0.9121571779251099,
+    "text": {
+      "Crazing": 0.017614981159567833,
+      "Inclusion": 0.012590235099196434,
+      "Patches": 0.01892768405377865,
+      "Pitted surface": 0.017022034153342247,
+      "Rolled-in scale": 0.021688004955649376,
+      "Scratches": 0.9121571779251099
+    }
+  }
+]

@@ -130,5 +130,28 @@ Format: `D-NNN · date · owner · status (Accepted / Proposed / Superseded)`
 - The single ResNet error, `scratches_149` → predicted *inclusion* at 0.50 confidence: Grad-CAM sits on a dark blob next to the scratch, i.e. a locally inclusion-like feature; the classifier was uncertain (0.50 = exactly the app's "uncertain" threshold). Plausible borderline case, not a systematic failure. Useful thesis example.
 - **App classifier = EfficientNet-B0 (E003)**: same/better accuracy, ~half the VRAM, faster → supersedes the earlier plan to serve ResNet-50. ResNet-50 stays as a comparison model.
 
+## D-026 · 2026-10-30 · Claude · Accepted — overfitting / leakage safeguards (summary)
+How we guard against over-optimistic numbers, in one place:
+1. **Held-out test folds** (5-fold CV): every reported number is on images the model never trained on.
+2. **Selection on inner validation only** (D-022): early stopping, best checkpoint and YOLO config choice use the val split, never the test fold.
+3. **Early stopping + best-on-val checkpoint**: E005 shows the expected pattern — val mAP peaks at epoch 118, then val loss rises while train loss falls; `best.pt` is the epoch-118 model.
+4. **Exact duplicate removal** (MD5, D-020) and new **near-duplicate check across folds** (`near_dups.py`, dHash) — NEU-CLS ~100 % accuracy must not come from near-identical images in train and test.
+5. **Known limitation (not overfitting in the CV sense, but dataset bias):** all NEU images come from one line/camera; 100 % here ≠ 100 % in another mill. Tested in Part 2 (train NEU → test GC10-DET).
+- Also fixed: `--resume` on a finished Ultralytics run fell back to default coco8 args; now detected and skipped. `train_minutes` now read from results.csv cumulative time.
+
+## D-027 · 2026-10-30 · Madhav/Claude · Accepted — close Module 1 (no more YOLO tuning)
+- Goal is an impressive, honest **demo + thesis**, not leaderboard numbers. More YOLO tuning won't improve the demo.
+- **E007 (YOLOv8s) cancelled**; **T10 (YOLO folds 1–4) skipped**. YOLO is reported on fold 0 only, with that caveat stated in the thesis. E005 is the detector (best fold-0 val mAP50-95 0.448; E006 300-epoch run did not help: 0.445 → longer training ≠ better).
+- **App serves fold-0 models** (CNN E003 EfficientNet-B0 fold0, YOLO E005 fold0) instead of full-data retrains, so the app's **sample gallery = fold-0 held-out test images** (2 per class, `app/examples/`, answer key kept separately). Professor can tap real steel images the model has never seen. Full-data retrain (old T11 plan) dropped.
+- Phone access: `app.py` binds 0.0.0.0 (same Wi-Fi via laptop IP) and `METALAI_SHARE=1` gives a public link. Live phone photos of arbitrary objects are **out of scope** for NEU models (D-023/limitations); a phone-photo dataset is a possible later extension.
+- Next: Module 2 (Steel Property Predictor & Designer).
+
+## D-028 · 2026-10-30 · Madhav/Claude · Accepted — UI + free deployment of Module 1
+- **Tata Steel CCT data: not used** (email marks it confidential / do-not-share; Madhav chose to drop it). M2 direction pending.
+- **UI:** `app/app.py` redesigned (Gradio): hero header, verdict card (defect name, confidence bar, located-region chips, "uncertain" warning < 0.5), tabs *Where? (YOLO boxes) / Why? (Grad-CAM) / All classes*, sample gallery (fold-0 held-out test images), auto-inspect on tap, model card + limitations accordions. Model-card numbers are generated from `results/m1/*.csv` (never typed).
+- **Hosting: Hugging Face Spaces, free CPU tier** (Gradio SDK, public URL, works on phones). Rejected: Render/Railway free tiers (sleep, small RAM for torch), Streamlit Cloud (would need a rewrite), gradio.live share links (expire after 72 h — fine for a quick demo only).
+- `python -m metalai.deploy.build_space [--push --repo-id <user>/metalai]` builds a self-contained Space in `deploy_build/hf_space/` (git-ignored): inference-only source subset, served weights only (EfficientNet-B0 E003 fold0 ≈ 16 MB, YOLOv8n E005 fold0 ≈ 6 MB), CPU-only torch wheels, `packages.txt` for libGL, README with Space config; runs a headless check before pushing. HF token lives in `.secrets/hf_token` (git-ignored).
+- NEU images in the gallery: dataset licence is "unknown" on Kaggle — acceptable for a non-commercial academic demo with citation; remove the gallery if anyone objects.
+
 ## D-014 · 2026-10-28 · Claude · Accepted
 **Sandbox verification done before hand-off:** `prepare_data`, `splits`, `eda`, `classical`, `yolo_data`, `report` were executed end-to-end on a synthetic NEU-like dataset (180 fake images) — all ran and produced figures. `cnn`, `gradcam`, `yolo_train`, `app` were syntax-checked only (no torch/GPU in sandbox) → OpenCode runs a 1-epoch smoke test first (T4).

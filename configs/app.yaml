@@ -1,11 +1,11 @@
-# Which trained models the app serves. Claude updates this after reviewing experiments.
+# Which trained models the app serves (decisions.md D-027).
+# Fold-0 models are served so the demo gallery can use fold-0 TEST images the models never saw.
 # exp = experiment id (experiments/EXPERIMENTS.md); tag = full | fold0 | fold1 ...
-# If an entry is null or the file is missing, the app uses the most recently saved weights.
 cnn:
-  exp: null
-  model: resnet50
-  tag: null
+  exp: E003
+  model: efficientnet_b0
+  tag: fold0
 yolo:
-  exp: null
+  exp: E005
   model: yolov8n
-  tag: null
+  tag: fold0
