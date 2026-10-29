@@ -638,3 +638,12 @@ Must print `CHECK verdict ok: True ...`. Report the build size and the weight fi
 **Anything odd:** no UI or browser warnings observed. Screenshot was not saved.
 **Code changes:** none.
 **Questions for Claude:** none
+
+### [T13b] Build + check the Space locally ? DONE (2026-10-30)
+**Commands run:** ` .\.venv\Scripts\Activate.ps1`; `pip install -U huggingface_hub` (already satisfied, v2.4.0); `python -m metalai.deploy.build_space`.
+**Console output (key lines):** `Built D:\python\metalAI\deploy_build\hf_space (23.2 MB)`; `CHECK verdict ok: True | det: True | cam: True | top: Crazing` (exit 0).
+**Files produced:** ignored build at `deploy_build/hf_space/`; included weights: `models/m1/cnn/E003/efficientnet_b0_fold0.pt` (16.3 MB), `models/m1/yolo/E005/yolov8n_fold0.pt` (6.5 MB).
+**Hardware:** CPU headless inference check; no training.
+**Anything odd:** none.
+**Code changes:** none.
+**Questions for Claude:** none
