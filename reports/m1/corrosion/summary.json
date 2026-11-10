@@ -1,0 +1,43 @@
+{
+  "n_files": 3230,
+  "n_label_conflict_photos": 3,
+  "n_label_conflict_files_dropped": 7,
+  "n_exact_duplicates_dropped": 43,
+  "n_kept": 3180,
+  "n_images": 3180,
+  "per_class": {
+    "fair": 1247,
+    "severe": 927,
+    "poor": 726,
+    "good": 280
+  },
+  "n_groups": 1098,
+  "4class_grouped": {
+    "accuracy_mean": 0.45943396226415095,
+    "accuracy_std": 0.027400928554436727,
+    "macro_f1_mean": 0.434246959322888,
+    "macro_f1_std": 0.025110846764480447,
+    "majority_baseline": 0.39213836477987424
+  },
+  "4class_random": {
+    "accuracy_mean": 0.5147798742138365,
+    "accuracy_std": 0.030742914225044715,
+    "macro_f1_mean": 0.48608736050519513,
+    "macro_f1_std": 0.02240308970462678,
+    "majority_baseline": 0.39213836477987424
+  },
+  "binary_grouped": {
+    "accuracy_mean": 0.7248405407441424,
+    "accuracy_std": 0.03709098174775658,
+    "macro_f1_mean": 0.7245805551298665,
+    "macro_f1_std": 0.03699270988723044,
+    "majority_baseline": 0.519811320754717
+  },
+  "binary_random": {
+    "accuracy_mean": 0.7427672955974843,
+    "accuracy_std": 0.02261091573867617,
+    "macro_f1_mean": 0.7424855779290445,
+    "macro_f1_std": 0.02252498937238753,
+    "majority_baseline": 0.519811320754717
+  }
+}
