@@ -69,12 +69,31 @@ CARD = find_model_card()
 
 
 # ----------------------------------------------------------------------------- inference
-def verdict_html(probs: dict | None, dets: list, ms_total: float | None) -> str:
+# Out-of-scope guards (decisions.md D-032). No trained weights needed.
+# Every NEU image has grey-level std >= 5.97 (median 23.4), so std < 3 means a blank, textureless image.
+LOW_CONTRAST_STD = 3.0
+
+
+def scope_flags(gray, probs: dict | None, dets: list) -> list[str]:
+    flags = []
+    if float(gray.std()) < LOW_CONTRAST_STD:
+        flags.append("almost no surface texture: this does not look like a steel surface image")
+    if probs and dets:
+        top = max(probs, key=probs.get)
+        if top not in {d["class"] for d in dets}:
+            found = ", ".join(sorted({PRETTY[d["class"]] for d in dets}))
+            flags.append(f"classifier says {PRETTY[top]} but the detector found {found}")
+    return flags
+
+
+def verdict_html(probs: dict | None, dets: list, ms_total: float | None, flags: list[str] | None = None) -> str:
     if not probs:
         return "<div class='mai-card'><b>Model not loaded.</b> Train / configure models first.</div>"
     top = max(probs, key=probs.get)
     p = probs[top]
-    uncertain = p < UNCERTAIN_BELOW
+    flags = flags or []
+    blank = any(f.startswith("almost no surface texture") for f in flags)
+    uncertain = p < UNCERTAIN_BELOW or blank
     title = "Uncertain — manual review" if uncertain else PRETTY[top]
     badge = "mai-warn" if uncertain else "mai-ok"
     n_boxes = len(dets)
@@ -85,6 +104,8 @@ def verdict_html(probs: dict | None, dets: list, ms_total: float | None) -> str:
     chips = "".join(f"<span class='mai-chip'>{PRETTY[c]} × {n}</span>" for c, n in by_cls.items())
     info = DEFECT_INFO.get(top, "") if not uncertain else (
         f"Best guess: {PRETTY[top]} ({p:.0%}). The image may be outside what the model was trained on.")
+    if flags:
+        info += "".join(f"<br><span class='mai-warn'>Check: {f}.</span>" for f in flags)
     return f"""
 <div class='mai-card'>
   <div class='mai-label'>Classifier verdict</div>
@@ -98,13 +119,13 @@ def verdict_html(probs: dict | None, dets: list, ms_total: float | None) -> str:
 
 def inspect(image, conf):
     if image is None:
-        return verdict_html(None, [], None), None, None, None
+        return "<div class='mai-card'><b>Please upload an image</b> or tap a sample below.</div>", None, None, None
     gray = to_gray_uint8(image)
     probs, cam, ms_c = INSPECTOR.classify(gray)
     det_img, dets, ms_d = INSPECTOR.detect(gray, conf)
     ms_total = (ms_c or 0) + (ms_d or 0)
     labels = {PRETTY[k]: v for k, v in probs.items()} if probs else None
-    return verdict_html(probs, dets, ms_total), det_img, cam, labels
+    return verdict_html(probs, dets, ms_total, scope_flags(gray, probs, dets)), det_img, cam, labels
 
 
 # ----------------------------------------------------------------------------- UI
