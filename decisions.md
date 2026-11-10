@@ -160,5 +160,25 @@ How we guard against over-optimistic numbers, in one place:
 - Rejected: Gradio share link (expires after 72 h and needs the laptop on), Render/Koyeb/Cloud Run free tiers (~512 MB RAM — too small for PyTorch), Railway (trial credit only), PythonAnywhere (no ASGI on free).
 - Fallbacks: HF PRO (~$9 for one month, re-run T13c unchanged) or a fully in-browser ONNX version on a free Static Space (more work).
 
+## D-030 · 2026-11-10 · Rishav/Claude · Accepted — scratch vs crack from line shape (E008) + report fix
+- Prof asked to show damage types (cracks, corrosion) from surface/microstructure images. First step with data we already have: **scratch (mechanical) vs crack (material failure)** on NEU scratches vs crazing.
+- Method (`line_features.py`, `scratch_crack.py`): flatten lighting + CLAHE → Sato ridge filter run for dark and bright lines, keep the stronger (so brightness does not decide) → hysteresis threshold → skeleton → 7 shape features (endpoint density, fragments, longest line, orientation coherence, branch density, straightness, width CV) → logistic regression / random forest on the fixed 5 folds. CPU only, ~1 min.
+- Result: **99.67 ± 0.75 %** accuracy for both models; 2 errors (faint scratches broken into pieces).
+- Shortcut check: in NEU, scratches are mostly bright and crazing dark, so polarity alone scores 98 %. The trained model tested on brightness-inverted images keeps 99.67 % (RF) / 99.83 % (logreg) → it uses shape, not brightness.
+- Limits: NEU crazing is a crack *network*, not single micro-cracks; at 200 px crack-tip taper is invisible (width CV, straightness weak); wide bright scratches give ladder skeletons (false branches). No CNN run: EfficientNet E003 already gets 100 % on these classes; the point is an explainable result.
+- **Report fix:** `report.py` kept the latest row per (model, fold), so E004/E005/E006 (all yolov8n fold 0) collapsed to E006 (72.3 %) while the app serves E005 (75.4 %). Now keyed by (exp_id, fold); val table shows all runs, test tables show only the selected run from `configs/app.yaml`.
+- App: empty input now says "Please upload an image" instead of "Model not loaded".
+- Data check: NEU re-prepared from a GitHub mirror (siddhartamukherjee/NEU-DET-Steel-Surface-Defect-Detection) gives the identical manifest (1,799 images, same box counts, same fold ids) as the Kaggle copy.
+
+## D-031 · 2026-11-10 · Rishav/Claude · Accepted — first corrosion model on PUBLIC data (E009)
+- Prof wants corrosion shown from surface or microstructure images. No lab access yet, so we start with public, cited data and say so plainly. Downloaded data is never presented as our own lab data.
+- Searched for corrosion datasets (docs/CORROSION_DATA.md). No public, labelled corrosion **micrograph** set found that fits. Best downloadable fit: Jackson (2025) steel bridge corrosion photos (MIT, condition states good/fair/poor/severe).
+- Data hygiene: 43 exact duplicates dropped; 3 photos appear under two different labels (label noise) and are dropped entirely. Weathering class excluded (steel type, not a grade).
+- Leakage guard: file names are camera photo numbers; near-consecutive numbers (gap <= 20) are grouped as one structure/visit and kept in one fold (StratifiedGroupKFold). Random split also reported to measure leakage.
+- Model: same recipe as E001 (LBP + GLCM) plus colour features (HS histogram, Lab stats, rust-hue fraction) -> RBF-SVM, class_weight balanced, inner 3-fold grid search. CPU, ~7 min.
+- Result (grouped 5-fold): **binary corroded vs not 72.5 ± 3.7 %** (majority 52.0 %); **4-class 45.9 ± 2.7 %** (majority 39.2 %, macro-F1 43.4). Random split is 2-6 points higher -> grouping matters.
+- Reading: most 4-class errors are between neighbouring grades (fair/poor, poor/severe); the grades are ordinal and judged by inspectors on whole members, so they are noisy. This is a weak, honest baseline, not a result to oversell. A fine-tuned CNN on GPU (E003 recipe) is the next step for this data.
+- Limits: bridge-scale photos (metres), not microstructure; photos contain date stamps, paint marks, sky and concrete. Corroded vs non-corroded **pits** and corrosion **type from micrographs** need our own samples (planned lab work: 3.5 % NaCl pitting; sensitized stainless + ASTM A262 Practice A oxalic etch for intergranular attack).
+
 ## D-014 · 2026-10-28 · Claude · Accepted
 **Sandbox verification done before hand-off:** `prepare_data`, `splits`, `eda`, `classical`, `yolo_data`, `report` were executed end-to-end on a synthetic NEU-like dataset (180 fake images) — all ran and produced figures. `cnn`, `gradcam`, `yolo_train`, `app` were syntax-checked only (no torch/GPU in sandbox) → OpenCode runs a 1-epoch smoke test first (T4).
