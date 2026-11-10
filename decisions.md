@@ -180,5 +180,13 @@ How we guard against over-optimistic numbers, in one place:
 - Reading: most 4-class errors are between neighbouring grades (fair/poor, poor/severe); the grades are ordinal and judged by inspectors on whole members, so they are noisy. This is a weak, honest baseline, not a result to oversell. A fine-tuned CNN on GPU (E003 recipe) is the next step for this data.
 - Limits: bridge-scale photos (metres), not microstructure; photos contain date stamps, paint marks, sky and concrete. Corroded vs non-corroded **pits** and corrosion **type from micrographs** need our own samples (planned lab work: 3.5 % NaCl pitting; sensitized stainless + ASTM A262 Practice A oxalic etch for intergranular attack).
 
+## D-032 · 2026-11-10 · Rishav/Claude · Accepted — app out-of-scope checks (no retraining)
+- Problem found by probing the live app: a plain grey image got "Patches, 100 %"; a white image with text got "Scratches, 53 %" with no warning.
+- Two checks added in `app/app.py` (`scope_flags`), no trained weights needed:
+  1. **Blank image:** grey-level std < 3 -> verdict becomes "Uncertain - manual review". Every NEU image has std >= 5.97 (median 23.4), so no NEU image can trigger it.
+  2. **Classifier vs detector disagree:** YOLO found boxes but none of them is the classifier's top class -> a visible "Check:" warning. The verdict title is not changed, because the false-alarm rate on real test images is not measured yet (weights are not in the repo).
+- Mock tests: grey image -> uncertain + both warnings; text image -> disagreement warning; NEU-like image with matching boxes -> no warning.
+- Still to do with the weights (Madhav's laptop): measure how often check 2 fires on fold-0 test images; temperature-scale the classifier on validation folds and pick the uncertain threshold from validation data. The Modal app shows these checks only after a redeploy.
+
 ## D-014 · 2026-10-28 · Claude · Accepted
 **Sandbox verification done before hand-off:** `prepare_data`, `splits`, `eda`, `classical`, `yolo_data`, `report` were executed end-to-end on a synthetic NEU-like dataset (180 fake images) — all ran and produced figures. `cnn`, `gradcam`, `yolo_train`, `app` were syntax-checked only (no torch/GPU in sandbox) → OpenCode runs a 1-epoch smoke test first (T4).
