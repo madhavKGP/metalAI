@@ -98,7 +98,7 @@ def verdict_html(probs: dict | None, dets: list, ms_total: float | None) -> str:
 
 def inspect(image, conf):
     if image is None:
-        return verdict_html(None, [], None), None, None, None
+        return "<div class='mai-card'><b>Please upload an image</b> or tap a sample below.</div>", None, None, None
     gray = to_gray_uint8(image)
     probs, cam, ms_c = INSPECTOR.classify(gray)
     det_img, dets, ms_d = INSPECTOR.detect(gray, conf)
