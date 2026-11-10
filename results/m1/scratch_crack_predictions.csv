@@ -1,0 +1,1201 @@
+model,image_id,fold,true,pred,p_crack
+logreg,crazing_101,0,crack (crazing),crack (crazing),0.999
+logreg,crazing_106,0,crack (crazing),crack (crazing),0.9984
+logreg,crazing_109,0,crack (crazing),crack (crazing),0.9978
+logreg,crazing_110,0,crack (crazing),crack (crazing),0.9997
+logreg,crazing_121,0,crack (crazing),crack (crazing),0.9959
+logreg,crazing_126,0,crack (crazing),crack (crazing),0.9997
+logreg,crazing_128,0,crack (crazing),crack (crazing),0.9981
+logreg,crazing_129,0,crack (crazing),crack (crazing),0.9997
+logreg,crazing_131,0,crack (crazing),crack (crazing),0.9953
+logreg,crazing_133,0,crack (crazing),crack (crazing),0.9983
+logreg,crazing_152,0,crack (crazing),crack (crazing),0.9948
+logreg,crazing_154,0,crack (crazing),crack (crazing),0.9975
+logreg,crazing_155,0,crack (crazing),crack (crazing),0.993
+logreg,crazing_158,0,crack (crazing),crack (crazing),0.9994
+logreg,crazing_159,0,crack (crazing),crack (crazing),0.9999
+logreg,crazing_160,0,crack (crazing),crack (crazing),0.9993
+logreg,crazing_173,0,crack (crazing),crack (crazing),0.9844
+logreg,crazing_179,0,crack (crazing),crack (crazing),0.9941
+logreg,crazing_18,0,crack (crazing),crack (crazing),0.9993
+logreg,crazing_184,0,crack (crazing),crack (crazing),0.9995
+logreg,crazing_185,0,crack (crazing),crack (crazing),0.9942
+logreg,crazing_191,0,crack (crazing),crack (crazing),0.9932
+logreg,crazing_196,0,crack (crazing),crack (crazing),0.9966
+logreg,crazing_207,0,crack (crazing),crack (crazing),0.9965
+logreg,crazing_212,0,crack (crazing),crack (crazing),0.9993
+logreg,crazing_224,0,crack (crazing),crack (crazing),0.9973
+logreg,crazing_232,0,crack (crazing),crack (crazing),0.9713
+logreg,crazing_245,0,crack (crazing),crack (crazing),0.9948
+logreg,crazing_246,0,crack (crazing),crack (crazing),0.9622
+logreg,crazing_247,0,crack (crazing),crack (crazing),0.9923
+logreg,crazing_251,0,crack (crazing),crack (crazing),0.9986
+logreg,crazing_255,0,crack (crazing),crack (crazing),0.9976
+logreg,crazing_259,0,crack (crazing),crack (crazing),0.9959
+logreg,crazing_262,0,crack (crazing),crack (crazing),0.9974
+logreg,crazing_27,0,crack (crazing),crack (crazing),0.9881
+logreg,crazing_275,0,crack (crazing),crack (crazing),0.8411
+logreg,crazing_278,0,crack (crazing),crack (crazing),0.8897
+logreg,crazing_28,0,crack (crazing),crack (crazing),0.997
+logreg,crazing_281,0,crack (crazing),crack (crazing),0.999
+logreg,crazing_290,0,crack (crazing),crack (crazing),0.9929
+logreg,crazing_294,0,crack (crazing),crack (crazing),0.9863
+logreg,crazing_297,0,crack (crazing),crack (crazing),0.9581
+logreg,crazing_300,0,crack (crazing),crack (crazing),0.9917
+logreg,crazing_36,0,crack (crazing),crack (crazing),0.9885
+logreg,crazing_40,0,crack (crazing),crack (crazing),0.9891
+logreg,crazing_41,0,crack (crazing),crack (crazing),0.9993
+logreg,crazing_48,0,crack (crazing),crack (crazing),0.9973
+logreg,crazing_53,0,crack (crazing),crack (crazing),0.9967
+logreg,crazing_55,0,crack (crazing),crack (crazing),0.9992
+logreg,crazing_57,0,crack (crazing),crack (crazing),0.9993
+logreg,crazing_6,0,crack (crazing),crack (crazing),0.9471
+logreg,crazing_62,0,crack (crazing),crack (crazing),0.9908
+logreg,crazing_64,0,crack (crazing),crack (crazing),0.9991
+logreg,crazing_66,0,crack (crazing),crack (crazing),0.9985
+logreg,crazing_72,0,crack (crazing),crack (crazing),0.996
+logreg,crazing_73,0,crack (crazing),crack (crazing),0.9997
+logreg,crazing_79,0,crack (crazing),crack (crazing),0.8377
+logreg,crazing_8,0,crack (crazing),crack (crazing),0.9867
+logreg,crazing_82,0,crack (crazing),crack (crazing),0.9998
+logreg,crazing_94,0,crack (crazing),crack (crazing),0.9994
+logreg,scratches_1,0,scratch,scratch,0.0244
+logreg,scratches_10,0,scratch,scratch,0.0087
+logreg,scratches_103,0,scratch,scratch,0.0024
+logreg,scratches_108,0,scratch,scratch,0.0011
+logreg,scratches_121,0,scratch,scratch,0.0013
+logreg,scratches_126,0,scratch,scratch,0.0035
+logreg,scratches_127,0,scratch,scratch,0.0007
+logreg,scratches_130,0,scratch,scratch,0.0011
+logreg,scratches_135,0,scratch,scratch,0.0013
+logreg,scratches_143,0,scratch,scratch,0.0002
+logreg,scratches_144,0,scratch,scratch,0.0003
+logreg,scratches_15,0,scratch,scratch,0.0546
+logreg,scratches_17,0,scratch,scratch,0.0131
+logreg,scratches_177,0,scratch,scratch,0.0006
+logreg,scratches_178,0,scratch,scratch,0.0011
+logreg,scratches_186,0,scratch,scratch,0.0005
+logreg,scratches_188,0,scratch,scratch,0.0002
+logreg,scratches_190,0,scratch,scratch,0.0006
+logreg,scratches_192,0,scratch,scratch,0.0012
+logreg,scratches_196,0,scratch,scratch,0.0013
+logreg,scratches_199,0,scratch,scratch,0.0009
+logreg,scratches_2,0,scratch,scratch,0.0043
+logreg,scratches_205,0,scratch,scratch,0.0003
+logreg,scratches_211,0,scratch,scratch,0.0003
+logreg,scratches_216,0,scratch,scratch,0.0002
+logreg,scratches_220,0,scratch,scratch,0.0007
+logreg,scratches_223,0,scratch,scratch,0.0096
+logreg,scratches_225,0,scratch,scratch,0.0021
+logreg,scratches_235,0,scratch,scratch,0.0026
+logreg,scratches_236,0,scratch,scratch,0.0061
+logreg,scratches_247,0,scratch,scratch,0.1123
+logreg,scratches_26,0,scratch,scratch,0.0036
+logreg,scratches_262,0,scratch,scratch,0.0002
+logreg,scratches_265,0,scratch,scratch,0.0002
+logreg,scratches_267,0,scratch,scratch,0.005
+logreg,scratches_270,0,scratch,scratch,0.0004
+logreg,scratches_277,0,scratch,scratch,0.0002
+logreg,scratches_278,0,scratch,scratch,0.0011
+logreg,scratches_279,0,scratch,scratch,0.0001
+logreg,scratches_281,0,scratch,scratch,0.0474
+logreg,scratches_291,0,scratch,scratch,0.0001
+logreg,scratches_293,0,scratch,scratch,0.0361
+logreg,scratches_295,0,scratch,scratch,0.0018
+logreg,scratches_300,0,scratch,scratch,0.0043
+logreg,scratches_31,0,scratch,scratch,0.0085
+logreg,scratches_37,0,scratch,scratch,0.0003
+logreg,scratches_43,0,scratch,scratch,0.0013
+logreg,scratches_49,0,scratch,scratch,0.0001
+logreg,scratches_51,0,scratch,scratch,0.0007
+logreg,scratches_52,0,scratch,scratch,0.0002
+logreg,scratches_6,0,scratch,scratch,0.0002
+logreg,scratches_62,0,scratch,scratch,0.0
+logreg,scratches_63,0,scratch,scratch,0.0001
+logreg,scratches_69,0,scratch,scratch,0.0006
+logreg,scratches_79,0,scratch,scratch,0.0006
+logreg,scratches_85,0,scratch,scratch,0.0006
+logreg,scratches_87,0,scratch,scratch,0.0046
+logreg,scratches_9,0,scratch,scratch,0.002
+logreg,scratches_90,0,scratch,scratch,0.0003
+logreg,scratches_92,0,scratch,scratch,0.0002
+logreg,crazing_105,1,crack (crazing),crack (crazing),0.9988
+logreg,crazing_117,1,crack (crazing),crack (crazing),0.9955
+logreg,crazing_118,1,crack (crazing),crack (crazing),0.9955
+logreg,crazing_120,1,crack (crazing),crack (crazing),0.9918
+logreg,crazing_130,1,crack (crazing),crack (crazing),0.9999
+logreg,crazing_132,1,crack (crazing),crack (crazing),0.9998
+logreg,crazing_134,1,crack (crazing),crack (crazing),0.9999
+logreg,crazing_135,1,crack (crazing),crack (crazing),0.9995
+logreg,crazing_136,1,crack (crazing),crack (crazing),0.9993
+logreg,crazing_138,1,crack (crazing),crack (crazing),0.9982
+logreg,crazing_139,1,crack (crazing),crack (crazing),0.9975
+logreg,crazing_14,1,crack (crazing),crack (crazing),0.9988
+logreg,crazing_142,1,crack (crazing),crack (crazing),0.9952
+logreg,crazing_147,1,crack (crazing),crack (crazing),0.9995
+logreg,crazing_15,1,crack (crazing),crack (crazing),0.9989
+logreg,crazing_150,1,crack (crazing),crack (crazing),0.9997
+logreg,crazing_162,1,crack (crazing),crack (crazing),0.9998
+logreg,crazing_168,1,crack (crazing),crack (crazing),0.9993
+logreg,crazing_169,1,crack (crazing),crack (crazing),0.9981
+logreg,crazing_17,1,crack (crazing),crack (crazing),0.9995
+logreg,crazing_175,1,crack (crazing),crack (crazing),0.9944
+logreg,crazing_176,1,crack (crazing),crack (crazing),0.997
+logreg,crazing_177,1,crack (crazing),crack (crazing),0.994
+logreg,crazing_178,1,crack (crazing),crack (crazing),0.9992
+logreg,crazing_181,1,crack (crazing),crack (crazing),0.9999
+logreg,crazing_182,1,crack (crazing),crack (crazing),0.9988
+logreg,crazing_189,1,crack (crazing),crack (crazing),0.998
+logreg,crazing_190,1,crack (crazing),crack (crazing),0.988
+logreg,crazing_198,1,crack (crazing),crack (crazing),0.9979
+logreg,crazing_20,1,crack (crazing),crack (crazing),0.8866
+logreg,crazing_202,1,crack (crazing),crack (crazing),0.9994
+logreg,crazing_217,1,crack (crazing),crack (crazing),0.9998
+logreg,crazing_219,1,crack (crazing),crack (crazing),1.0
+logreg,crazing_225,1,crack (crazing),crack (crazing),0.9993
+logreg,crazing_231,1,crack (crazing),crack (crazing),0.9895
+logreg,crazing_233,1,crack (crazing),crack (crazing),0.9795
+logreg,crazing_235,1,crack (crazing),crack (crazing),0.9966
+logreg,crazing_240,1,crack (crazing),crack (crazing),0.9986
+logreg,crazing_242,1,crack (crazing),crack (crazing),0.9956
+logreg,crazing_252,1,crack (crazing),crack (crazing),0.9788
+logreg,crazing_256,1,crack (crazing),crack (crazing),0.9993
+logreg,crazing_265,1,crack (crazing),crack (crazing),0.9942
+logreg,crazing_269,1,crack (crazing),crack (crazing),0.9991
+logreg,crazing_270,1,crack (crazing),crack (crazing),0.9864
+logreg,crazing_287,1,crack (crazing),crack (crazing),0.9977
+logreg,crazing_291,1,crack (crazing),crack (crazing),0.9985
+logreg,crazing_293,1,crack (crazing),crack (crazing),0.9992
+logreg,crazing_32,1,crack (crazing),crack (crazing),0.9944
+logreg,crazing_33,1,crack (crazing),crack (crazing),0.9995
+logreg,crazing_42,1,crack (crazing),crack (crazing),0.9911
+logreg,crazing_54,1,crack (crazing),crack (crazing),0.9993
+logreg,crazing_59,1,crack (crazing),crack (crazing),0.9998
+logreg,crazing_60,1,crack (crazing),crack (crazing),0.9972
+logreg,crazing_63,1,crack (crazing),crack (crazing),0.9957
+logreg,crazing_67,1,crack (crazing),crack (crazing),0.9944
+logreg,crazing_9,1,crack (crazing),crack (crazing),0.9988
+logreg,crazing_90,1,crack (crazing),crack (crazing),0.9992
+logreg,crazing_96,1,crack (crazing),crack (crazing),0.9987
+logreg,crazing_97,1,crack (crazing),crack (crazing),0.988
+logreg,crazing_99,1,crack (crazing),crack (crazing),0.9965
+logreg,scratches_102,1,scratch,scratch,0.0033
+logreg,scratches_106,1,scratch,scratch,0.0031
+logreg,scratches_115,1,scratch,scratch,0.0004
+logreg,scratches_116,1,scratch,scratch,0.0005
+logreg,scratches_118,1,scratch,scratch,0.0002
+logreg,scratches_119,1,scratch,scratch,0.0001
+logreg,scratches_12,1,scratch,scratch,0.1564
+logreg,scratches_132,1,scratch,scratch,0.0016
+logreg,scratches_133,1,scratch,scratch,0.0008
+logreg,scratches_134,1,scratch,scratch,0.0005
+logreg,scratches_142,1,scratch,scratch,0.0002
+logreg,scratches_150,1,scratch,scratch,0.0007
+logreg,scratches_154,1,scratch,scratch,0.0024
+logreg,scratches_158,1,scratch,scratch,0.0003
+logreg,scratches_16,1,scratch,crack (crazing),0.7657
+logreg,scratches_172,1,scratch,scratch,0.0005
+logreg,scratches_175,1,scratch,scratch,0.0004
+logreg,scratches_184,1,scratch,scratch,0.0001
+logreg,scratches_19,1,scratch,scratch,0.001
+logreg,scratches_198,1,scratch,scratch,0.0008
+logreg,scratches_202,1,scratch,scratch,0.1263
+logreg,scratches_209,1,scratch,scratch,0.0011
+logreg,scratches_214,1,scratch,scratch,0.0002
+logreg,scratches_217,1,scratch,scratch,0.0006
+logreg,scratches_218,1,scratch,scratch,0.0058
+logreg,scratches_22,1,scratch,scratch,0.0183
+logreg,scratches_228,1,scratch,scratch,0.0005
+logreg,scratches_239,1,scratch,scratch,0.0036
+logreg,scratches_245,1,scratch,scratch,0.0011
+logreg,scratches_249,1,scratch,scratch,0.0011
+logreg,scratches_251,1,scratch,scratch,0.0005
+logreg,scratches_252,1,scratch,scratch,0.0005
+logreg,scratches_254,1,scratch,scratch,0.0009
+logreg,scratches_256,1,scratch,scratch,0.0002
+logreg,scratches_257,1,scratch,scratch,0.0003
+logreg,scratches_259,1,scratch,scratch,0.0006
+logreg,scratches_260,1,scratch,scratch,0.0004
+logreg,scratches_266,1,scratch,scratch,0.0006
+logreg,scratches_269,1,scratch,scratch,0.0012
+logreg,scratches_286,1,scratch,scratch,0.0023
+logreg,scratches_296,1,scratch,scratch,0.0098
+logreg,scratches_297,1,scratch,scratch,0.0081
+logreg,scratches_299,1,scratch,scratch,0.0005
+logreg,scratches_33,1,scratch,scratch,0.0173
+logreg,scratches_38,1,scratch,scratch,0.0004
+logreg,scratches_4,1,scratch,scratch,0.0014
+logreg,scratches_40,1,scratch,scratch,0.0005
+logreg,scratches_45,1,scratch,scratch,0.0005
+logreg,scratches_46,1,scratch,scratch,0.0002
+logreg,scratches_55,1,scratch,scratch,0.0001
+logreg,scratches_59,1,scratch,scratch,0.0002
+logreg,scratches_70,1,scratch,scratch,0.0006
+logreg,scratches_72,1,scratch,scratch,0.0293
+logreg,scratches_73,1,scratch,crack (crazing),0.5389
+logreg,scratches_74,1,scratch,scratch,0.0145
+logreg,scratches_75,1,scratch,scratch,0.0087
+logreg,scratches_81,1,scratch,scratch,0.0002
+logreg,scratches_83,1,scratch,scratch,0.0251
+logreg,scratches_86,1,scratch,scratch,0.0005
+logreg,scratches_98,1,scratch,scratch,0.0015
+logreg,crazing_100,2,crack (crazing),crack (crazing),0.9946
+logreg,crazing_107,2,crack (crazing),crack (crazing),0.8696
+logreg,crazing_115,2,crack (crazing),crack (crazing),0.9954
+logreg,crazing_116,2,crack (crazing),crack (crazing),0.9989
+logreg,crazing_124,2,crack (crazing),crack (crazing),0.999
+logreg,crazing_127,2,crack (crazing),crack (crazing),0.997
+logreg,crazing_145,2,crack (crazing),crack (crazing),0.9927
+logreg,crazing_157,2,crack (crazing),crack (crazing),0.9985
+logreg,crazing_163,2,crack (crazing),crack (crazing),0.9737
+logreg,crazing_166,2,crack (crazing),crack (crazing),0.9438
+logreg,crazing_171,2,crack (crazing),crack (crazing),0.9978
+logreg,crazing_172,2,crack (crazing),crack (crazing),0.9992
+logreg,crazing_174,2,crack (crazing),crack (crazing),0.9933
+logreg,crazing_186,2,crack (crazing),crack (crazing),0.9915
+logreg,crazing_187,2,crack (crazing),crack (crazing),0.9945
+logreg,crazing_195,2,crack (crazing),crack (crazing),0.9996
+logreg,crazing_199,2,crack (crazing),crack (crazing),0.9978
+logreg,crazing_203,2,crack (crazing),crack (crazing),0.9638
+logreg,crazing_208,2,crack (crazing),crack (crazing),0.9908
+logreg,crazing_21,2,crack (crazing),crack (crazing),0.9941
+logreg,crazing_210,2,crack (crazing),crack (crazing),0.9991
+logreg,crazing_213,2,crack (crazing),crack (crazing),0.9997
+logreg,crazing_216,2,crack (crazing),crack (crazing),0.997
+logreg,crazing_218,2,crack (crazing),crack (crazing),0.9991
+logreg,crazing_221,2,crack (crazing),crack (crazing),0.983
+logreg,crazing_222,2,crack (crazing),crack (crazing),0.9934
+logreg,crazing_223,2,crack (crazing),crack (crazing),0.9993
+logreg,crazing_226,2,crack (crazing),crack (crazing),0.9894
+logreg,crazing_227,2,crack (crazing),crack (crazing),0.9975
+logreg,crazing_228,2,crack (crazing),crack (crazing),0.9921
+logreg,crazing_230,2,crack (crazing),crack (crazing),0.9919
+logreg,crazing_237,2,crack (crazing),crack (crazing),0.9767
+logreg,crazing_244,2,crack (crazing),crack (crazing),0.9903
+logreg,crazing_248,2,crack (crazing),crack (crazing),0.9855
+logreg,crazing_250,2,crack (crazing),crack (crazing),0.9798
+logreg,crazing_258,2,crack (crazing),crack (crazing),0.9981
+logreg,crazing_260,2,crack (crazing),crack (crazing),0.9694
+logreg,crazing_268,2,crack (crazing),crack (crazing),0.9022
+logreg,crazing_271,2,crack (crazing),crack (crazing),0.9955
+logreg,crazing_280,2,crack (crazing),crack (crazing),0.991
+logreg,crazing_283,2,crack (crazing),crack (crazing),0.9724
+logreg,crazing_286,2,crack (crazing),crack (crazing),0.9995
+logreg,crazing_288,2,crack (crazing),crack (crazing),0.9955
+logreg,crazing_289,2,crack (crazing),crack (crazing),0.9971
+logreg,crazing_296,2,crack (crazing),crack (crazing),0.9926
+logreg,crazing_298,2,crack (crazing),crack (crazing),0.9946
+logreg,crazing_30,2,crack (crazing),crack (crazing),0.9953
+logreg,crazing_47,2,crack (crazing),crack (crazing),0.9992
+logreg,crazing_5,2,crack (crazing),crack (crazing),0.9224
+logreg,crazing_56,2,crack (crazing),crack (crazing),0.9966
+logreg,crazing_58,2,crack (crazing),crack (crazing),0.9979
+logreg,crazing_68,2,crack (crazing),crack (crazing),0.9938
+logreg,crazing_7,2,crack (crazing),crack (crazing),0.9983
+logreg,crazing_74,2,crack (crazing),crack (crazing),0.9902
+logreg,crazing_78,2,crack (crazing),crack (crazing),0.9965
+logreg,crazing_83,2,crack (crazing),crack (crazing),0.9935
+logreg,crazing_87,2,crack (crazing),crack (crazing),0.9974
+logreg,crazing_88,2,crack (crazing),crack (crazing),0.9975
+logreg,crazing_89,2,crack (crazing),crack (crazing),0.986
+logreg,crazing_92,2,crack (crazing),crack (crazing),0.9912
+logreg,scratches_101,2,scratch,scratch,0.0004
+logreg,scratches_104,2,scratch,scratch,0.002
+logreg,scratches_109,2,scratch,scratch,0.0032
+logreg,scratches_11,2,scratch,scratch,0.0075
+logreg,scratches_110,2,scratch,scratch,0.0004
+logreg,scratches_113,2,scratch,scratch,0.0006
+logreg,scratches_114,2,scratch,scratch,0.0004
+logreg,scratches_123,2,scratch,scratch,0.0024
+logreg,scratches_128,2,scratch,scratch,0.0006
+logreg,scratches_138,2,scratch,scratch,0.0012
+logreg,scratches_139,2,scratch,scratch,0.0007
+logreg,scratches_14,2,scratch,scratch,0.0822
+logreg,scratches_146,2,scratch,scratch,0.0002
+logreg,scratches_148,2,scratch,scratch,0.0003
+logreg,scratches_156,2,scratch,scratch,0.0005
+logreg,scratches_163,2,scratch,scratch,0.0006
+logreg,scratches_167,2,scratch,scratch,0.0004
+logreg,scratches_168,2,scratch,scratch,0.1399
+logreg,scratches_170,2,scratch,scratch,0.002
+logreg,scratches_171,2,scratch,scratch,0.0008
+logreg,scratches_173,2,scratch,scratch,0.0011
+logreg,scratches_176,2,scratch,scratch,0.0004
+logreg,scratches_179,2,scratch,scratch,0.0018
+logreg,scratches_183,2,scratch,scratch,0.0001
+logreg,scratches_193,2,scratch,scratch,0.0373
+logreg,scratches_195,2,scratch,scratch,0.0006
+logreg,scratches_200,2,scratch,scratch,0.001
+logreg,scratches_215,2,scratch,scratch,0.0002
+logreg,scratches_219,2,scratch,scratch,0.001
+logreg,scratches_224,2,scratch,scratch,0.0033
+logreg,scratches_227,2,scratch,scratch,0.0025
+logreg,scratches_229,2,scratch,scratch,0.0032
+logreg,scratches_230,2,scratch,scratch,0.0003
+logreg,scratches_231,2,scratch,scratch,0.0006
+logreg,scratches_233,2,scratch,scratch,0.0014
+logreg,scratches_238,2,scratch,scratch,0.0001
+logreg,scratches_241,2,scratch,scratch,0.0003
+logreg,scratches_243,2,scratch,scratch,0.0012
+logreg,scratches_246,2,scratch,scratch,0.0002
+logreg,scratches_250,2,scratch,scratch,0.0018
+logreg,scratches_255,2,scratch,scratch,0.0002
+logreg,scratches_27,2,scratch,scratch,0.002
+logreg,scratches_271,2,scratch,scratch,0.0003
+logreg,scratches_275,2,scratch,scratch,0.0002
+logreg,scratches_283,2,scratch,scratch,0.0003
+logreg,scratches_284,2,scratch,scratch,0.0003
+logreg,scratches_292,2,scratch,scratch,0.0003
+logreg,scratches_298,2,scratch,scratch,0.001
+logreg,scratches_3,2,scratch,scratch,0.0127
+logreg,scratches_54,2,scratch,scratch,0.0001
+logreg,scratches_56,2,scratch,scratch,0.0002
+logreg,scratches_57,2,scratch,scratch,0.0002
+logreg,scratches_60,2,scratch,scratch,0.0002
+logreg,scratches_65,2,scratch,scratch,0.0004
+logreg,scratches_68,2,scratch,scratch,0.0005
+logreg,scratches_7,2,scratch,scratch,0.0002
+logreg,scratches_78,2,scratch,scratch,0.0002
+logreg,scratches_80,2,scratch,scratch,0.1214
+logreg,scratches_82,2,scratch,scratch,0.0005
+logreg,scratches_88,2,scratch,scratch,0.0068
+logreg,crazing_1,3,crack (crazing),crack (crazing),0.9991
+logreg,crazing_102,3,crack (crazing),crack (crazing),0.9814
+logreg,crazing_103,3,crack (crazing),crack (crazing),0.9927
+logreg,crazing_104,3,crack (crazing),crack (crazing),0.9941
+logreg,crazing_108,3,crack (crazing),crack (crazing),0.9935
+logreg,crazing_11,3,crack (crazing),crack (crazing),0.9981
+logreg,crazing_111,3,crack (crazing),crack (crazing),0.9991
+logreg,crazing_112,3,crack (crazing),crack (crazing),0.9935
+logreg,crazing_114,3,crack (crazing),crack (crazing),0.9995
+logreg,crazing_125,3,crack (crazing),crack (crazing),0.9935
+logreg,crazing_13,3,crack (crazing),crack (crazing),0.9978
+logreg,crazing_140,3,crack (crazing),crack (crazing),0.9979
+logreg,crazing_141,3,crack (crazing),crack (crazing),0.9999
+logreg,crazing_143,3,crack (crazing),crack (crazing),0.9973
+logreg,crazing_144,3,crack (crazing),crack (crazing),0.9975
+logreg,crazing_146,3,crack (crazing),crack (crazing),0.9987
+logreg,crazing_151,3,crack (crazing),crack (crazing),0.9967
+logreg,crazing_153,3,crack (crazing),crack (crazing),0.998
+logreg,crazing_156,3,crack (crazing),crack (crazing),0.995
+logreg,crazing_161,3,crack (crazing),crack (crazing),0.9997
+logreg,crazing_164,3,crack (crazing),crack (crazing),0.9855
+logreg,crazing_165,3,crack (crazing),crack (crazing),0.9855
+logreg,crazing_180,3,crack (crazing),crack (crazing),0.9985
+logreg,crazing_183,3,crack (crazing),crack (crazing),0.9997
+logreg,crazing_19,3,crack (crazing),crack (crazing),0.9994
+logreg,crazing_192,3,crack (crazing),crack (crazing),0.9972
+logreg,crazing_194,3,crack (crazing),crack (crazing),0.9998
+logreg,crazing_197,3,crack (crazing),crack (crazing),0.9992
+logreg,crazing_205,3,crack (crazing),crack (crazing),0.9997
+logreg,crazing_206,3,crack (crazing),crack (crazing),0.9989
+logreg,crazing_209,3,crack (crazing),crack (crazing),0.9973
+logreg,crazing_214,3,crack (crazing),crack (crazing),0.9996
+logreg,crazing_229,3,crack (crazing),crack (crazing),0.976
+logreg,crazing_236,3,crack (crazing),crack (crazing),0.9891
+logreg,crazing_24,3,crack (crazing),crack (crazing),0.9996
+logreg,crazing_241,3,crack (crazing),crack (crazing),0.9972
+logreg,crazing_243,3,crack (crazing),crack (crazing),0.9995
+logreg,crazing_253,3,crack (crazing),crack (crazing),0.9973
+logreg,crazing_261,3,crack (crazing),crack (crazing),0.9858
+logreg,crazing_272,3,crack (crazing),crack (crazing),0.9849
+logreg,crazing_273,3,crack (crazing),crack (crazing),0.9978
+logreg,crazing_279,3,crack (crazing),crack (crazing),0.9995
+logreg,crazing_282,3,crack (crazing),crack (crazing),0.9954
+logreg,crazing_284,3,crack (crazing),crack (crazing),0.9997
+logreg,crazing_3,3,crack (crazing),crack (crazing),0.9999
+logreg,crazing_34,3,crack (crazing),crack (crazing),0.9997
+logreg,crazing_35,3,crack (crazing),crack (crazing),0.999
+logreg,crazing_4,3,crack (crazing),crack (crazing),0.9586
+logreg,crazing_44,3,crack (crazing),crack (crazing),0.9997
+logreg,crazing_46,3,crack (crazing),crack (crazing),0.9969
+logreg,crazing_49,3,crack (crazing),crack (crazing),0.9975
+logreg,crazing_50,3,crack (crazing),crack (crazing),0.9983
+logreg,crazing_51,3,crack (crazing),crack (crazing),0.9858
+logreg,crazing_61,3,crack (crazing),crack (crazing),0.9989
+logreg,crazing_75,3,crack (crazing),crack (crazing),0.9876
+logreg,crazing_77,3,crack (crazing),crack (crazing),0.9995
+logreg,crazing_80,3,crack (crazing),crack (crazing),0.9998
+logreg,crazing_85,3,crack (crazing),crack (crazing),0.9994
+logreg,crazing_91,3,crack (crazing),crack (crazing),0.9983
+logreg,crazing_95,3,crack (crazing),crack (crazing),0.9973
+logreg,scratches_111,3,scratch,scratch,0.0001
+logreg,scratches_120,3,scratch,scratch,0.0014
+logreg,scratches_125,3,scratch,scratch,0.0007
+logreg,scratches_129,3,scratch,scratch,0.0007
+logreg,scratches_131,3,scratch,scratch,0.0105
+logreg,scratches_137,3,scratch,scratch,0.0011
+logreg,scratches_140,3,scratch,scratch,0.0006
+logreg,scratches_145,3,scratch,scratch,0.0001
+logreg,scratches_147,3,scratch,scratch,0.0002
+logreg,scratches_149,3,scratch,scratch,0.0019
+logreg,scratches_151,3,scratch,scratch,0.0001
+logreg,scratches_152,3,scratch,scratch,0.0001
+logreg,scratches_153,3,scratch,scratch,0.0003
+logreg,scratches_159,3,scratch,scratch,0.0004
+logreg,scratches_162,3,scratch,scratch,0.0002
+logreg,scratches_174,3,scratch,scratch,0.0002
+logreg,scratches_18,3,scratch,scratch,0.0309
+logreg,scratches_180,3,scratch,scratch,0.0009
+logreg,scratches_181,3,scratch,scratch,0.0008
+logreg,scratches_20,3,scratch,scratch,0.0227
+logreg,scratches_201,3,scratch,scratch,0.0011
+logreg,scratches_203,3,scratch,scratch,0.0012
+logreg,scratches_206,3,scratch,scratch,0.0056
+logreg,scratches_207,3,scratch,scratch,0.0005
+logreg,scratches_208,3,scratch,scratch,0.0003
+logreg,scratches_210,3,scratch,scratch,0.0004
+logreg,scratches_212,3,scratch,scratch,0.0004
+logreg,scratches_213,3,scratch,scratch,0.0002
+logreg,scratches_221,3,scratch,scratch,0.0013
+logreg,scratches_226,3,scratch,scratch,0.0128
+logreg,scratches_232,3,scratch,scratch,0.0905
+logreg,scratches_24,3,scratch,scratch,0.0013
+logreg,scratches_242,3,scratch,scratch,0.0037
+logreg,scratches_253,3,scratch,scratch,0.0004
+logreg,scratches_258,3,scratch,scratch,0.0001
+logreg,scratches_261,3,scratch,scratch,0.0001
+logreg,scratches_263,3,scratch,scratch,0.0001
+logreg,scratches_264,3,scratch,scratch,0.0003
+logreg,scratches_268,3,scratch,scratch,0.001
+logreg,scratches_272,3,scratch,scratch,0.0008
+logreg,scratches_273,3,scratch,scratch,0.0003
+logreg,scratches_276,3,scratch,scratch,0.0002
+logreg,scratches_28,3,scratch,scratch,0.0199
+logreg,scratches_282,3,scratch,scratch,0.0011
+logreg,scratches_285,3,scratch,scratch,0.0034
+logreg,scratches_288,3,scratch,scratch,0.0011
+logreg,scratches_29,3,scratch,scratch,0.0417
+logreg,scratches_34,3,scratch,scratch,0.0001
+logreg,scratches_36,3,scratch,scratch,0.0
+logreg,scratches_39,3,scratch,scratch,0.0002
+logreg,scratches_42,3,scratch,scratch,0.0
+logreg,scratches_48,3,scratch,scratch,0.0001
+logreg,scratches_5,3,scratch,scratch,0.0007
+logreg,scratches_53,3,scratch,scratch,0.0003
+logreg,scratches_67,3,scratch,scratch,0.0003
+logreg,scratches_77,3,scratch,scratch,0.0002
+logreg,scratches_8,3,scratch,scratch,0.0043
+logreg,scratches_89,3,scratch,scratch,0.0005
+logreg,scratches_96,3,scratch,scratch,0.0007
+logreg,scratches_97,3,scratch,scratch,0.0003
+logreg,crazing_10,4,crack (crazing),crack (crazing),0.9934
+logreg,crazing_113,4,crack (crazing),crack (crazing),0.7892
+logreg,crazing_119,4,crack (crazing),crack (crazing),0.9967
+logreg,crazing_12,4,crack (crazing),crack (crazing),0.9927
+logreg,crazing_122,4,crack (crazing),crack (crazing),0.9982
+logreg,crazing_123,4,crack (crazing),crack (crazing),0.9949
+logreg,crazing_137,4,crack (crazing),crack (crazing),0.9933
+logreg,crazing_148,4,crack (crazing),crack (crazing),0.9687
+logreg,crazing_149,4,crack (crazing),crack (crazing),0.9887
+logreg,crazing_16,4,crack (crazing),crack (crazing),0.9995
+logreg,crazing_167,4,crack (crazing),crack (crazing),0.9925
+logreg,crazing_170,4,crack (crazing),crack (crazing),0.9997
+logreg,crazing_188,4,crack (crazing),crack (crazing),0.9673
+logreg,crazing_193,4,crack (crazing),crack (crazing),0.9992
+logreg,crazing_2,4,crack (crazing),crack (crazing),0.9991
+logreg,crazing_200,4,crack (crazing),crack (crazing),0.9986
+logreg,crazing_201,4,crack (crazing),crack (crazing),0.9915
+logreg,crazing_204,4,crack (crazing),crack (crazing),0.9973
+logreg,crazing_211,4,crack (crazing),crack (crazing),0.9995
+logreg,crazing_215,4,crack (crazing),crack (crazing),0.9992
+logreg,crazing_22,4,crack (crazing),crack (crazing),0.992
+logreg,crazing_220,4,crack (crazing),crack (crazing),0.997
+logreg,crazing_23,4,crack (crazing),crack (crazing),0.9441
+logreg,crazing_234,4,crack (crazing),crack (crazing),0.9508
+logreg,crazing_238,4,crack (crazing),crack (crazing),0.9437
+logreg,crazing_239,4,crack (crazing),crack (crazing),0.9937
+logreg,crazing_249,4,crack (crazing),crack (crazing),0.9947
+logreg,crazing_25,4,crack (crazing),crack (crazing),0.9998
+logreg,crazing_254,4,crack (crazing),crack (crazing),0.9993
+logreg,crazing_257,4,crack (crazing),crack (crazing),0.9978
+logreg,crazing_26,4,crack (crazing),crack (crazing),0.9999
+logreg,crazing_263,4,crack (crazing),crack (crazing),0.9802
+logreg,crazing_264,4,crack (crazing),crack (crazing),0.9534
+logreg,crazing_266,4,crack (crazing),crack (crazing),0.9179
+logreg,crazing_267,4,crack (crazing),crack (crazing),0.9977
+logreg,crazing_274,4,crack (crazing),crack (crazing),0.9844
+logreg,crazing_276,4,crack (crazing),crack (crazing),0.9972
+logreg,crazing_277,4,crack (crazing),crack (crazing),0.9544
+logreg,crazing_285,4,crack (crazing),crack (crazing),0.9937
+logreg,crazing_29,4,crack (crazing),crack (crazing),0.9975
+logreg,crazing_292,4,crack (crazing),crack (crazing),0.9773
+logreg,crazing_295,4,crack (crazing),crack (crazing),0.9972
+logreg,crazing_299,4,crack (crazing),crack (crazing),0.9915
+logreg,crazing_31,4,crack (crazing),crack (crazing),0.9984
+logreg,crazing_37,4,crack (crazing),crack (crazing),0.9999
+logreg,crazing_38,4,crack (crazing),crack (crazing),0.9997
+logreg,crazing_39,4,crack (crazing),crack (crazing),0.9901
+logreg,crazing_43,4,crack (crazing),crack (crazing),0.9995
+logreg,crazing_45,4,crack (crazing),crack (crazing),0.9972
+logreg,crazing_52,4,crack (crazing),crack (crazing),0.9996
+logreg,crazing_65,4,crack (crazing),crack (crazing),0.9966
+logreg,crazing_69,4,crack (crazing),crack (crazing),0.9821
+logreg,crazing_70,4,crack (crazing),crack (crazing),0.9284
+logreg,crazing_71,4,crack (crazing),crack (crazing),0.9967
+logreg,crazing_76,4,crack (crazing),crack (crazing),0.9998
+logreg,crazing_81,4,crack (crazing),crack (crazing),0.9997
+logreg,crazing_84,4,crack (crazing),crack (crazing),0.9963
+logreg,crazing_86,4,crack (crazing),crack (crazing),0.9989
+logreg,crazing_93,4,crack (crazing),crack (crazing),0.9966
+logreg,crazing_98,4,crack (crazing),crack (crazing),0.9922
+logreg,scratches_100,4,scratch,scratch,0.0012
+logreg,scratches_105,4,scratch,scratch,0.0014
+logreg,scratches_107,4,scratch,scratch,0.0017
+logreg,scratches_112,4,scratch,scratch,0.0003
+logreg,scratches_117,4,scratch,scratch,0.0003
+logreg,scratches_122,4,scratch,scratch,0.0002
+logreg,scratches_124,4,scratch,scratch,0.0061
+logreg,scratches_13,4,scratch,scratch,0.3585
+logreg,scratches_136,4,scratch,scratch,0.0012
+logreg,scratches_141,4,scratch,scratch,0.0003
+logreg,scratches_155,4,scratch,scratch,0.0013
+logreg,scratches_157,4,scratch,scratch,0.0001
+logreg,scratches_160,4,scratch,scratch,0.0006
+logreg,scratches_161,4,scratch,scratch,0.0005
+logreg,scratches_164,4,scratch,scratch,0.0017
+logreg,scratches_165,4,scratch,scratch,0.0001
+logreg,scratches_166,4,scratch,scratch,0.0002
+logreg,scratches_169,4,scratch,scratch,0.0023
+logreg,scratches_182,4,scratch,scratch,0.0003
+logreg,scratches_185,4,scratch,scratch,0.0006
+logreg,scratches_187,4,scratch,scratch,0.0001
+logreg,scratches_189,4,scratch,scratch,0.0002
+logreg,scratches_191,4,scratch,scratch,0.001
+logreg,scratches_194,4,scratch,scratch,0.0033
+logreg,scratches_197,4,scratch,scratch,0.0011
+logreg,scratches_204,4,scratch,scratch,0.0001
+logreg,scratches_21,4,scratch,scratch,0.0097
+logreg,scratches_222,4,scratch,scratch,0.0056
+logreg,scratches_23,4,scratch,scratch,0.0021
+logreg,scratches_234,4,scratch,scratch,0.0004
+logreg,scratches_237,4,scratch,scratch,0.0003
+logreg,scratches_240,4,scratch,scratch,0.0005
+logreg,scratches_244,4,scratch,scratch,0.0001
+logreg,scratches_248,4,scratch,scratch,0.0005
+logreg,scratches_25,4,scratch,scratch,0.0015
+logreg,scratches_274,4,scratch,scratch,0.0004
+logreg,scratches_280,4,scratch,scratch,0.0002
+logreg,scratches_287,4,scratch,scratch,0.0021
+logreg,scratches_289,4,scratch,scratch,0.0012
+logreg,scratches_290,4,scratch,scratch,0.0003
+logreg,scratches_294,4,scratch,scratch,0.0014
+logreg,scratches_30,4,scratch,scratch,0.0228
+logreg,scratches_32,4,scratch,scratch,0.0052
+logreg,scratches_35,4,scratch,scratch,0.0001
+logreg,scratches_41,4,scratch,scratch,0.0004
+logreg,scratches_44,4,scratch,scratch,0.0005
+logreg,scratches_47,4,scratch,scratch,0.0003
+logreg,scratches_50,4,scratch,scratch,0.0006
+logreg,scratches_58,4,scratch,scratch,0.0
+logreg,scratches_61,4,scratch,scratch,0.0004
+logreg,scratches_64,4,scratch,scratch,0.0002
+logreg,scratches_66,4,scratch,scratch,0.0002
+logreg,scratches_71,4,scratch,scratch,0.0181
+logreg,scratches_76,4,scratch,scratch,0.003
+logreg,scratches_84,4,scratch,scratch,0.0148
+logreg,scratches_91,4,scratch,scratch,0.0001
+logreg,scratches_93,4,scratch,scratch,0.0003
+logreg,scratches_94,4,scratch,scratch,0.0006
+logreg,scratches_95,4,scratch,scratch,0.0003
+logreg,scratches_99,4,scratch,scratch,0.0006
+random_forest,crazing_101,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_106,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_109,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_110,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_121,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_126,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_128,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_129,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_131,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_133,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_152,0,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_154,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_155,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_158,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_159,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_160,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_173,0,crack (crazing),crack (crazing),0.98
+random_forest,crazing_179,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_18,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_184,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_185,0,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_191,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_196,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_207,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_212,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_224,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_232,0,crack (crazing),crack (crazing),0.99
+random_forest,crazing_245,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_246,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_247,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_251,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_255,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_259,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_262,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_27,0,crack (crazing),crack (crazing),0.99
+random_forest,crazing_275,0,crack (crazing),crack (crazing),0.9567
+random_forest,crazing_278,0,crack (crazing),crack (crazing),0.95
+random_forest,crazing_28,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_281,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_290,0,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_294,0,crack (crazing),crack (crazing),0.9867
+random_forest,crazing_297,0,crack (crazing),crack (crazing),0.9667
+random_forest,crazing_300,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_36,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_40,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_41,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_48,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_53,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_55,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_57,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_6,0,crack (crazing),crack (crazing),0.96
+random_forest,crazing_62,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_64,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_66,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_72,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_73,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_79,0,crack (crazing),crack (crazing),0.9267
+random_forest,crazing_8,0,crack (crazing),crack (crazing),0.9833
+random_forest,crazing_82,0,crack (crazing),crack (crazing),1.0
+random_forest,crazing_94,0,crack (crazing),crack (crazing),1.0
+random_forest,scratches_1,0,scratch,scratch,0.0067
+random_forest,scratches_10,0,scratch,scratch,0.0067
+random_forest,scratches_103,0,scratch,scratch,0.0
+random_forest,scratches_108,0,scratch,scratch,0.0
+random_forest,scratches_121,0,scratch,scratch,0.0
+random_forest,scratches_126,0,scratch,scratch,0.0033
+random_forest,scratches_127,0,scratch,scratch,0.0
+random_forest,scratches_130,0,scratch,scratch,0.0
+random_forest,scratches_135,0,scratch,scratch,0.0
+random_forest,scratches_143,0,scratch,scratch,0.0
+random_forest,scratches_144,0,scratch,scratch,0.0
+random_forest,scratches_15,0,scratch,scratch,0.0333
+random_forest,scratches_17,0,scratch,scratch,0.0
+random_forest,scratches_177,0,scratch,scratch,0.0
+random_forest,scratches_178,0,scratch,scratch,0.0
+random_forest,scratches_186,0,scratch,scratch,0.0
+random_forest,scratches_188,0,scratch,scratch,0.0
+random_forest,scratches_190,0,scratch,scratch,0.0
+random_forest,scratches_192,0,scratch,scratch,0.0
+random_forest,scratches_196,0,scratch,scratch,0.0
+random_forest,scratches_199,0,scratch,scratch,0.0
+random_forest,scratches_2,0,scratch,scratch,0.0
+random_forest,scratches_205,0,scratch,scratch,0.0
+random_forest,scratches_211,0,scratch,scratch,0.0
+random_forest,scratches_216,0,scratch,scratch,0.0
+random_forest,scratches_220,0,scratch,scratch,0.0
+random_forest,scratches_223,0,scratch,scratch,0.0
+random_forest,scratches_225,0,scratch,scratch,0.0033
+random_forest,scratches_235,0,scratch,scratch,0.0
+random_forest,scratches_236,0,scratch,scratch,0.0
+random_forest,scratches_247,0,scratch,scratch,0.03
+random_forest,scratches_26,0,scratch,scratch,0.0
+random_forest,scratches_262,0,scratch,scratch,0.0
+random_forest,scratches_265,0,scratch,scratch,0.0
+random_forest,scratches_267,0,scratch,scratch,0.0
+random_forest,scratches_270,0,scratch,scratch,0.0
+random_forest,scratches_277,0,scratch,scratch,0.0
+random_forest,scratches_278,0,scratch,scratch,0.0
+random_forest,scratches_279,0,scratch,scratch,0.0
+random_forest,scratches_281,0,scratch,scratch,0.04
+random_forest,scratches_291,0,scratch,scratch,0.0
+random_forest,scratches_293,0,scratch,scratch,0.15
+random_forest,scratches_295,0,scratch,scratch,0.0
+random_forest,scratches_300,0,scratch,scratch,0.0
+random_forest,scratches_31,0,scratch,scratch,0.0
+random_forest,scratches_37,0,scratch,scratch,0.0067
+random_forest,scratches_43,0,scratch,scratch,0.0
+random_forest,scratches_49,0,scratch,scratch,0.0
+random_forest,scratches_51,0,scratch,scratch,0.0
+random_forest,scratches_52,0,scratch,scratch,0.0
+random_forest,scratches_6,0,scratch,scratch,0.0
+random_forest,scratches_62,0,scratch,scratch,0.0
+random_forest,scratches_63,0,scratch,scratch,0.0
+random_forest,scratches_69,0,scratch,scratch,0.0
+random_forest,scratches_79,0,scratch,scratch,0.0
+random_forest,scratches_85,0,scratch,scratch,0.0067
+random_forest,scratches_87,0,scratch,scratch,0.0067
+random_forest,scratches_9,0,scratch,scratch,0.0
+random_forest,scratches_90,0,scratch,scratch,0.0
+random_forest,scratches_92,0,scratch,scratch,0.0
+random_forest,crazing_105,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_117,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_118,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_120,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_130,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_132,1,crack (crazing),crack (crazing),0.9633
+random_forest,crazing_134,1,crack (crazing),crack (crazing),0.9733
+random_forest,crazing_135,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_136,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_138,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_139,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_14,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_142,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_147,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_15,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_150,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_162,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_168,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_169,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_17,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_175,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_176,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_177,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_178,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_181,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_182,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_189,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_190,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_198,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_20,1,crack (crazing),crack (crazing),0.86
+random_forest,crazing_202,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_217,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_219,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_225,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_231,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_233,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_235,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_240,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_242,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_252,1,crack (crazing),crack (crazing),0.98
+random_forest,crazing_256,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_265,1,crack (crazing),crack (crazing),0.9867
+random_forest,crazing_269,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_270,1,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_287,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_291,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_293,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_32,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_33,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_42,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_54,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_59,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_60,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_63,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_67,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_9,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_90,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_96,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_97,1,crack (crazing),crack (crazing),1.0
+random_forest,crazing_99,1,crack (crazing),crack (crazing),1.0
+random_forest,scratches_102,1,scratch,scratch,0.0033
+random_forest,scratches_106,1,scratch,scratch,0.0
+random_forest,scratches_115,1,scratch,scratch,0.0
+random_forest,scratches_116,1,scratch,scratch,0.0
+random_forest,scratches_118,1,scratch,scratch,0.0033
+random_forest,scratches_119,1,scratch,scratch,0.0
+random_forest,scratches_12,1,scratch,scratch,0.0467
+random_forest,scratches_132,1,scratch,scratch,0.0133
+random_forest,scratches_133,1,scratch,scratch,0.0
+random_forest,scratches_134,1,scratch,scratch,0.0
+random_forest,scratches_142,1,scratch,scratch,0.0
+random_forest,scratches_150,1,scratch,scratch,0.0
+random_forest,scratches_154,1,scratch,scratch,0.0
+random_forest,scratches_158,1,scratch,scratch,0.0
+random_forest,scratches_16,1,scratch,crack (crazing),0.8667
+random_forest,scratches_172,1,scratch,scratch,0.0
+random_forest,scratches_175,1,scratch,scratch,0.0
+random_forest,scratches_184,1,scratch,scratch,0.0
+random_forest,scratches_19,1,scratch,scratch,0.0
+random_forest,scratches_198,1,scratch,scratch,0.0
+random_forest,scratches_202,1,scratch,scratch,0.1567
+random_forest,scratches_209,1,scratch,scratch,0.0
+random_forest,scratches_214,1,scratch,scratch,0.0
+random_forest,scratches_217,1,scratch,scratch,0.0
+random_forest,scratches_218,1,scratch,scratch,0.0
+random_forest,scratches_22,1,scratch,scratch,0.0133
+random_forest,scratches_228,1,scratch,scratch,0.0
+random_forest,scratches_239,1,scratch,scratch,0.0
+random_forest,scratches_245,1,scratch,scratch,0.0
+random_forest,scratches_249,1,scratch,scratch,0.0
+random_forest,scratches_251,1,scratch,scratch,0.0
+random_forest,scratches_252,1,scratch,scratch,0.0
+random_forest,scratches_254,1,scratch,scratch,0.0
+random_forest,scratches_256,1,scratch,scratch,0.0
+random_forest,scratches_257,1,scratch,scratch,0.0
+random_forest,scratches_259,1,scratch,scratch,0.0
+random_forest,scratches_260,1,scratch,scratch,0.0
+random_forest,scratches_266,1,scratch,scratch,0.0
+random_forest,scratches_269,1,scratch,scratch,0.0
+random_forest,scratches_286,1,scratch,scratch,0.0
+random_forest,scratches_296,1,scratch,scratch,0.0
+random_forest,scratches_297,1,scratch,scratch,0.0
+random_forest,scratches_299,1,scratch,scratch,0.0
+random_forest,scratches_33,1,scratch,scratch,0.0
+random_forest,scratches_38,1,scratch,scratch,0.0
+random_forest,scratches_4,1,scratch,scratch,0.0
+random_forest,scratches_40,1,scratch,scratch,0.0
+random_forest,scratches_45,1,scratch,scratch,0.0
+random_forest,scratches_46,1,scratch,scratch,0.0
+random_forest,scratches_55,1,scratch,scratch,0.0
+random_forest,scratches_59,1,scratch,scratch,0.0
+random_forest,scratches_70,1,scratch,scratch,0.0
+random_forest,scratches_72,1,scratch,scratch,0.0167
+random_forest,scratches_73,1,scratch,crack (crazing),0.82
+random_forest,scratches_74,1,scratch,scratch,0.0
+random_forest,scratches_75,1,scratch,scratch,0.0
+random_forest,scratches_81,1,scratch,scratch,0.0
+random_forest,scratches_83,1,scratch,scratch,0.02
+random_forest,scratches_86,1,scratch,scratch,0.0
+random_forest,scratches_98,1,scratch,scratch,0.0
+random_forest,crazing_100,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_107,2,crack (crazing),crack (crazing),0.93
+random_forest,crazing_115,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_116,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_124,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_127,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_145,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_157,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_163,2,crack (crazing),crack (crazing),0.9667
+random_forest,crazing_166,2,crack (crazing),crack (crazing),0.7467
+random_forest,crazing_171,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_172,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_174,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_186,2,crack (crazing),crack (crazing),0.98
+random_forest,crazing_187,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_195,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_199,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_203,2,crack (crazing),crack (crazing),0.9733
+random_forest,crazing_208,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_21,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_210,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_213,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_216,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_218,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_221,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_222,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_223,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_226,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_227,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_228,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_230,2,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_237,2,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_244,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_248,2,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_250,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_258,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_260,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_268,2,crack (crazing),crack (crazing),0.99
+random_forest,crazing_271,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_280,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_283,2,crack (crazing),crack (crazing),0.9667
+random_forest,crazing_286,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_288,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_289,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_296,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_298,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_30,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_47,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_5,2,crack (crazing),crack (crazing),0.9933
+random_forest,crazing_56,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_58,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_68,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_7,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_74,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_78,2,crack (crazing),crack (crazing),0.95
+random_forest,crazing_83,2,crack (crazing),crack (crazing),0.9933
+random_forest,crazing_87,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_88,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_89,2,crack (crazing),crack (crazing),1.0
+random_forest,crazing_92,2,crack (crazing),crack (crazing),1.0
+random_forest,scratches_101,2,scratch,scratch,0.0
+random_forest,scratches_104,2,scratch,scratch,0.0
+random_forest,scratches_109,2,scratch,scratch,0.0
+random_forest,scratches_11,2,scratch,scratch,0.0
+random_forest,scratches_110,2,scratch,scratch,0.0
+random_forest,scratches_113,2,scratch,scratch,0.0
+random_forest,scratches_114,2,scratch,scratch,0.0
+random_forest,scratches_123,2,scratch,scratch,0.0
+random_forest,scratches_128,2,scratch,scratch,0.0
+random_forest,scratches_138,2,scratch,scratch,0.0
+random_forest,scratches_139,2,scratch,scratch,0.0
+random_forest,scratches_14,2,scratch,scratch,0.0233
+random_forest,scratches_146,2,scratch,scratch,0.0
+random_forest,scratches_148,2,scratch,scratch,0.0
+random_forest,scratches_156,2,scratch,scratch,0.0
+random_forest,scratches_163,2,scratch,scratch,0.0
+random_forest,scratches_167,2,scratch,scratch,0.0
+random_forest,scratches_168,2,scratch,scratch,0.04
+random_forest,scratches_170,2,scratch,scratch,0.0
+random_forest,scratches_171,2,scratch,scratch,0.0
+random_forest,scratches_173,2,scratch,scratch,0.0
+random_forest,scratches_176,2,scratch,scratch,0.0
+random_forest,scratches_179,2,scratch,scratch,0.0
+random_forest,scratches_183,2,scratch,scratch,0.0
+random_forest,scratches_193,2,scratch,scratch,0.0067
+random_forest,scratches_195,2,scratch,scratch,0.0
+random_forest,scratches_200,2,scratch,scratch,0.0
+random_forest,scratches_215,2,scratch,scratch,0.0
+random_forest,scratches_219,2,scratch,scratch,0.0
+random_forest,scratches_224,2,scratch,scratch,0.0
+random_forest,scratches_227,2,scratch,scratch,0.0
+random_forest,scratches_229,2,scratch,scratch,0.0
+random_forest,scratches_230,2,scratch,scratch,0.0
+random_forest,scratches_231,2,scratch,scratch,0.0
+random_forest,scratches_233,2,scratch,scratch,0.0
+random_forest,scratches_238,2,scratch,scratch,0.0
+random_forest,scratches_241,2,scratch,scratch,0.0
+random_forest,scratches_243,2,scratch,scratch,0.0
+random_forest,scratches_246,2,scratch,scratch,0.0
+random_forest,scratches_250,2,scratch,scratch,0.0
+random_forest,scratches_255,2,scratch,scratch,0.0033
+random_forest,scratches_27,2,scratch,scratch,0.0
+random_forest,scratches_271,2,scratch,scratch,0.0
+random_forest,scratches_275,2,scratch,scratch,0.0
+random_forest,scratches_283,2,scratch,scratch,0.0
+random_forest,scratches_284,2,scratch,scratch,0.0
+random_forest,scratches_292,2,scratch,scratch,0.0
+random_forest,scratches_298,2,scratch,scratch,0.0
+random_forest,scratches_3,2,scratch,scratch,0.0033
+random_forest,scratches_54,2,scratch,scratch,0.0
+random_forest,scratches_56,2,scratch,scratch,0.0
+random_forest,scratches_57,2,scratch,scratch,0.0
+random_forest,scratches_60,2,scratch,scratch,0.0
+random_forest,scratches_65,2,scratch,scratch,0.0
+random_forest,scratches_68,2,scratch,scratch,0.0
+random_forest,scratches_7,2,scratch,scratch,0.0
+random_forest,scratches_78,2,scratch,scratch,0.0
+random_forest,scratches_80,2,scratch,scratch,0.05
+random_forest,scratches_82,2,scratch,scratch,0.0033
+random_forest,scratches_88,2,scratch,scratch,0.0
+random_forest,crazing_1,3,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_102,3,crack (crazing),crack (crazing),0.7833
+random_forest,crazing_103,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_104,3,crack (crazing),crack (crazing),0.9733
+random_forest,crazing_108,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_11,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_111,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_112,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_114,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_125,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_13,3,crack (crazing),crack (crazing),0.98
+random_forest,crazing_140,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_141,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_143,3,crack (crazing),crack (crazing),0.9933
+random_forest,crazing_144,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_146,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_151,3,crack (crazing),crack (crazing),0.9367
+random_forest,crazing_153,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_156,3,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_161,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_164,3,crack (crazing),crack (crazing),0.9767
+random_forest,crazing_165,3,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_180,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_183,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_19,3,crack (crazing),crack (crazing),0.99
+random_forest,crazing_192,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_194,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_197,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_205,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_206,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_209,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_214,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_229,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_236,3,crack (crazing),crack (crazing),0.9867
+random_forest,crazing_24,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_241,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_243,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_253,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_261,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_272,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_273,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_279,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_282,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_284,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_3,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_34,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_35,3,crack (crazing),crack (crazing),0.98
+random_forest,crazing_4,3,crack (crazing),crack (crazing),0.9533
+random_forest,crazing_44,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_46,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_49,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_50,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_51,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_61,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_75,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_77,3,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_80,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_85,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_91,3,crack (crazing),crack (crazing),1.0
+random_forest,crazing_95,3,crack (crazing),crack (crazing),1.0
+random_forest,scratches_111,3,scratch,scratch,0.0
+random_forest,scratches_120,3,scratch,scratch,0.0
+random_forest,scratches_125,3,scratch,scratch,0.0033
+random_forest,scratches_129,3,scratch,scratch,0.0
+random_forest,scratches_131,3,scratch,scratch,0.0033
+random_forest,scratches_137,3,scratch,scratch,0.0
+random_forest,scratches_140,3,scratch,scratch,0.0
+random_forest,scratches_145,3,scratch,scratch,0.0
+random_forest,scratches_147,3,scratch,scratch,0.0
+random_forest,scratches_149,3,scratch,scratch,0.0
+random_forest,scratches_151,3,scratch,scratch,0.0
+random_forest,scratches_152,3,scratch,scratch,0.0
+random_forest,scratches_153,3,scratch,scratch,0.0
+random_forest,scratches_159,3,scratch,scratch,0.0
+random_forest,scratches_162,3,scratch,scratch,0.0
+random_forest,scratches_174,3,scratch,scratch,0.0
+random_forest,scratches_18,3,scratch,scratch,0.0033
+random_forest,scratches_180,3,scratch,scratch,0.0
+random_forest,scratches_181,3,scratch,scratch,0.0
+random_forest,scratches_20,3,scratch,scratch,0.0
+random_forest,scratches_201,3,scratch,scratch,0.0
+random_forest,scratches_203,3,scratch,scratch,0.0
+random_forest,scratches_206,3,scratch,scratch,0.0133
+random_forest,scratches_207,3,scratch,scratch,0.0
+random_forest,scratches_208,3,scratch,scratch,0.0
+random_forest,scratches_210,3,scratch,scratch,0.0
+random_forest,scratches_212,3,scratch,scratch,0.0
+random_forest,scratches_213,3,scratch,scratch,0.0
+random_forest,scratches_221,3,scratch,scratch,0.0
+random_forest,scratches_226,3,scratch,scratch,0.0
+random_forest,scratches_232,3,scratch,scratch,0.0267
+random_forest,scratches_24,3,scratch,scratch,0.0033
+random_forest,scratches_242,3,scratch,scratch,0.0067
+random_forest,scratches_253,3,scratch,scratch,0.0
+random_forest,scratches_258,3,scratch,scratch,0.0
+random_forest,scratches_261,3,scratch,scratch,0.0
+random_forest,scratches_263,3,scratch,scratch,0.0
+random_forest,scratches_264,3,scratch,scratch,0.0
+random_forest,scratches_268,3,scratch,scratch,0.0
+random_forest,scratches_272,3,scratch,scratch,0.0
+random_forest,scratches_273,3,scratch,scratch,0.0
+random_forest,scratches_276,3,scratch,scratch,0.0
+random_forest,scratches_28,3,scratch,scratch,0.0067
+random_forest,scratches_282,3,scratch,scratch,0.0
+random_forest,scratches_285,3,scratch,scratch,0.0
+random_forest,scratches_288,3,scratch,scratch,0.0
+random_forest,scratches_29,3,scratch,scratch,0.0
+random_forest,scratches_34,3,scratch,scratch,0.0233
+random_forest,scratches_36,3,scratch,scratch,0.02
+random_forest,scratches_39,3,scratch,scratch,0.02
+random_forest,scratches_42,3,scratch,scratch,0.0033
+random_forest,scratches_48,3,scratch,scratch,0.0
+random_forest,scratches_5,3,scratch,scratch,0.0
+random_forest,scratches_53,3,scratch,scratch,0.0
+random_forest,scratches_67,3,scratch,scratch,0.0
+random_forest,scratches_77,3,scratch,scratch,0.0
+random_forest,scratches_8,3,scratch,scratch,0.0
+random_forest,scratches_89,3,scratch,scratch,0.0
+random_forest,scratches_96,3,scratch,scratch,0.0
+random_forest,scratches_97,3,scratch,scratch,0.0
+random_forest,crazing_10,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_113,4,crack (crazing),crack (crazing),0.6533
+random_forest,crazing_119,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_12,4,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_122,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_123,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_137,4,crack (crazing),crack (crazing),0.97
+random_forest,crazing_148,4,crack (crazing),crack (crazing),0.5933
+random_forest,crazing_149,4,crack (crazing),crack (crazing),0.9167
+random_forest,crazing_16,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_167,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_170,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_188,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_193,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_2,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_200,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_201,4,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_204,4,crack (crazing),crack (crazing),0.9933
+random_forest,crazing_211,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_215,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_22,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_220,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_23,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_234,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_238,4,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_239,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_249,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_25,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_254,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_257,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_26,4,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_263,4,crack (crazing),crack (crazing),0.99
+random_forest,crazing_264,4,crack (crazing),crack (crazing),0.9133
+random_forest,crazing_266,4,crack (crazing),crack (crazing),0.6867
+random_forest,crazing_267,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_274,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_276,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_277,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_285,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_29,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_292,4,crack (crazing),crack (crazing),0.9933
+random_forest,crazing_295,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_299,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_31,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_37,4,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_38,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_39,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_43,4,crack (crazing),crack (crazing),0.9967
+random_forest,crazing_45,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_52,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_65,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_69,4,crack (crazing),crack (crazing),0.9667
+random_forest,crazing_70,4,crack (crazing),crack (crazing),0.9667
+random_forest,crazing_71,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_76,4,crack (crazing),crack (crazing),0.9933
+random_forest,crazing_81,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_84,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_86,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_93,4,crack (crazing),crack (crazing),1.0
+random_forest,crazing_98,4,crack (crazing),crack (crazing),1.0
+random_forest,scratches_100,4,scratch,scratch,0.0
+random_forest,scratches_105,4,scratch,scratch,0.0
+random_forest,scratches_107,4,scratch,scratch,0.0067
+random_forest,scratches_112,4,scratch,scratch,0.0
+random_forest,scratches_117,4,scratch,scratch,0.0
+random_forest,scratches_122,4,scratch,scratch,0.0
+random_forest,scratches_124,4,scratch,scratch,0.0
+random_forest,scratches_13,4,scratch,scratch,0.44
+random_forest,scratches_136,4,scratch,scratch,0.0
+random_forest,scratches_141,4,scratch,scratch,0.0
+random_forest,scratches_155,4,scratch,scratch,0.0
+random_forest,scratches_157,4,scratch,scratch,0.0
+random_forest,scratches_160,4,scratch,scratch,0.0
+random_forest,scratches_161,4,scratch,scratch,0.0
+random_forest,scratches_164,4,scratch,scratch,0.0
+random_forest,scratches_165,4,scratch,scratch,0.0
+random_forest,scratches_166,4,scratch,scratch,0.0
+random_forest,scratches_169,4,scratch,scratch,0.0
+random_forest,scratches_182,4,scratch,scratch,0.0
+random_forest,scratches_185,4,scratch,scratch,0.0
+random_forest,scratches_187,4,scratch,scratch,0.0
+random_forest,scratches_189,4,scratch,scratch,0.0
+random_forest,scratches_191,4,scratch,scratch,0.0
+random_forest,scratches_194,4,scratch,scratch,0.0
+random_forest,scratches_197,4,scratch,scratch,0.0
+random_forest,scratches_204,4,scratch,scratch,0.0
+random_forest,scratches_21,4,scratch,scratch,0.0067
+random_forest,scratches_222,4,scratch,scratch,0.0
+random_forest,scratches_23,4,scratch,scratch,0.0
+random_forest,scratches_234,4,scratch,scratch,0.0
+random_forest,scratches_237,4,scratch,scratch,0.0
+random_forest,scratches_240,4,scratch,scratch,0.0
+random_forest,scratches_244,4,scratch,scratch,0.0
+random_forest,scratches_248,4,scratch,scratch,0.0
+random_forest,scratches_25,4,scratch,scratch,0.0
+random_forest,scratches_274,4,scratch,scratch,0.0
+random_forest,scratches_280,4,scratch,scratch,0.0
+random_forest,scratches_287,4,scratch,scratch,0.0
+random_forest,scratches_289,4,scratch,scratch,0.0
+random_forest,scratches_290,4,scratch,scratch,0.0
+random_forest,scratches_294,4,scratch,scratch,0.0
+random_forest,scratches_30,4,scratch,scratch,0.0
+random_forest,scratches_32,4,scratch,scratch,0.0
+random_forest,scratches_35,4,scratch,scratch,0.0033
+random_forest,scratches_41,4,scratch,scratch,0.0
+random_forest,scratches_44,4,scratch,scratch,0.0
+random_forest,scratches_47,4,scratch,scratch,0.0
+random_forest,scratches_50,4,scratch,scratch,0.0
+random_forest,scratches_58,4,scratch,scratch,0.0
+random_forest,scratches_61,4,scratch,scratch,0.0
+random_forest,scratches_64,4,scratch,scratch,0.0
+random_forest,scratches_66,4,scratch,scratch,0.0
+random_forest,scratches_71,4,scratch,scratch,0.0133
+random_forest,scratches_76,4,scratch,scratch,0.0
+random_forest,scratches_84,4,scratch,scratch,0.0267
+random_forest,scratches_91,4,scratch,scratch,0.0
+random_forest,scratches_93,4,scratch,scratch,0.0
+random_forest,scratches_94,4,scratch,scratch,0.0
+random_forest,scratches_95,4,scratch,scratch,0.0
+random_forest,scratches_99,4,scratch,scratch,0.0
